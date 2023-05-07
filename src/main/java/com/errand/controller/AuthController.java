@@ -1,5 +1,6 @@
 package com.errand.controller;
 
+import com.errand.dto.BaseRegistrationDTO;
 import com.errand.dto.ClientRegistrationDto;
 import com.errand.dto.ServiceProviderRegistrationDto;
 import com.errand.models.Users;
@@ -28,20 +29,20 @@ public class AuthController {
 
     @GetMapping("/register/client")
     public String getClientRegisterForm(Model model){
-        ClientRegistrationDto user = new ClientRegistrationDto();
+        BaseRegistrationDTO user = new BaseRegistrationDTO();
         model.addAttribute("user", user);
         return "register-client";
     }
 
     @GetMapping("/register/serviceprovider")
     public String getServiceProviderRegisterForm(Model model){
-        ServiceProviderRegistrationDto user = new ServiceProviderRegistrationDto();
+        BaseRegistrationDTO user = new BaseRegistrationDTO();
         model.addAttribute("user", user);
         return "register-serviceprovider";
     }
 
     @PostMapping("/register/save/client")
-    public String register(@Valid @ModelAttribute("user") ClientRegistrationDto user,
+    public String register(@Valid @ModelAttribute("user")BaseRegistrationDTO user,
                            BindingResult result,
                            Model model){
 
@@ -58,7 +59,7 @@ public class AuthController {
     }
 
     @PostMapping("/register/save/serviceprovider")
-    public String registerServiceProvider(@Valid @ModelAttribute("user") ServiceProviderRegistrationDto user,
+    public String registerServiceProvider(@Valid @ModelAttribute("user")BaseRegistrationDTO user,
                                           BindingResult result,
                                           Model model){
 
