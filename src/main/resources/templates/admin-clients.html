@@ -1,92 +1,102 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{admin-layout}">
+        layout:decorate="~{layout}">
 <head>
   <title>Clients Management</title>
 </head>
+
 <body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
 
+  <div layout:fragment="profile-name">
+    <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${user.username + ' (Administrator)'}"></span>
+  </div>
+
+  <!-- Sidebar Items-->
   <section layout:fragment="sidebar-item" class="py-2">
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
 
-    <li class="nav-item">
-      <a class="nav-link" href="/admin/dashboard">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Dashboard</span></a>
-    </li>
+      <hr class="sidebar-divider my-0">
 
-    <hr class="sidebar-divider">
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/dashboard">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
 
-    <div class="sidebar-heading">
-      Management
-    </div>
+      <hr class="sidebar-divider">
 
-    <li class="nav-item active">
-      <a class="nav-link" href="/admin/clients">
-        <i class="fas fa-fw fa-user-tie"></i>
-        <span>Clients</span></a>
-    </li>
+      <div class="sidebar-heading">
+        Management
+      </div>
 
-    <li class="nav-item">
-      <a class="nav-link" href="charts.html">
-        <i class="fas fa-fw fa-tools"></i>
-        <span>Service Providers</span></a>
-    </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/admin/clients">
+          <i class="fas fa-fw fa-user-tie"></i>
+          <span>Clients</span></a>
+      </li>
 
-    <li class="nav-item">
-      <a class="nav-link" href="charts.html">
-        <i class="fas fa-fw fa-briefcase"></i>
-        <span>Tasks</span></a>
-    </li>
+      <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+          <i class="fas fa-fw fa-tools"></i>
+          <span>Service Providers</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+          <i class="fas fa-fw fa-briefcase"></i>
+          <span>Tasks</span></a>
+      </li>
 
   </section>
+
   <!-- Page Content-->
   <section layout:fragment="body" class="py-3">
-
     <div class="container-fluid">
 
       <div class="card shadow mb-4">
+
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Client Management</h6>
         </div>
+
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-              <tr>
-                <th>Client ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Contact Number</th>
-                <th>Date Created</th>
-                <th>Date Modified</th>
-                <th>Action</th>
-              </tr>
-              </thead>
-              <tbody th:each="client :${clients}">
-              <tr>
-                <td th:text="${client.id}"></td>
-                <td th:text="${client.firstName}"></td>
-                <td th:text="${client.lastName}"></td>
-                <td th:text="${client.email}"></td>
-                <td th:text="${client.contactNumber}"></td>
-                <td th:text="${client.user.createdDate}"></td>
-                <td th:text="${client.user.modifiedDate}"></td>
-                <td><button class="btn btn-primary">View Task</button></td>
-              </tr>
 
+              <thead>
+                <tr>
+                  <th>Client ID</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>Contact Number</th>
+                  <th>Date Created</th>
+                  <th>Date Modified</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody th:each="client :${clients}">
+                <tr>
+                  <td th:text="${client.id}"></td>
+                  <td th:text="${client.firstName}"></td>
+                  <td th:text="${client.lastName}"></td>
+                  <td th:text="${client.email}"></td>
+                  <td th:text="${client.contactNumber}"></td>
+                  <td th:text="${client.user.createdDate}"></td>
+                  <td th:text="${client.user.modifiedDate}"></td>
+                  <td><button class="btn btn-primary">View Task</button></td>
+                </tr>
               </tbody>
+
             </table>
           </div>
         </div>
+
       </div>
 
     </div>
   </section>
-
 
 </body>
 </html>

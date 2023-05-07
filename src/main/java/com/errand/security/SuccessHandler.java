@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
-public class RoleBasedAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class SuccessHandler implements AuthenticationSuccessHandler {
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -31,4 +31,5 @@ public class RoleBasedAuthenticationSuccessHandler implements AuthenticationSucc
             redirectStrategy.sendRedirect(request, response, "/serviceProvider/dashboard");
         }
     }
+
 }

@@ -12,4 +12,5 @@ public interface UserService {
     void saveUserServiceProvider(BaseRegistrationDTO serviceProviderRegistrationDto);
 
     Users findByUsername(String username);
+
 }

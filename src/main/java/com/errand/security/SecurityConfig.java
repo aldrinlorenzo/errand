@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/")
                         .loginProcessingUrl("/login")
-                        .successHandler(new RoleBasedAuthenticationSuccessHandler())
+                        .successHandler(new SuccessHandler())
                         .failureUrl("/?error=true")
                         .permitAll()
                 )
@@ -51,4 +51,5 @@ public class SecurityConfig {
     public void configure(AuthenticationManagerBuilder builder) throws Exception{
         builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
+
 }

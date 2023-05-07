@@ -1,8 +1,6 @@
 package com.errand.services.impl;
 
 import com.errand.dto.BaseRegistrationDTO;
-import com.errand.dto.ClientRegistrationDto;
-import com.errand.dto.ServiceProviderRegistrationDto;
 import com.errand.models.Client;
 import com.errand.models.Role;
 import com.errand.models.ServiceProvider;
@@ -21,6 +19,7 @@ import java.util.Arrays;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private ClientRepository clientRepository;
@@ -39,7 +38,6 @@ public class UserServiceImpl implements UserService {
         this.serviceProviderRepository = serviceProviderRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
 
     @Override
     @Transactional
@@ -60,7 +58,6 @@ public class UserServiceImpl implements UserService {
         client.setContactNumber(registrationDto.getContactNumber());
         clientRepository.save(client);
     }
-
 
     @Override
     @Transactional
@@ -88,4 +85,5 @@ public class UserServiceImpl implements UserService {
     public Users findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
 }

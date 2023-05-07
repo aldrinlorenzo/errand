@@ -3,13 +3,13 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout}">
 <head>
-    <title>Admin Dashboard</title>
+    <title>Client Dashboard</title>
 </head>
 
 <body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
 
     <div layout:fragment="profile-name">
-        <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${user.username + ' (Administrator)'}"></span>
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${client.firstName + ' ' + client.lastName + ' (Client)'}"></span>
     </div>
 
     <section layout:fragment="sidebar-item" class="py-2">
@@ -17,33 +17,17 @@
         <hr class="sidebar-divider my-0">
 
         <li class="nav-item active">
-            <a class="nav-link" href="/admin/dashboard">
+            <a class="nav-link" href="/client/dashboard">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
 
         <hr class="sidebar-divider">
 
-        <div class="sidebar-heading">
-            Management
-        </div>
-
         <li class="nav-item">
-            <a class="nav-link" href="/admin/clients">
-                <i class="fas fa-fw fa-user-tie"></i>
-                <span>Clients</span></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="/admin/serviceProviders">
-                <i class="fas fa-fw fa-tools"></i>
-                <span>Service Providers</span></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="admin/tasks">
+            <a class="nav-link" href="/client/tasks">
                 <i class="fas fa-fw fa-briefcase"></i>
-                <span>Tasks</span></a>
+                <span>Task Requests</span></a>
         </li>
 
     </section>
