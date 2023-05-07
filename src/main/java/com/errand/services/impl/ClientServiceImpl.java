@@ -1,4 +1,43 @@
 package com.errand.services.impl;
 
-public class ClientServiceImpl {
+import com.errand.dto.ClientDto;
+import com.errand.models.Client;
+import com.errand.repository.ClientRepository;
+import com.errand.repository.UserRepository;
+import com.errand.services.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.errand.mapper.ClientMapper.mapToClientDto;
+
+@Service
+public class ClientServiceImpl implements ClientService {
+    private ClientRepository clientRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    public ClientServiceImpl(ClientRepository clientRepository, UserRepository userRepository) {
+        this.clientRepository = clientRepository;
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public Client findByFirstName(String firstName) {
+        return clientRepository.findByFirstName(firstName);
+    }
+
+    @Override
+    public Client findByLastName(String lastName) {
+        return clientRepository.findByLastName(lastName);
+    }
+
+    @Override
+    public List<ClientDto> findAllClients() {
+        List<Client> clients = clientRepository.findAll();
+        return clients.stream().map((client) -> mapToClientDto(client)).collect(Collectors.toList());
+    }
+
 }
