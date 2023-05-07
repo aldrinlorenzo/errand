@@ -33,7 +33,6 @@ public class AdminSeeder implements CommandLineRunner {
     @PersistenceContext
     private EntityManager entityManager;
 
-
     @Override
     @Transactional
     public void run(String... args) throws Exception {
@@ -45,22 +44,6 @@ public class AdminSeeder implements CommandLineRunner {
             adminUser.setRoles(Collections.singletonList(adminRole));
 
             userRepository.save(adminUser);
-
-            String sql = "INSERT INTO user_roles (user_id, role_id) VALUES (:userId, :roleId)";
-            Query query = entityManager.createNativeQuery(sql);
-
-            List<Users> users = userRepository.findAll();
-            if (!users.isEmpty()) {
-                Users user = users.get(0);
-                List<Role> roles = user.getRoles();
-                if (!roles.isEmpty()) {
-                    Role role = roles.get(0);
-                    query.setParameter("userId", user.getId());
-                    query.setParameter("roleId", role.getId());
-                    query.executeUpdate();
-                }
-            }
-
         }
     }
 }

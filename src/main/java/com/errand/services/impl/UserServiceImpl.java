@@ -1,5 +1,6 @@
 package com.errand.services.impl;
 
+import com.errand.dto.BaseRegistrationDTO;
 import com.errand.dto.ClientRegistrationDto;
 import com.errand.dto.ServiceProviderRegistrationDto;
 import com.errand.models.Client;
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void saveUserClient(ClientRegistrationDto registrationDto) {
+    public void saveUserClient(BaseRegistrationDTO registrationDto) {
         Users user = new Users();
         user.setUsername(registrationDto.getUsername());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
@@ -52,17 +53,18 @@ public class UserServiceImpl implements UserService {
 
         Client client = new Client();
         client.setUser(user);
-        client.setFirstName(registrationDto.getClient().getFirstName());
-        client.setLastName(registrationDto.getClient().getLastName());
-        client.setEmail(registrationDto.getClient().getEmail());
-        client.setContactNumber(registrationDto.getClient().getContactNumber());
+        client.setId(user.getId());
+        client.setFirstName(registrationDto.getFirstName());
+        client.setLastName(registrationDto.getLastName());
+        client.setEmail(registrationDto.getEmail());
+        client.setContactNumber(registrationDto.getContactNumber());
         clientRepository.save(client);
     }
 
 
     @Override
     @Transactional
-    public void saveUserServiceProvider(ServiceProviderRegistrationDto registrationDto) {
+    public void saveUserServiceProvider(BaseRegistrationDTO registrationDto) {
         Users user = new Users();
         user.setUsername(registrationDto.getUsername());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
@@ -72,10 +74,12 @@ public class UserServiceImpl implements UserService {
 
         ServiceProvider serviceProvider = new ServiceProvider();
         serviceProvider.setUser(user);
-        serviceProvider.setFirstName(registrationDto.getServiceProvider().getFirstName());
-        serviceProvider.setLastName(registrationDto.getServiceProvider().getLastName());
-        serviceProvider.setEmail(registrationDto.getServiceProvider().getEmail());
-        serviceProvider.setContactNumber(registrationDto.getServiceProvider().getContactNumber());
+        serviceProvider.setId(user.getId());
+        serviceProvider.setFirstName(registrationDto.getFirstName());
+        serviceProvider.setLastName(registrationDto.getLastName());
+        serviceProvider.setEmail(registrationDto.getEmail());
+        serviceProvider.setContactNumber(registrationDto.getContactNumber());
+        serviceProvider.setBusinessName(registrationDto.getBusinessName());
         serviceProviderRepository.save(serviceProvider);
     }
 
