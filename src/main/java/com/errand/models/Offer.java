@@ -3,7 +3,6 @@ package com.errand.models;
 import lombok.*;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Getter
 @Setter

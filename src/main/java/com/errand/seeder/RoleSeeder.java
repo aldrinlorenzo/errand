@@ -29,4 +29,5 @@ public class RoleSeeder implements CommandLineRunner {
             roleRepository.save(serviceProviderRole);
         }
     }
+
 }
