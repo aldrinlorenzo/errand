@@ -24,11 +24,11 @@ public class RoleBasedAuthenticationSuccessHandler implements AuthenticationSucc
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
         if (authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-            redirectStrategy.sendRedirect(request, response, "/admin/clients");
+            redirectStrategy.sendRedirect(request, response, "/admin/dashboard");
         } else if (authorities.contains(new SimpleGrantedAuthority("CLIENT"))){
-            redirectStrategy.sendRedirect(request, response, "/tasks");
+            redirectStrategy.sendRedirect(request, response, "/client/dashboard");
         } else if(authorities.contains(new SimpleGrantedAuthority("SERVICE_PROVIDER"))){
-            redirectStrategy.sendRedirect(request, response, "/tasks/new");
+            redirectStrategy.sendRedirect(request, response, "/serviceProvider/dashboard");
         }
     }
 }
