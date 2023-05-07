@@ -55,7 +55,7 @@ public class AuthController {
             return "register";
         }
         userservice.saveUserClient(user);
-        return "redirect:/tasks?success";
+        return "redirect:/?success=true";
     }
 
     @PostMapping("/register/save/serviceprovider")
@@ -72,7 +72,7 @@ public class AuthController {
             return "register-serviceprovider";
         }
         userservice.saveUserServiceProvider(user);
-        return "redirect:/tasks?success";
+        return "redirect:/?success=true";
     }
 
 }
