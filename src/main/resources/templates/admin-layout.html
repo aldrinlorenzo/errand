@@ -4,7 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org"
 >
-<!--layout:decorate="~{layout}"-->
 
 <head>
     <meta charset="utf-8">
@@ -47,19 +46,7 @@
             </div>
         </a>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
-        </li>
-
-
-
-
+        <body layout:fragment="sidebar-item"></body>
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
@@ -230,7 +217,5 @@
 <!-- Page level custom scripts -->
 <script src="/js/demo/chart-area-demo.js"></script>
 <script src="/js/demo/chart-pie-demo.js"></script>
-
-
 
 </html>
