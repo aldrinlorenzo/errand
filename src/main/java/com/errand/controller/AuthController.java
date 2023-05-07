@@ -1,8 +1,6 @@
 package com.errand.controller;
 
 import com.errand.dto.BaseRegistrationDTO;
-import com.errand.dto.ClientRegistrationDto;
-import com.errand.dto.ServiceProviderRegistrationDto;
 import com.errand.models.Users;
 import com.errand.services.UserService;
 import org.springframework.stereotype.Controller;

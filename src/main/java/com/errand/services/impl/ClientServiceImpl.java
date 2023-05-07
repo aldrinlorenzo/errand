@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.errand.mapper.ClientMapper.mapToClientDto;
 
 @Service
 public class ClientServiceImpl implements ClientService {
+
     private ClientRepository clientRepository;
     private UserRepository userRepository;
 
@@ -22,6 +24,11 @@ public class ClientServiceImpl implements ClientService {
     public ClientServiceImpl(ClientRepository clientRepository, UserRepository userRepository) {
         this.clientRepository = clientRepository;
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public Optional<Client> findById(Long id) {
+        return clientRepository.findById(id);
     }
 
     @Override

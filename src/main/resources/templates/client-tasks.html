@@ -1,0 +1,45 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <title>Client Tasks</title>
+</head>
+
+<body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<div layout:fragment="profile-name">
+    <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${client.firstName + ' ' + client.lastName + ' (Client)'}"></span>
+</div>
+
+<section layout:fragment="sidebar-item" class="py-2">
+
+    <hr class="sidebar-divider my-0">
+
+    <li class="nav-item">
+        <a class="nav-link" href="/client/dashboard">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <li class="nav-item active">
+        <a class="nav-link" href="/client/tasks">
+            <i class="fas fa-fw fa-briefcase"></i>
+            <span>Task Requests</span></a>
+    </li>
+
+</section>
+
+<!-- Page Content-->
+<section layout:fragment="body" class="px-3 py-1">
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
+        Create New Task
+    </button>
+
+</section>
+
+</body>
+</html>
