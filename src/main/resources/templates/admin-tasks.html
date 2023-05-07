@@ -3,7 +3,7 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{admin-layout}">
 <head>
-  <title>Clients Management</title>
+  <title>Tasks Management</title>
 </head>
 <body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
 
@@ -23,7 +23,7 @@
       Management
     </div>
 
-    <li class="nav-item active">
+    <li  class="nav-item">
       <a class="nav-link" href="/admin/clients">
         <i class="fas fa-fw fa-user-tie"></i>
         <span>Clients</span></a>
@@ -35,7 +35,7 @@
         <span>Service Providers</span></a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item active">
       <a class="nav-link" href="/admin/tasks">
         <i class="fas fa-fw fa-briefcase"></i>
         <span>Tasks</span></a>
@@ -49,35 +49,34 @@
 
       <div class="card shadow mb-4">
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Client Management</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Tasks Management</h6>
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered" id="dataTable" STYLE="width='100%'; cellspacing='0'" >
               <thead>
               <tr>
-                <th>Client ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Contact Number</th>
-                <th>Date Created</th>
-                <th>Date Modified</th>
+                <th>Task ID</th>
+                <th>Title</th>
+                <th>Descriptions</th>
+                <th>Budget</th>
+                <th>Created Date</th>
+                <th>Target Date</th>
+                <th>Status</th>
                 <th>Action</th>
               </tr>
               </thead>
-              <tbody th:each="client :${clients}">
+              <tbody th:each="task :${tasks}">
               <tr>
-                <td th:text="${client.id}"></td>
-                <td th:text="${client.firstName}"></td>
-                <td th:text="${client.lastName}"></td>
-                <td th:text="${client.email}"></td>
-                <td th:text="${client.contactNumber}"></td>
-                <td th:text="${client.user.createdDate}"></td>
-                <td th:text="${client.user.modifiedDate}"></td>
-                <td><button class="btn btn-primary">View Task</button></td>
+                <td th:text="${task.id}"></td>
+                <td th:text="${task.title}"></td>
+                <td th:text="${task.description}"></td>
+                <td th:text="${task.budget}"></td>
+                <td th:text="${task.createdDate}"></td>
+                <td th:text="${task.TargetDate}"></td>
+                <td th:text="${task.Status}"></td>
+                <td><a class="btn btn-primary">View Task</a></td>
               </tr>
-
               </tbody>
             </table>
           </div>
@@ -86,7 +85,5 @@
 
     </div>
   </section>
-
-
 </body>
 </html>
