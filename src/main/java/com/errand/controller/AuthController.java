@@ -46,11 +46,11 @@ public class AuthController {
 
         Users existingUserUsername = userservice.findByUsername(user.getUsername());
         if(existingUserUsername != null && existingUserUsername.getUsername() != null && !existingUserUsername.getUsername().isEmpty()){
-            return "redirect:/register?fail";
+            return "redirect:/register/client?fail";
         }
         if(result.hasErrors()){
             model.addAttribute("user",user);
-            return "register";
+            return "register/client";
         }
         userservice.saveUserClient(user);
         return "redirect:/?success=true";
@@ -63,11 +63,11 @@ public class AuthController {
 
         Users existingUserUsername = userservice.findByUsername(user.getUsername());
         if(existingUserUsername != null && existingUserUsername.getUsername() != null && !existingUserUsername.getUsername().isEmpty()){
-            return "redirect:/register?fail";
+            return "redirect:/register/serviceprovider?fail";
         }
         if(result.hasErrors()){
             model.addAttribute("user",user);
-            return "register-serviceprovider";
+            return "register/serviceprovider";
         }
         userservice.saveUserServiceProvider(user);
         return "redirect:/?success=true";
