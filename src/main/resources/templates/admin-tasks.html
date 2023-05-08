@@ -66,6 +66,8 @@
                 <th>Budget</th>
                 <th>Created Date</th>
                 <th>Target Date</th>
+                <th>Location</th>
+                <th>Created By</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -77,7 +79,9 @@
                 <td th:text="${task.description}"></td>
                 <td th:text="${task.budget}"></td>
                 <td th:text="${task.createdDate}"></td>
-                <td th:text="${task.TargetDate}"></td>
+                <td th:text="${task.targetDate}"></td>
+                <td th:text="${task.street+', '+task.city+', '+task.postalCode}"></td>
+                <td th:text="${task.createdby}"></td>
                 <td th:text="${task.Status}"></td>
                 <td><a class="btn btn-primary">View Task</a></td>
               </tr>
