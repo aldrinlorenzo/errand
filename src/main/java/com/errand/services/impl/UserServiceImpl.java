@@ -15,29 +15,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.Null;
 import java.util.Arrays;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
     private RoleRepository roleRepository;
+    @Autowired
     private ClientRepository clientRepository;
+    @Autowired
     private ServiceProviderRepository serviceProviderRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository,
-                           RoleRepository roleRepository,
-                           ClientRepository clientRepository,
-                           ServiceProviderRepository serviceProviderRepository,
-                           PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.clientRepository = clientRepository;
-        this.serviceProviderRepository = serviceProviderRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     @Transactional
@@ -83,7 +77,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Users findByUsername(String username) {
-        return userRepository.findByUsername(username);
+
+        return userRepository.findFirstByUsername(username);
+
     }
 
 }
