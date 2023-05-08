@@ -1,5 +1,8 @@
 package com.errand.security;
 
+import com.errand.repository.UserRepository;
+import com.errand.services.UserService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,9 +20,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
     private CustomUserDetailsService userDetailsService;
 
+    private UserService userService;
+
     @Autowired
-    public SecurityConfig(CustomUserDetailsService userDetailsService) {
+    public SecurityConfig(CustomUserDetailsService userDetailsService , UserService userService) {
         this.userDetailsService = userDetailsService;
+        this.userService = userService;
     }
 
     @Bean
@@ -37,7 +43,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/")
                         .loginProcessingUrl("/login")
-                        .successHandler(new SuccessHandler())
+                        .successHandler(new SuccessHandler(userService))
                         .failureUrl("/?error=true")
                         .permitAll()
                 )

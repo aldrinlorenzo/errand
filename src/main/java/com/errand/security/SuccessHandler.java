@@ -1,5 +1,8 @@
 package com.errand.security;
 
+import com.errand.repository.UserRepository;
+import com.errand.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,21 +17,32 @@ import java.util.Collection;
 
 public class SuccessHandler implements AuthenticationSuccessHandler {
 
+    @Autowired
+    private   UserService userService;
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
+    SuccessHandler(UserService userService){
+        this.userService = userService;
+    }
+
+
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException {
 
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        Collection<? extends GrantedAuthority> authoritiesRole = authentication.getAuthorities();
+        String authoritiesName = authentication.getName();
 
-        if (authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
+
+        if (authoritiesRole.contains(new SimpleGrantedAuthority("ADMIN"))) {
             redirectStrategy.sendRedirect(request, response, "/admin/dashboard");
-        } else if (authorities.contains(new SimpleGrantedAuthority("CLIENT"))){
+        } else if (authoritiesRole.contains(new SimpleGrantedAuthority("CLIENT"))){
             redirectStrategy.sendRedirect(request, response, "/client/dashboard");
-        } else if(authorities.contains(new SimpleGrantedAuthority("SERVICE_PROVIDER"))){
-            redirectStrategy.sendRedirect(request, response, "/serviceProvider/dashboard");
+        } else if(authoritiesRole.contains(new SimpleGrantedAuthority("SERVICE_PROVIDER"))){
+           Long serviceProviderId =  userService.findByUsername(authoritiesName).getId();
+            redirectStrategy.sendRedirect(request, response, "/serviceProvider/" + serviceProviderId + "/dashboard");
         }
     }
 

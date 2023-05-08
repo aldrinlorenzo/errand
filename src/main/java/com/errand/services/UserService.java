@@ -4,7 +4,9 @@ import com.errand.dto.BaseRegistrationDTO;
 import com.errand.dto.ClientRegistrationDto;
 import com.errand.dto.ServiceProviderRegistrationDto;
 import com.errand.models.Users;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface UserService {
 
     void saveUserClient(BaseRegistrationDTO clientRegistrationDto);
