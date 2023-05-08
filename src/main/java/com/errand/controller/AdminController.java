@@ -62,8 +62,16 @@ public class AdminController {
 
     @GetMapping("/tasks")
     public String getAllTasks(Model model){
+
+        Users user;
         List<TaskDto> tasks = taskService.findAllTask();
-        model.addAttribute("tasks", tasks);
+        String username = SecurityUtil.getSessionUser();
+        if(username != null){
+            user = userService.findByUsername(username);
+            model.addAttribute("user", user);
+            model.addAttribute("tasks", tasks);
+        }
+
         return "admin-tasks";
     }
 
