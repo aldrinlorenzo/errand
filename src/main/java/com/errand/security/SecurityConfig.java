@@ -39,6 +39,10 @@ public class SecurityConfig {
                 .authorizeRequests()
                     .antMatchers("/login", "/register/client", "/register/serviceprovider", "/css/**", "/js/**", "/vendor/**")
                     .permitAll()
+                    .antMatchers("/admin/**")
+                    .hasAuthority("ADMIN")
+                    .antMatchers("/client/**")
+                    .hasAuthority("CLIENT")
                 .and()
                 .formLogin(form -> form
                         .loginPage("/")
