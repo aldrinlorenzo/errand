@@ -50,6 +50,8 @@ public class TaskSeeder implements CommandLineRunner {
             taskByClient.setStreet("41 Block 17");
             taskByClient.setTitle("Fix PC Urgent");
 
+            taskRepository.save(taskByClient);
+
             //task created by client2 LastName Rizal
             Task taskByClient2 = new Task();
 
@@ -59,13 +61,43 @@ public class TaskSeeder implements CommandLineRunner {
             taskByClient2.setCity("Makati");
             taskByClient2.setDescription("Plumbing");
             taskByClient2.setPostalCode(new BigDecimal(123));
-            taskByClient2.setStatus("PENDING");
+            taskByClient2.setStatus("ONGOING");
             taskByClient2.setStreet("434 Block 234");
             taskByClient2.setTitle("Fix Plumbing");
-            
-            taskRepository.save(taskByClient);
 
             taskRepository.save(taskByClient2);
+
+            //task created by client2 LastName Rizal
+            Task taskByClient3 = new Task();
+
+            taskByClient3.setClient(clientRepository.findByLastName("Rizal"));
+
+            taskByClient3.setBudget(new BigDecimal(1000));
+            taskByClient3.setCity("Pasig");
+            taskByClient3.setDescription("Cooking");
+            taskByClient3.setPostalCode(new BigDecimal(123));
+            taskByClient3.setStatus("COMPLETED");
+            taskByClient3.setStreet("434 Block 234");
+            taskByClient3.setTitle("Help me cook");
+
+            taskRepository.save(taskByClient3);
+
+            //task created by client2 LastName Rizal
+            Task taskByClient4 = new Task();
+
+            taskByClient4.setClient(clientRepository.findByLastName("Rizal"));
+
+            taskByClient4.setBudget(new BigDecimal(1000));
+            taskByClient4.setCity("Pasig");
+            taskByClient4.setDescription("Fix Laptop");
+            taskByClient4.setPostalCode(new BigDecimal(123));
+            taskByClient4.setStatus("CANCELLED");
+            taskByClient4.setStreet("434 Block 234");
+            taskByClient4.setTitle("Help me cook");
+
+            taskRepository.save(taskByClient4);
+
+
 
             }
         }

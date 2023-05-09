@@ -53,6 +53,29 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<TaskDto> getOngoingTask() {
+        List<Task> ongoingTasks = taskRepository.searchTasksByStatus("ONGOING");
+        return ongoingTasks.stream().map((tasks) ->
+                        taskMapper.mapToTaskDto(tasks))
+                .collect(Collectors.toList());
+    }
+
+    public List<TaskDto> getCompletedTask() {
+        List<Task> completedTasks = taskRepository.searchTasksByStatus("COMPLETED");
+        return completedTasks.stream().map((tasks) ->
+                        taskMapper.mapToTaskDto(tasks))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDto> getCancelledTask() {
+        List<Task> cancelledTasks = taskRepository.searchTasksByStatus("CANCELLED");
+        return cancelledTasks.stream().map((tasks) ->
+                        taskMapper.mapToTaskDto(tasks))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Task saveTask(TaskDto taskDto){
         String username = SecurityUtil.getSessionUser();
         Users user = userRepository.findByUsername(username);

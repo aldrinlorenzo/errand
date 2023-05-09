@@ -1,6 +1,7 @@
 package com.errand.controller;
 
 import com.errand.dto.ClientDto;
+import com.errand.dto.PendingTaskDto;
 import com.errand.dto.ServiceProviderForDisplayDto;
 import com.errand.dto.TaskDto;
 import com.errand.models.Task;
@@ -54,11 +55,42 @@ public class AdminController {
 
     @GetMapping("/tasks")
     public String getAllTasks(Model model){
-
         List<TaskDto> tasks = taskService.findAllTask();
         model.addAttribute("user", userService.getCurrentUser());
         model.addAttribute("tasks", tasks);
 
+        return "admin-tasks";
+    }
+
+    @GetMapping("/tasks/pending-tasks")
+    public String getPendingTasks(Model model){
+        List<PendingTaskDto> tasks = taskService.getPendingTask();
+        model.addAttribute("user", userService.getCurrentUser());
+        model.addAttribute("tasks", tasks);
+        return "admin-tasks";
+    }
+
+    @GetMapping("/tasks/ongoing-tasks")
+    public String getOngoingTasks(Model model){
+        List<TaskDto> tasks = taskService.getOngoingTask();
+        model.addAttribute("user", userService.getCurrentUser());
+        model.addAttribute("tasks", tasks);
+        return "admin-tasks";
+    }
+
+    @GetMapping("/tasks/completed-tasks")
+    public String getCompletedTasks(Model model){
+        List<TaskDto> tasks = taskService.getCompletedTask();
+        model.addAttribute("user", userService.getCurrentUser());
+        model.addAttribute("tasks", tasks);
+        return "admin-tasks";
+    }
+
+    @GetMapping("/tasks/cancelled-tasks")
+    public String getCancelledTasks(Model model){
+        List<TaskDto> tasks = taskService.getCancelledTask();
+        model.addAttribute("user", userService.getCurrentUser());
+        model.addAttribute("tasks", tasks);
         return "admin-tasks";
     }
 

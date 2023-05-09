@@ -64,12 +64,15 @@ public class TaskMapper {
 
     public PendingTaskDto mapToPendingTaskDto(Task task) {
         return PendingTaskDto.builder()
+                .id(task.getId())
                 .title(task.getTitle())
                 .description(task.getDescription())
                 .budget(task.getBudget())
                 .street(task.getStreet())
                 .city(task.getCity())
                 .postalCode(task.getPostalCode())
+                .createdBy(task.getClient().getUser().getUsername())
+                .status(task.getStatus())
                 .targetDate(task.getTargetDate())
                 .createdDate(task.getCreatedDate())
                 .targetDate(task.getTargetDate())

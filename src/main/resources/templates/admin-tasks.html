@@ -57,6 +57,11 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
+            <a class="btn btn-primary" th:href="@{/admin/tasks}">View All Tasks</a>
+            <a class="btn btn-warning" th:href="@{/admin/tasks/pending-tasks}">View Pending Tasks</a>
+            <a class="btn btn-success" th:href="@{/admin/tasks/ongoing-tasks}">View Ongoing Tasks</a>
+            <a class="btn btn-dark" th:href="@{/admin/tasks/completed-tasks}">View Completed Tasks</a>
+            <a class="btn btn-danger" th:href="@{/admin/tasks/cancelled-tasks}">View Cancelled Tasks</a>
             <table class="table table-bordered" id="dataTable" STYLE="width='100%'; cellspacing='0'" >
               <thead>
               <tr>
@@ -69,7 +74,6 @@
                 <th>Location</th>
                 <th>Created By</th>
                 <th>Status</th>
-                <th>Action</th>
               </tr>
               </thead>
               <tbody th:each="task :${tasks}">
@@ -83,7 +87,7 @@
                 <td th:text="${task.street+', '+task.city+', '+task.postalCode}"></td>
                 <td th:text="${task.createdBy}"></td>
                 <td th:text="${task.Status}"></td>
-                <td><a class="btn btn-primary">View Task</a></td>
+
               </tr>
               </tbody>
             </table>
