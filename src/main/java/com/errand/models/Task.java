@@ -35,7 +35,7 @@ public class Task {
 
     private String city;
 
-    private int postalCode;
+    private BigDecimal postalCode;
 
     private String status;
 

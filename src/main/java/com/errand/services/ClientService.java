@@ -16,4 +16,6 @@ public interface ClientService {
 
     List<ClientDto> findAllClients();
 
+    Client getCurrentClient();
+
 }

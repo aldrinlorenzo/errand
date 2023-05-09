@@ -8,4 +8,5 @@ public interface RatingRepository extends JpaRepository<Rating,Long> {
     Rating findByClientRating(float clientRating);
 
     Rating findByServiceProviderRating(float serviceProviderRating);
+
 }
