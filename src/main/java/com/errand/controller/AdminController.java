@@ -37,7 +37,19 @@ public class AdminController {
 
     @GetMapping("/dashboard")
     public String getAdminDashboard(Model model){
+        int clientCount = clientService.findAllClients().size();
+        int serviceProviderCount = serviceProviderService.getAllServiceProvider().size();
+        int pendingTaskCount = taskService.getPendingTask().size();
+        int completedTaskCount = taskService.getCompletedTask().size();
+        int cancelledTaskCount = taskService.getCancelledTask().size();
+
         model.addAttribute("user", userService.getCurrentUser());
+        model.addAttribute("clientCount", clientCount);
+        model.addAttribute("serviceProviderCount", serviceProviderCount);
+        model.addAttribute("pendingTaskCount", pendingTaskCount);
+        model.addAttribute("completedTaskCount", completedTaskCount);
+        model.addAttribute("cancelledTaskCount", cancelledTaskCount);
+
         return "admin-dashboard";
     }
 
@@ -74,22 +86,6 @@ public class AdminController {
         model.addAttribute("user", user);
         model.addAttribute("serviceProviders", serviceProviders);
         return "admin-serviceproviders";
-    }
-
-    @GetMapping("/reports")
-    public String getAllReports(Model model) {
-        int clientCount = clientService.findAllClients().size();
-        int serviceProviderCount = serviceProviderService.getAllServiceProvider().size();
-        int pendingTaskCount = taskService.getPendingTask().size();
-        int completedTaskCount = taskService.getCompletedTask().size();
-        int cancelledTaskCount = taskService.getCancelledTask().size();
-
-        model.addAttribute("clientCount", clientCount);
-        model.addAttribute("serviceProviderCount", serviceProviderCount);
-        model.addAttribute("pendingTaskCount", pendingTaskCount);
-        model.addAttribute("completedTaskCount", completedTaskCount);
-        model.addAttribute("cancelledTaskCount", cancelledTaskCount);
-        return "admin-reports";
     }
 
 }
