@@ -90,4 +90,20 @@ public class AdminController {
         return "admin-serviceproviders";
     }
 
+    @GetMapping("/reports")
+    public String getAllReports(Model model) {
+        int clientCount = clientService.findAllClients().size();
+        int serviceProviderCount = serviceProviderService.getAllServiceProvider().size();
+        int pendingTaskCount = taskService.getPendingTask().size();
+        int completedTaskCount = taskService.getCompletedTask().size();
+        int cancelledTaskCount = taskService.getCancelledTask().size();
+
+        model.addAttribute("clientCount", clientCount);
+        model.addAttribute("serviceProviderCount", serviceProviderCount);
+        model.addAttribute("pendingTaskCount", pendingTaskCount);
+        model.addAttribute("completedTaskCount", completedTaskCount);
+        model.addAttribute("cancelledTaskCount", cancelledTaskCount);
+        return "admin-reports";
+    }
+
 }
