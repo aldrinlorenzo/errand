@@ -44,6 +44,15 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskDto> getCompletedTask() {
         List<Task> completedTasks = taskRepository.searchTasksByStatus("COMPLETED");
 
-        return completedTasks.stream().map((task) -> mapToTaskDto(task)).collect(Collectors.toList());
+        return completedTasks.stream().map(TaskMapper::mapToTaskDto).collect(Collectors.toList());
     }
+
+    @Override
+    public List<PendingTaskDto> getCancelledTask() {
+        List<Task> cancelledTasks = taskRepository.searchTasksByStatus("CANCELLED");
+
+        return cancelledTasks.stream().map(taskMapper::toPendingTaskDto).collect(Collectors.toList());
+    }
+
+
 }
