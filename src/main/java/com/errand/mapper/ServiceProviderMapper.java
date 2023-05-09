@@ -18,6 +18,16 @@ public class ServiceProviderMapper {
                 .build();
     }
 
+    public ServiceProvider toServiceProvider(ServiceProviderForUpdateDto serviceProviderForUpdateDto) {
+        return ServiceProvider.builder()
+                .firstName(serviceProviderForUpdateDto.getFirstName())
+                .lastName(serviceProviderForUpdateDto.getLastName())
+                .email(serviceProviderForUpdateDto.getEmail())
+                .contactNumber(serviceProviderForUpdateDto.getContactNumber())
+                .businessName(serviceProviderForUpdateDto.getBusinessName())
+                .build();
+    }
+
     public ServiceProviderForDisplayDto toServiceProviderForDisplayDto(ServiceProvider serviceProvider){
         return ServiceProviderForDisplayDto.builder()
                 .id(serviceProvider.getId())

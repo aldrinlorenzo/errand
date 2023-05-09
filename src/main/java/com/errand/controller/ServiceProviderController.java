@@ -3,6 +3,7 @@ package com.errand.controller;
 import com.errand.dto.PendingTaskDto;
 import com.errand.dto.ServiceProviderForDisplayDto;
 import com.errand.dto.ServiceProviderForUpdateDto;
+import com.errand.dto.TaskDto;
 import com.errand.services.ServiceProviderService;
 import com.errand.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,21 +32,29 @@ public class ServiceProviderController {
     @GetMapping("/{serviceProviderId}/dashboard")
     public String getServiceProviderDetails(@PathVariable Long serviceProviderId, Model model) {
 
-        // Get service provider by ID
-        ServiceProviderForUpdateDto serviceProviderDto = serviceProviderService.getServiceProviderById(serviceProviderId).orElseThrow(() -> new IllegalArgumentException("Invalid service provider ID: " + serviceProviderId));
-        model.addAttribute("serviceProvider", serviceProviderDto);
-
-        // Get pending tasks for service provider
-        List<PendingTaskDto> pendingTasks = taskService.getPendingTask();
-        model.addAttribute("pendingTasks", pendingTasks);
-
-        return "serviceProviderDetails";
+        ServiceProviderForDisplayDto serviceProviderForDisplayDto = serviceProviderService.getCurrentServiceProvider();
+        model.addAttribute("serviceProvider", serviceProviderForDisplayDto );
+        return "serviceprovider-dashboard";
     }
-//    @GetMapping("/{serviceProviderId}/dashboard/findAll")
-//    public ResponseEntity<List<ServiceProviderForDisplayDto>> findAll() {
-//        List<ServiceProviderForDisplayDto> serviceProviders = serviceProviderService.getAllServiceProvider();
-//        return ResponseEntity.ok(serviceProviders);
-//    }
+    @GetMapping("/{serviceProviderId}/profile")
+    public String  createUpdateProfileForm(@PathVariable Long serviceProviderId, Model model) {
+        ServiceProviderForDisplayDto serviceProviderForDisplayDto = serviceProviderService.getCurrentServiceProvider();
+        serviceProviderId = serviceProviderForDisplayDto.getId();
+        model.addAttribute("serviceProvider",serviceProviderForDisplayDto );
+        return "serviceprovider-profile-edit";
+
+    }
+    @PostMapping("/{serviceProviderId}/profile/save")
+    public String  updateServiceProviderDetails(@PathVariable Long serviceProviderId, @ModelAttribute("serviceProvider") ServiceProviderForUpdateDto serviceProviderDto, Model model) {
+        boolean isUpdated = serviceProviderService.updateServiceProviderDetails(serviceProviderDto,serviceProviderId);
+
+        if (isUpdated) {
+            model.addAttribute("serviceProvider", serviceProviderDto);
+            model.addAttribute("serviceProviderId", serviceProviderId);
+            return "serviceprovider-dashboard";
+        }
+        return "serviceprovider-dashboard";
+    }
 
 }
 
