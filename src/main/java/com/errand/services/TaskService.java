@@ -15,9 +15,9 @@ public interface TaskService {
 
     List<TaskDto> getOngoingTask();
 
-    List<TaskDto> getCompletedTask();
+    List<TaskDto> getCompletedTaskOnAdmin();
 
-    List<TaskDto> getCancelledTask();
+    List<TaskDto> getCancelledTaskOnAdmin();
 
     List<TaskDto> getCompletedTask();
 
