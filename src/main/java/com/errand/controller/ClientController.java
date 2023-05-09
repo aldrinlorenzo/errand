@@ -6,6 +6,7 @@ import com.errand.models.Task;
 import com.errand.models.Users;
 import com.errand.security.SecurityUtil;
 import com.errand.services.ClientService;
+import com.errand.services.LabelService;
 import com.errand.services.TaskService;
 import com.errand.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,15 @@ public class ClientController {
     private UserService userService;
     private ClientService clientService;
     private TaskService taskService;
+    private LabelService labelService;
+
 
     @Autowired
-    public ClientController(UserService userService, ClientService clientService, TaskService taskService) {
+    public ClientController(UserService userService, ClientService clientService, TaskService taskService, LabelService labelService) {
         this.userService = userService;
         this.clientService = clientService;
         this.taskService = taskService;
+        this.labelService = labelService;
     }
 
     @GetMapping("/dashboard")
@@ -50,6 +54,7 @@ public class ClientController {
     @GetMapping("/tasks/new")
     public String createTaskForm(Model model){
         Task task = new Task();
+        model.addAttribute("taskLabels", labelService.findAllTasks());
         model.addAttribute("client", clientService.getCurrentClient());
         model.addAttribute("task", task);
         return "client-tasks-create";

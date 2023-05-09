@@ -69,6 +69,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   transform: scale(1.05); /* scale up the card slightly on hover */
 }
 
+<<<<<<< Updated upstream
 /* Style the select element */
 .label-select {
   display: block;
@@ -101,6 +102,8 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   background-color: #4e73df;
 }
 
+=======
+>>>>>>> Stashed changes
 /*End of Custom css created for Errand only*/
 
 body {
