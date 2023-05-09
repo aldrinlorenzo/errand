@@ -5,7 +5,8 @@ import com.errand.dto.TaskDto;
 import com.errand.models.Task;
 import org.springframework.stereotype.Component;
 
-import java.text.DateFormat;
+import java.time.LocalDate;
+
 import java.time.format.DateTimeFormatter;
 
 @Component
@@ -22,7 +23,7 @@ public class TaskMapper {
                 .postalCode(task.getPostalCode())
                 .status(task.getStatus())
                 .offerId(task.getOfferId())
-                .targetDate(task.getTargetDate())
+                .targetDate(LocalDate.parse(task.getTargetDate()))
                 .completedDate(task.getCompletedDate())
                 .createdDate(task.getCreatedDate())
                 .modifiedDate(task.getModifiedDate())
@@ -42,7 +43,7 @@ public class TaskMapper {
                 .createdBy(task.getClient().getUser().getUsername())
                 .status(task.getStatus())
                 .offerId(task.getOfferId())
-                .targetDate(task.getTargetDate())
+                .targetDate(task.getTargetDate().format(DateTimeFormatter.ISO_DATE))
                 .completedDate(task.getCompletedDate())
                 .createdDate(task.getCreatedDate())
                 .modifiedDate(task.getModifiedDate())

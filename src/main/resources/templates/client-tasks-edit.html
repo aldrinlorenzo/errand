@@ -1,0 +1,171 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <title>Edit Task</title>
+</head>
+
+<body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<div layout:fragment="profile-name">
+    <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${client.firstName + ' ' + client.lastName + ' (Client)'}"></span>
+</div>
+
+<section layout:fragment="sidebar-item" class="py-2">
+
+    <hr class="sidebar-divider my-0">
+
+    <li class="nav-item">
+        <a class="nav-link" href="/client/dashboard">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <div class="sidebar-heading">
+        Tasks
+    </div>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/client/tasks/new">
+            <i class="fas fa-fw fa-briefcase"></i>
+            <span>New Request</span></a>
+    </li>
+
+    <li class="nav-item active">
+        <a class="nav-link" href="/client/tasks">
+            <i class="fas fa-fw fa-briefcase"></i>
+            <span>Task List</span></a>
+    </li>
+
+</section>
+
+<!-- Page Content-->
+<section layout:fragment="body" class="px-3 py-1">
+
+    <div class="container">
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Edit Task Request</h6>
+            </div>
+            <div class="card-body">
+
+                <form role="form" method="post" th:action="@{/client/tasks/{taskId}/edit(taskId=${task.id})}"  th:object="${task}">
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{createdDate}">
+                    <input type="hidden" th:field="*{status}">
+                    <div class="form-group">
+                        <label for="title">Task Title</label>
+                        <input type="text"
+                               class="form-control"
+                               id="title"
+                               th:field="*{title}"
+                               required="required"
+                        >
+                        <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Task Description</label>
+                        <textarea
+                                class="form-control"
+                                id="description"
+                                rows="3"
+                                th:field="*{description}"
+                                required="required"
+                        >
+            </textarea>
+                        <p th:if="${#fields.hasErrors('description')}" class="text-danger" th:errors="*{description}"></p>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label for="budget">Budget</label>
+                            <input type="number"
+                                   class="form-control"
+                                   id="budget"
+                                   th:field="*{budget}"
+                                   required="required"
+                            >
+                            <p th:if="${#fields.hasErrors('budget')}" class="text-danger" th:errors="*{budget}"></p>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="targetDate">Target Date</label>
+                            <input type="date"
+                                   class="form-control"
+                                   id="targetDate"
+                                   th:field="*{targetDate}"
+
+                            >
+                            <p th:if="${#fields.hasErrors('targetDate')}" class="text-danger" th:errors="*{targetDate}"></p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col-sm-4 mb-3 mb-sm-0">
+                            <label for="street">Street</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="street"
+                                   th:field="*{street}"
+                                   required="required"
+                            >
+                            <p th:if="${#fields.hasErrors('street')}" class="text-danger" th:errors="*{street}"></p>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label for="city">City</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="city"
+                                   th:field="*{city}"
+                                   required="required"
+                            >
+                            <p th:if="${#fields.hasErrors('city')}" class="text-danger" th:errors="*{city}"></p>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label for="postalCode">Postal Code</label>
+                            <input type="number"
+                                   class="form-control"
+                                   id="postalCode"
+                                   th:field="*{postalCode}"
+                                   required="required"
+                            >
+                            <p th:if="${#fields.hasErrors('postalCode')}" class="text-danger" th:errors="*{postalCode}"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="label">Label</label>
+                        <select class="form-control label-select" id="label" name="label" th:field="*{labels}">
+                            <option value="" disabled selected>Select a label</option>
+                            <option value="1">Food</option>
+                            <option value="2">Software</option>
+                            <option value="3">Hardware</option>
+                        </select>
+                        <!--            <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>-->
+                    </div>
+
+
+                    <div class="d-flex justify-content-end">
+                        <button type="reset" class="btn btn-secondary mx-2">Clear</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

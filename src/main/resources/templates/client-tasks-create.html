@@ -54,7 +54,6 @@
       <div class="card-body">
 
         <form role="form" method="post" th:action="@{/client/tasks/new}" th:object="${task}">
-
           <div class="form-group">
             <label for="title">Task Title</label>
             <input type="text"
@@ -93,7 +92,7 @@
 
             <div class="col-sm-6">
               <label for="targetDate">Target Date</label>
-              <input type="datetime-local"
+              <input type="date"
                      class="form-control"
                      id="targetDate"
                      th:field="*{targetDate}"
@@ -138,6 +137,18 @@
               <p th:if="${#fields.hasErrors('postalCode')}" class="text-danger" th:errors="*{postalCode}"></p>
             </div>
           </div>
+
+          <div class="form-group">
+            <label for="label">Label</label>
+            <select class="form-control label-select" id="label" name="label" th:field="*{labels}">
+              <option value="" disabled selected>Select a label</option>
+              <option value="1">Food</option>
+              <option value="2">Software</option>
+              <option value="3">Hardware</option>
+            </select>
+<!--            <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>-->
+          </div>
+
 
           <div class="d-flex justify-content-end">
             <button type="reset" class="btn btn-secondary mx-2">Clear</button>
