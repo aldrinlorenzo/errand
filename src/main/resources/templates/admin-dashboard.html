@@ -58,16 +58,14 @@
                 <!-- Collapsable Card Example -->
                 <div class="card border-left-secondary shadow mt-4 mb-4">
                     <!-- Card Header - Accordion -->
-                    <a href="#cancelledTasksCard" class="d-block card-header py-3" data-toggle="collapse"
+                    <a href="#pendingTasksCard" class="d-block card-header py-3" data-toggle="collapse"
                        role="button" aria-expanded="true" aria-controls="collapseCardExample">
                         <h6 class="m-0 font-weight-bold text-primary">Pending Tasks</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show">
                         <div class="card-body">
-                            This is a collapsable card example using Bootstrap's built in collapse
-                            functionality. <strong>Click on the card header</strong> to see the card body
-                            collapse and expand!
+                            <h1 th:text="${pendingTaskCount}"></h1> Pending Tasks
                         </div>
                     </div>
                 </div>
@@ -78,16 +76,14 @@
                 <!-- Collapsable Card Example -->
                 <div class="card border-left-warning shadow mt-4 mb-4">
                     <!-- Card Header - Accordion -->
-                    <a href="#cancelledTasksCard" class="d-block card-header py-3" data-toggle="collapse"
+                    <a href="#ongoingTasksCard" class="d-block card-header py-3" data-toggle="collapse"
                        role="button" aria-expanded="true" aria-controls="collapseCardExample">
                         <h6 class="m-0 font-weight-bold text-primary">Ongoing Tasks</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show">
                         <div class="card-body">
-                            This is a collapsable card example using Bootstrap's built in collapse
-                            functionality. <strong>Click on the card header</strong> to see the card body
-                            collapse and expand!
+                            <h1 th:text="${ongoingTaskCount}"></h1> Ongoing Tasks
                         </div>
                     </div>
                 </div>
@@ -98,16 +94,14 @@
                 <!-- Collapsable Card Example -->
                 <div class="card border-left-success shadow mt-4 mb-4">
                     <!-- Card Header - Accordion -->
-                    <a href="#cancelledTasksCard" class="d-block card-header py-3" data-toggle="collapse"
+                    <a href="#completedTasksCard" class="d-block card-header py-3" data-toggle="collapse"
                        role="button" aria-expanded="true" aria-controls="collapseCardExample">
                         <h6 class="m-0 font-weight-bold text-primary">Completed Tasks</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show">
                         <div class="card-body">
-                            This is a collapsable card example using Bootstrap's built in collapse
-                            functionality. <strong>Click on the card header</strong> to see the card body
-                            collapse and expand!
+                            <h1 th:text="${completedTaskCount}"></h1> Completed Tasks
                         </div>
                     </div>
                 </div>
@@ -125,9 +119,7 @@
                     <!-- Card Content - Collapse -->
                     <div class="collapse show">
                         <div class="card-body">
-                            This is a collapsable card example using Bootstrap's built in collapse
-                            functionality. <strong>Click on the card header</strong> to see the card body
-                            collapse and expand!
+                            <h1 th:text="${cancelledTaskCount}"></h1> Cancelled Tasks
                         </div>
                     </div>
                 </div>
@@ -142,16 +134,14 @@
                 <!-- Collapsable Card Example -->
                 <div class="card border-left-secondary shadow mt-4 mb-4">
                     <!-- Card Header - Accordion -->
-                    <a href="#cancelledTasksCard" class="d-block card-header py-3" data-toggle="collapse"
+                    <a href="#clientCountCard" class="d-block card-header py-3" data-toggle="collapse"
                        role="button" aria-expanded="true" aria-controls="collapseCardExample">
                         <h6 class="m-0 font-weight-bold text-primary">Client Count</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show">
                         <div class="card-body">
-                            This is a collapsable card example using Bootstrap's built in collapse
-                            functionality. <strong>Click on the card header</strong> to see the card body
-                            collapse and expand!
+                            <h1 th:text="${clientCount}"></h1> Clients
                         </div>
                     </div>
                 </div>
@@ -162,16 +152,14 @@
                 <!-- Collapsable Card Example -->
                 <div class="card border-left-secondary shadow mt-4 mb-4">
                     <!-- Card Header - Accordion -->
-                    <a href="#cancelledTasksCard" class="d-block card-header py-3" data-toggle="collapse"
+                    <a href="#serviceProviderCountCard" class="d-block card-header py-3" data-toggle="collapse"
                        role="button" aria-expanded="true" aria-controls="collapseCardExample">
                         <h6 class="m-0 font-weight-bold text-primary">Service Provider Count</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse show">
                         <div class="card-body">
-                            This is a collapsable card example using Bootstrap's built in collapse
-                            functionality. <strong>Click on the card header</strong> to see the card body
-                            collapse and expand!
+                            <h1 th:text="${serviceProviderCount}"></h1> Service Providers
                         </div>
                     </div>
                 </div>
