@@ -41,6 +41,7 @@ public class AdminController {
         int clientCount = clientService.findAllClients().size();
         int serviceProviderCount = serviceProviderService.getAllServiceProvider().size();
         int pendingTaskCount = taskService.getPendingTask().size();
+        int ongoingTaskCount = taskService.getOngoingTask().size();
         int completedTaskCount = taskService.getCompletedTask().size();
         int cancelledTaskCount = taskService.getCancelledTask().size();
 
@@ -48,6 +49,7 @@ public class AdminController {
         model.addAttribute("clientCount", clientCount);
         model.addAttribute("serviceProviderCount", serviceProviderCount);
         model.addAttribute("pendingTaskCount", pendingTaskCount);
+        model.addAttribute("ongoingTaskCount", ongoingTaskCount);
         model.addAttribute("completedTaskCount", completedTaskCount);
         model.addAttribute("cancelledTaskCount", cancelledTaskCount);
 
