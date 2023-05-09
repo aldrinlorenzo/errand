@@ -50,7 +50,7 @@ public class AuthController {
         }
         if(result.hasErrors()){
             model.addAttribute("user",user);
-            return "register/client";
+            return "register-client";
         }
         userservice.saveUserClient(user);
         return "redirect:/?success=true";
@@ -67,7 +67,7 @@ public class AuthController {
         }
         if(result.hasErrors()){
             model.addAttribute("user",user);
-            return "register/serviceprovider";
+            return "register-serviceprovider";
         }
         userservice.saveUserServiceProvider(user);
         return "redirect:/?success=true";

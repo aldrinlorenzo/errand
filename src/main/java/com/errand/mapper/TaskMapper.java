@@ -7,8 +7,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TaskMapper {
-    public static TaskDto mapToTaskDto(Task task){
-        return TaskDto.builder()
+
+    public static Task mapToTask(TaskDto task){
+        Task taskDto = Task.builder()
                 .id(task.getId())
                 .title(task.getTitle())
                 .description(task.getDescription())
@@ -23,8 +24,44 @@ public class TaskMapper {
                 .createdDate(task.getCreatedDate())
                 .modifiedDate(task.getModifiedDate())
                 .build();
+        return taskDto;
     }
+
+    public static TaskDto mapToTaskDto(Task task){
+        TaskDto taskDto = TaskDto.builder()
+                .id(task.getId())
+                .title(task.getTitle())
+                .description(task.getDescription())
+                .budget(task.getBudget())
+                .street(task.getStreet())
+                .city(task.getCity())
+                .postalCode(task.getPostalCode())
+                .status(task.getStatus())
+                .offerId(task.getOfferId())
+                .targetDate(task.getTargetDate())
+                .completedDate(task.getCompletedDate())
+                .createdDate(task.getCreatedDate())
+                .modifiedDate(task.getModifiedDate())
+                .build();
+        return taskDto;
+    }
+
     public PendingTaskDto toPendingTaskDto(Task task) {
+        return PendingTaskDto.builder()
+                .title(task.getTitle())
+                .description(task.getDescription())
+                .budget(task.getBudget())
+                .street(task.getStreet())
+                .city(task.getCity())
+                .postalCode(task.getPostalCode())
+                .targetDate(task.getTargetDate())
+                .createdDate(task.getCreatedDate())
+                .targetDate(task.getTargetDate())
+                .createdDate(task.getCreatedDate())
+                .build();
+    }
+
+    public PendingTaskDto mapToPendingTaskDto(Task task) {
         return PendingTaskDto.builder()
                 .title(task.getTitle())
                 .description(task.getDescription())

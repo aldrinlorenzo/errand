@@ -18,16 +18,20 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/serviceProvider")
 public class ServiceProviderController {
-    @Autowired
+
     private TaskService taskService;
+    private ServiceProviderService serviceProviderService;
 
     @Autowired
-    private ServiceProviderService serviceProviderService;
+    public ServiceProviderController(TaskService taskService, ServiceProviderService serviceProviderService) {
+        this.taskService = taskService;
+        this.serviceProviderService = serviceProviderService;
+    }
 
     @GetMapping("/{serviceProviderId}/dashboard")
     public String getServiceProviderDetails(@PathVariable Long serviceProviderId, Model model) {
-        // Get service provider by ID
 
+        // Get service provider by ID
         ServiceProviderForUpdateDto serviceProviderDto = serviceProviderService.getServiceProviderById(serviceProviderId).orElseThrow(() -> new IllegalArgumentException("Invalid service provider ID: " + serviceProviderId));
         model.addAttribute("serviceProvider", serviceProviderDto);
 

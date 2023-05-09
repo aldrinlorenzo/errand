@@ -32,4 +32,5 @@ public class BaseRegistrationDTO {
     private LocalDateTime createdDate;
 
     private LocalDateTime modifiedDate;
+
 }
