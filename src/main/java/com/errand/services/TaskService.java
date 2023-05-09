@@ -18,4 +18,6 @@ public interface TaskService {
 
     Task saveTask(TaskDto taskDto);
 
+    List<TaskDto> findTaskByServiceProvider(Integer id);
+
 }

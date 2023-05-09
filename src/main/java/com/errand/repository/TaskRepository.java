@@ -22,4 +22,6 @@ public interface TaskRepository extends JpaRepository<Task,Long> {
     @Query("SELECT t FROM Task t WHERE t.status = :status")
     List<Task> searchTasksByStatus(@Param("status") String status);
 
+    @Query("SELECT t FROM Task t, Offer o WHERE t.offerId = o.id AND o.serviceProvider = :spid")
+    List<Task> searchTaskByServiceProviderId(@Param("spid") Integer spid);
 }
