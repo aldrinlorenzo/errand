@@ -45,6 +45,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public TaskDto findTaskById(Long taskId) {
+        Task task = taskRepository.findById(taskId).get();
+        return mapToTaskDto(task);
+    }
+
+    @Override
     public List<PendingTaskDto> getPendingTask() {
         List<Task> pendingTasks = taskRepository.searchTasksByStatus("PENDING");
         return pendingTasks.stream().map((pendingTask) ->
@@ -91,6 +97,27 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskDto> findTaskByServiceProvider(Long id) {
         List<Task> tasks = taskRepository.searchTaskByServiceProviderId(id);
         return tasks.stream().map(TaskMapper::mapToTaskDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDto> getTasksByClient(Client client) {
+        List<Task> tasks = taskRepository.getTasksByClient(client);
+        return tasks.stream().map((task) -> mapToTaskDto(task)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateTask(TaskDto taskDto, Client client) {
+        Task task = mapToTask(taskDto);
+        task.setClient(client);
+        taskRepository.save(task);
+    }
+
+    @Override
+    public void cancelTask(TaskDto taskDto, Client client) {
+        Task task = mapToTask(taskDto);
+        task.setClient(client);
+        task.setStatus("CANCELLED");
+        taskRepository.save(task);
     }
 
     @Override

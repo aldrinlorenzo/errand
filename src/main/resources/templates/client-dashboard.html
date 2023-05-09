@@ -43,8 +43,155 @@
     </section>
 
     <!-- Page Content-->
-    <section layout:fragment="body" class="py-5">
+    <section layout:fragment="body" class="px-3 py-1">
+        <div class="row">
+            <div class="col-lg-3">
 
+                <!-- Collapsable Card Example -->
+                <div class="card border-left-secondary shadow mt-4 mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Pending Tasks</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse show" id="collapseCardExample">
+                        <div class="card-body">
+                            <!-- Dropdown Card Example -->
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-secondary">Air Conditioner Repair</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                             aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Action:</div>
+                                            <a class="dropdown-item" href="#">Edit</a>
+                                            <a class="dropdown-item" href="#">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    Label Target Date
+                                </div>
+                            </div>
+                            <!-- Dropdown Card Example -->
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-secondary">Laundry Service</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="pendingDropdownMenuLink"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                             aria-labelledby="pendingDropdownMenuLink">
+                                            <div class="dropdown-header">Action:</div>
+                                            <a class="dropdown-item" href="#">Edit</a>
+                                            <a class="dropdown-item" href="#">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    Label Target Date
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+
+                <!-- Collapsable Card Example -->
+                <div class="card border-left-warning shadow mt-4 mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#ongoingTasksCard" class="d-block card-header py-3" data-toggle="collapse"
+                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Ongoing Tasks</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse show" id="ongoingTasksCard">
+                        <div class="card-body">
+                            <!-- Dropdown Card Example -->
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-secondary">Printer Repair</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="ongoingDropdownMenuLink"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                             aria-labelledby="ongoingdropdownMenuLink">
+                                            <div class="dropdown-header">Action:</div>
+                                            <a class="dropdown-item" href="#">Edit</a>
+                                            <a class="dropdown-item" href="#">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    Label Target Date
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+
+                <!-- Collapsable Card Example -->
+                <div class="card border-left-success shadow mt-4 mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#completedTasksCard" class="d-block card-header py-3" data-toggle="collapse"
+                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Completed Tasks</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse show" id="completedTasksCard">
+                        <div class="card-body">
+                            This is a collapsable card example using Bootstrap's built in collapse
+                            functionality. <strong>Click on the card header</strong> to see the card body
+                            collapse and expand!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+
+                <!-- Collapsable Card Example -->
+                <div class="card border-left-danger shadow mt-4 mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#cancelledTasksCard" class="d-block card-header py-3" data-toggle="collapse"
+                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Cancelled Tasks</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse show" id="cancelledTasksCard">
+                        <div class="card-body">
+                            This is a collapsable card example using Bootstrap's built in collapse
+                            functionality. <strong>Click on the card header</strong> to see the card body
+                            collapse and expand!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </section>
 
 </body>
