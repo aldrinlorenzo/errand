@@ -68,6 +68,39 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   opacity: 1; /* Change opacity on hover */
   transform: scale(1.05); /* scale up the card slightly on hover */
 }
+
+/* Style the select element */
+.label-select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  color: #555;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  appearance: none; /* Remove the default dropdown arrow */
+  background-image: url('path/to/custom-arrow.png'); /* Add a custom dropdown arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+/* Style the options in the dropdown */
+.label-select option {
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  color: #555;
+  background-color: #fff;
+}
+
+/* Style the selected option in the dropdown */
+.label-select option:checked {
+  color: #fff;
+  text-decoration: none;
+  background-color: #4e73df;
+}
+
 /*End of Custom css created for Errand only*/
 
 body {

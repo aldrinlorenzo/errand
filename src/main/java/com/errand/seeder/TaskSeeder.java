@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Component
 @Order(4)
@@ -46,6 +47,7 @@ public class TaskSeeder implements CommandLineRunner {
             taskByClient.setCity("Taguig");
             taskByClient.setDescription("Fix Pc");
             taskByClient.setPostalCode(new BigDecimal(123));
+            taskByClient.setTargetDate(LocalDate.of(2022, 1, 1));
             taskByClient.setStatus("PENDING");
             taskByClient.setStreet("41 Block 17");
             taskByClient.setTitle("Fix PC Urgent");
@@ -60,6 +62,7 @@ public class TaskSeeder implements CommandLineRunner {
             taskByClient2.setBudget(new BigDecimal(1000));
             taskByClient2.setCity("Makati");
             taskByClient2.setDescription("Plumbing");
+            taskByClient2.setTargetDate(LocalDate.of(2022, 2, 8));
             taskByClient2.setPostalCode(new BigDecimal(123));
             taskByClient2.setStatus("ONGOING");
             taskByClient2.setStreet("434 Block 234");
