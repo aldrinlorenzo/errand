@@ -37,41 +37,27 @@ public class AdminController {
 
     @GetMapping("/dashboard")
     public String getAdminDashboard(Model model){
-        Users user = new Users();
-        String username = SecurityUtil.getSessionUser();
-        if(username != null){
-            user = userService.findByUsername(username);
-            model.addAttribute("user", user);
-        }
-        model.addAttribute("user", user);
+        model.addAttribute("user", userService.getCurrentUser());
         return "admin-dashboard";
     }
 
     @GetMapping("/clients")
     public String getAdminClients(Model model){
-        Users user = new Users();
+
         List<ClientDto> clients = clientService.findAllClients();
-        String username = SecurityUtil.getSessionUser();
-        if(username != null){
-            user = userService.findByUsername(username);
-            model.addAttribute("user", user);
-        }
-        model.addAttribute("user", user);
+        model.addAttribute("user", userService.getCurrentUser());
         model.addAttribute("clients", clients);
+
         return "admin-clients";
+
     }
 
     @GetMapping("/tasks")
     public String getAllTasks(Model model){
 
-        Users user;
         List<TaskDto> tasks = taskService.findAllTask();
-        String username = SecurityUtil.getSessionUser();
-        if(username != null){
-            user = userService.findByUsername(username);
-            model.addAttribute("user", user);
-            model.addAttribute("tasks", tasks);
-        }
+        model.addAttribute("user", userService.getCurrentUser());
+        model.addAttribute("tasks", tasks);
 
         return "admin-tasks";
     }

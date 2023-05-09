@@ -9,6 +9,7 @@ import com.errand.repository.ClientRepository;
 import com.errand.repository.RoleRepository;
 import com.errand.repository.ServiceProviderRepository;
 import com.errand.repository.UserRepository;
+import com.errand.security.SecurityUtil;
 import com.errand.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -80,6 +81,16 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.findFirstByUsername(username);
 
+    }
+
+    @Override
+    public Users getCurrentUser() {
+        Users user = new Users();
+        String username = SecurityUtil.getSessionUser();
+        if(username != null){
+            user = userRepository.findFirstByUsername(username);
+        }
+        return user;
     }
 
 }

@@ -3,26 +3,40 @@ package com.errand.services.impl;
 import com.errand.dto.PendingTaskDto;
 import com.errand.dto.TaskDto;
 import com.errand.mapper.TaskMapper;
+import com.errand.models.Client;
 import com.errand.models.Task;
+import com.errand.models.Users;
+import com.errand.repository.ClientRepository;
 import com.errand.repository.TaskRepository;
+import com.errand.repository.UserRepository;
+import com.errand.security.SecurityUtil;
 import com.errand.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.errand.mapper.TaskMapper.mapToTask;
 import static com.errand.mapper.TaskMapper.mapToTaskDto;
 
 @Service
 public class TaskServiceImpl implements TaskService {
 
-    @Autowired
-    TaskRepository taskRepository;
-
+    private TaskRepository taskRepository;
+    private UserRepository userRepository;
+    private ClientRepository clientRepository;
 
     @Autowired
     private TaskMapper taskMapper;
+
+    @Autowired
+    public TaskServiceImpl(TaskRepository taskRepository, UserRepository userRepository, ClientRepository clientRepository) {
+        this.taskRepository = taskRepository;
+        this.userRepository = userRepository;
+        this.clientRepository = clientRepository;
+    }
 
     @Override
     public List<TaskDto> findAllTask() {
@@ -33,11 +47,21 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<PendingTaskDto> getPendingTask() {
         List<Task> pendingTasks = taskRepository.searchTasksByStatus("PENDING");
-
-        return pendingTasks.stream()
-                .map(taskMapper::toPendingTaskDto)
+        return pendingTasks.stream().map((pendingTask) ->
+                taskMapper.mapToPendingTaskDto(pendingTask))
                 .collect(Collectors.toList());
+    }
 
+    @Override
+    public Task saveTask(TaskDto taskDto){
+        String username = SecurityUtil.getSessionUser();
+        Users user = userRepository.findByUsername(username);
+        Optional<Client> optionalClient = clientRepository.findById(user.getId());
+        Client client = optionalClient.orElseThrow(() -> new RuntimeException("Client not found"));
+        Task task = mapToTask(taskDto);
+        task.setStatus("PENDING");
+        task.setClient(client);
+        return taskRepository.save(task);
     }
 
     @Override

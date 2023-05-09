@@ -18,8 +18,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private CustomUserDetailsService userDetailsService;
 
+    private CustomUserDetailsService userDetailsService;
     private UserService userService;
 
     @Autowired
@@ -43,6 +43,8 @@ public class SecurityConfig {
                     .hasAuthority("ADMIN")
                     .antMatchers("/client/**")
                     .hasAuthority("CLIENT")
+                    .antMatchers("/serviceProvider/**")
+                    .hasAuthority("SERVICE_PROVIDER")
                 .and()
                 .formLogin(form -> form
                         .loginPage("/")

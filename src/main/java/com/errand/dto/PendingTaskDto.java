@@ -18,7 +18,7 @@ public class PendingTaskDto {
 
     private String city;
 
-    private int postalCode;
+    private BigDecimal postalCode;
 
     private LocalDateTime targetDate;
 
