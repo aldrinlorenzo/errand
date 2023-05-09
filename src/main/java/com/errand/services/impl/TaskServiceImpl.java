@@ -113,26 +113,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void cancelTask(TaskDto taskDto, Client client) {
-        Task task = mapToTask(taskDto);
-        task.setClient(client);
+    public void cancelTask(Long id) {
+        Optional<Task> optionalTask =taskRepository.findById(id);
+        Task task = optionalTask.orElseThrow(() -> new RuntimeException("Task not found"));
         task.setStatus("CANCELLED");
         taskRepository.save(task);
     }
-
-    @Override
-    public List<TaskDto> getCompletedTask() {
-        List<Task> completedTasks = taskRepository.searchTasksByStatus("COMPLETED");
-
-        return completedTasks.stream().map(TaskMapper::mapToTaskDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<PendingTaskDto> getCancelledTask() {
-        List<Task> cancelledTasks = taskRepository.searchTasksByStatus("CANCELLED");
-
-        return cancelledTasks.stream().map(taskMapper::toPendingTaskDto).collect(Collectors.toList());
-    }
-
 
 }

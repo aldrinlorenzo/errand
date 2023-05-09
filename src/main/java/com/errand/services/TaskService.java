@@ -32,6 +32,6 @@ public interface TaskService {
 
     void updateTask(TaskDto task, Client client);
 
-    void cancelTask(TaskDto task, Client client);
+    void cancelTask(Long id);
 
 }
