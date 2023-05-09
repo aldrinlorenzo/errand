@@ -97,6 +97,15 @@
                        th:field="*{businessName}"
                 >
               </div>
+              <div th:if="${#fields.hasErrors()}">
+                <div class="alert alert-danger">
+                  <ul>
+                    <li th:each="err : ${#fields.errors()}">
+                      <span th:text="${err}"></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
               <button type="submit" class="btn btn-primary btn-user btn-block">
                 Register Account
               </button>
