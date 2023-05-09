@@ -39,4 +39,11 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
 
     }
+
+    @Override
+    public List<TaskDto> getCompletedTask() {
+        List<Task> completedTasks = taskRepository.searchTasksByStatus("COMPLETED");
+
+        return completedTasks.stream().map((task) -> mapToTaskDto(task)).collect(Collectors.toList());
+    }
 }
