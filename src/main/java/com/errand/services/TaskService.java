@@ -12,6 +12,10 @@ public interface TaskService {
 
     List<PendingTaskDto> getPendingTask();
 
+    List<TaskDto> getCompletedTask();
+
+    List<PendingTaskDto> getCancelledTask();
+
     Task saveTask(TaskDto taskDto);
 
 }
