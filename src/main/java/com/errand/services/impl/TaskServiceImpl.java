@@ -60,7 +60,7 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
-    public List<TaskDto> getCompletedTask() {
+    public List<TaskDto> getCompletedTaskOnAdmin() {
         List<Task> completedTasks = taskRepository.searchTasksByStatus("COMPLETED");
         return completedTasks.stream().map((tasks) ->
                         taskMapper.mapToTaskDto(tasks))
@@ -68,7 +68,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> getCancelledTask() {
+    public List<TaskDto> getCancelledTaskOnAdmin() {
         List<Task> cancelledTasks = taskRepository.searchTasksByStatus("CANCELLED");
         return cancelledTasks.stream().map((tasks) ->
                         taskMapper.mapToTaskDto(tasks))

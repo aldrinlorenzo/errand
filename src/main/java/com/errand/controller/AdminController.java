@@ -91,7 +91,7 @@ public class AdminController {
     }
 
     @GetMapping("/tasks/completed-tasks")
-    public String getCompletedTasks(Model model){
+    public String getCompletedTasksOnAdmin(Model model){
         List<TaskDto> tasks = taskService.getCompletedTask();
         model.addAttribute("user", userService.getCurrentUser());
         model.addAttribute("tasks", tasks);
@@ -100,7 +100,7 @@ public class AdminController {
 
     @GetMapping("/tasks/cancelled-tasks")
     public String getCancelledTasks(Model model){
-        List<TaskDto> tasks = taskService.getCancelledTask();
+        List<TaskDto> tasks = taskService.getCancelledTaskOnAdmin();
         model.addAttribute("user", userService.getCurrentUser());
         model.addAttribute("tasks", tasks);
         return "admin-tasks";
