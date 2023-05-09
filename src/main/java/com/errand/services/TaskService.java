@@ -4,9 +4,11 @@ import com.errand.dto.PendingTaskDto;
 import com.errand.dto.TaskDto;
 import com.errand.models.Client;
 import com.errand.models.Task;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface TaskService {
 
     List<TaskDto> findAllTask();
