@@ -17,6 +17,7 @@ public class TaskMapper {
                 .street(task.getStreet())
                 .city(task.getCity())
                 .postalCode(task.getPostalCode())
+                .createdby(String.valueOf(task.getClient().getUser().getUsername()))
                 .status(task.getStatus())
                 .offerId(task.getOfferId())
                 .targetDate(task.getTargetDate())

@@ -1,5 +1,6 @@
 package com.errand.mapper;
 
+import com.errand.dto.ServiceProviderForDisplayDto;
 import com.errand.dto.ServiceProviderForUpdateDto;
 import com.errand.models.ServiceProvider;
 import org.springframework.stereotype.Component;
