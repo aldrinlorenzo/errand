@@ -8,6 +8,10 @@ import java.time.LocalDateTime;
 @Builder
 public class PendingTaskDto {
 
+    private Long id;
+
+    private String createdBy;
+
     private String title;
 
     private String description;
@@ -17,6 +21,8 @@ public class PendingTaskDto {
     private String street;
 
     private String city;
+
+    private String status;
 
     private BigDecimal postalCode;
 
