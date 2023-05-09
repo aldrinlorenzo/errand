@@ -80,6 +80,5 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         return serviceProviderMapper.toServiceProviderForDisplayDto(serviceProvider);
 
 
-
     }
 }

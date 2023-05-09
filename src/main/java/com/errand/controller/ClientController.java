@@ -63,6 +63,12 @@ public class ClientController {
         return "client-tasks-edit";
     }
 
+    @GetMapping("/tasks/{taskId}/cancel")
+    public String cancelTask(@PathVariable("taskId") Long taskId){
+        taskService.cancelTask(taskId);
+        return "redirect:/client/tasks";
+    }
+
     @PostMapping("/tasks/new")
     public String saveTask(@Valid @ModelAttribute("task") TaskDto taskDto,
                            BindingResult result, Model model){
@@ -87,19 +93,5 @@ public class ClientController {
         taskService.updateTask(task, clientService.getCurrentClient());
         return "redirect:/client/tasks";
     }
-
-    @PostMapping("/tasks/{taskId}/cancel")
-    public String cancelTask(@PathVariable("taskId") Long taskId,
-                             @Valid @ModelAttribute("task") TaskDto task,
-                             BindingResult result, Model model){
-        if(result.hasErrors()){
-            model.addAttribute("task", task);
-            return "client-tasks";
-        }
-        task.setId(taskId);
-        taskService.cancelTask(task, clientService.getCurrentClient());
-        return "redirect:/client/tasks";
-    }
-
 
 }
