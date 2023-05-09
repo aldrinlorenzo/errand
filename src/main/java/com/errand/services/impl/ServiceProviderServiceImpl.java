@@ -36,4 +36,15 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
                 .map(serviceProviderMapper::toServiceProviderForDisplayDto)
                 .collect(Collectors.toList());
     }
+
+    public ServiceProviderForDisplayDto toServiceProviderForDisplayDto(ServiceProvider serviceProvider){
+        return ServiceProviderForDisplayDto.builder()
+                .id(serviceProvider.getId())
+                .firstName(serviceProvider.getFirstName())
+                .lastName(serviceProvider.getLastName())
+                .email(serviceProvider.getEmail())
+                .contactNumber(serviceProvider.getContactNumber())
+                .businessName(serviceProvider.getBusinessName())
+                .build();
+    }
 }
