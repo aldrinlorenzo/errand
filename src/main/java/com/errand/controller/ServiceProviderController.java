@@ -53,7 +53,9 @@ public class ServiceProviderController {
             model.addAttribute("serviceProviderId", serviceProviderId);
             return "serviceprovider-dashboard";
         }
-        return "serviceprovider-dashboard";
+        else{
+            return "error";
+        }
     }
 
 }

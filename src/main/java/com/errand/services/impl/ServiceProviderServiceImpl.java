@@ -54,7 +54,6 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         ServiceProvider serviceProvider = serviceProviderMapper.toServiceProvider(serviceProviderDto);
         serviceProvider.setId(id);
         serviceProviderRepository.save(serviceProvider);
-
         return true;
     }
 
