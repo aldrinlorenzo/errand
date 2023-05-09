@@ -19,10 +19,6 @@ public interface TaskService {
 
     List<TaskDto> getCancelledTaskOnAdmin();
 
-    List<TaskDto> getCompletedTask();
-
-    List<PendingTaskDto> getCancelledTask();
-
     Task saveTask(TaskDto taskDto);
 
     List<TaskDto> findTaskByServiceProvider(Long id);

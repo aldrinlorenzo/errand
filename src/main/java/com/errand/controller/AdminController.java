@@ -42,8 +42,8 @@ public class AdminController {
         int serviceProviderCount = serviceProviderService.getAllServiceProvider().size();
         int pendingTaskCount = taskService.getPendingTask().size();
         int ongoingTaskCount = taskService.getOngoingTask().size();
-        int completedTaskCount = taskService.getCompletedTask().size();
-        int cancelledTaskCount = taskService.getCancelledTask().size();
+        int completedTaskCount = taskService.getCompletedTaskOnAdmin().size();
+        int cancelledTaskCount = taskService.getCancelledTaskOnAdmin().size();
 
         model.addAttribute("user", userService.getCurrentUser());
         model.addAttribute("clientCount", clientCount);
@@ -94,7 +94,7 @@ public class AdminController {
 
     @GetMapping("/tasks/completed-tasks")
     public String getCompletedTasksOnAdmin(Model model){
-        List<TaskDto> tasks = taskService.getCompletedTask();
+        List<TaskDto> tasks = taskService.getCompletedTaskOnAdmin();
         model.addAttribute("user", userService.getCurrentUser());
         model.addAttribute("tasks", tasks);
         return "admin-tasks";
