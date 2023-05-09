@@ -3,6 +3,7 @@ package com.errand.controller;
 import com.errand.dto.PendingTaskDto;
 import com.errand.dto.ServiceProviderForDisplayDto;
 import com.errand.dto.ServiceProviderForUpdateDto;
+import com.errand.dto.TaskDto;
 import com.errand.services.ServiceProviderService;
 import com.errand.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,24 +34,26 @@ public class ServiceProviderController {
 
         ServiceProviderForDisplayDto serviceProviderForDisplayDto = serviceProviderService.getCurrentServiceProvider();
         model.addAttribute("serviceProvider", serviceProviderForDisplayDto );
-//        List<PendingTaskDto> pendingTasks = taskService.getPendingTask();
-//        model.addAttribute("pendingTasks", pendingTasks);
-
         return "serviceprovider-dashboard";
     }
-    @PutMapping("/{serviceProviderId}/dashboard/")
-    public String  updateServiceProviderDetails(@PathVariable Long serviceProviderId, @RequestBody ServiceProviderForUpdateDto serviceProviderDto, Model model) {
+    @GetMapping("/{serviceProviderId}/profile")
+    public String  createUpdateProfileForm(@PathVariable Long serviceProviderId, Model model) {
+        ServiceProviderForDisplayDto serviceProviderForDisplayDto = serviceProviderService.getCurrentServiceProvider();
+        serviceProviderId = serviceProviderForDisplayDto.getId();
+        model.addAttribute("serviceProvider",serviceProviderForDisplayDto );
+        return "serviceprovider-profile-edit";
+
+    }
+    @PostMapping("/{serviceProviderId}/profile/save")
+    public String  updateServiceProviderDetails(@PathVariable Long serviceProviderId, @ModelAttribute("serviceProvider") ServiceProviderForUpdateDto serviceProviderDto, Model model) {
         boolean isUpdated = serviceProviderService.updateServiceProviderDetails(serviceProviderDto,serviceProviderId);
 
         if (isUpdated) {
             model.addAttribute("serviceProvider", serviceProviderDto);
             model.addAttribute("serviceProviderId", serviceProviderId);
             return "serviceprovider-dashboard";
-        } else {
-            model.addAttribute("errorMessage", "Failed to update service provider with ID: " + serviceProviderId);
-            return "error";
         }
-
+        return "serviceprovider-dashboard";
     }
 
 }

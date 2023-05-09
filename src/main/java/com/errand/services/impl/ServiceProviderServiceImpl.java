@@ -32,10 +32,13 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     private ServiceProviderMapper serviceProviderMapper;
 
     @Override
-    public Optional<ServiceProviderForUpdateDto> getServiceProviderById(Long id) {
-
+    public ServiceProviderForUpdateDto getServiceProviderById(Long id) {
         Optional<ServiceProvider> serviceProviderOptional = serviceProviderRepository.findById(id);
-        return serviceProviderOptional.map(serviceProviderMapper::toServiceProviderForUpdateDto);
+        if (serviceProviderOptional.isPresent()) {
+            return serviceProviderMapper.toServiceProviderForUpdateDto(serviceProviderOptional.get());
+        } else {
+            throw new IllegalArgumentException("Service provider with id " + id + " not found.");
+        }
     }
 
     @Override

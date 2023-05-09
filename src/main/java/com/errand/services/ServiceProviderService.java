@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface ServiceProviderService {
 
-    Optional<ServiceProviderForUpdateDto> getServiceProviderById(Long id);
+    ServiceProviderForUpdateDto getServiceProviderById(Long id);
 
     Boolean updateServiceProviderDetails(ServiceProviderForUpdateDto serviceProviderForUpdateDto, Long id);
 

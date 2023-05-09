@@ -57,6 +57,8 @@ public class ClientServiceImpl implements ClientService {
             Users user = userRepository.findFirstByUsername(username);
             Optional<Client> optionalClient = clientRepository.findById(user.getId());
             client = optionalClient.orElseThrow(() -> new RuntimeException("Client not found"));
+
+
         }
         return client;
     }
