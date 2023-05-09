@@ -50,45 +50,121 @@
     </section>
 
     <!-- Page Content-->
-    <section layout:fragment="body" class="py-5">
-        <div class="container-fluid">
-            <div class="row row-cols-3 column-gap-1 row-gap-1">
-                <div class="col">
-                    <div class="card shadow">
+    <section layout:fragment="body" class="px-3 py-1">
+        <div class="row">
+
+            <div class="col-lg-3">
+
+                <!-- Collapsable Card Example -->
+                <div class="card border-left-secondary shadow mt-4 mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#pendingTasksCard" class="d-block card-header py-3" data-toggle="collapse"
+                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Pending Tasks</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse show">
                         <div class="card-body">
-                            <div class="card-title" th:text="${pendingTaskCount+' Pending Tasks'}"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <div class="card-title" th:text="${completedTaskCount+' Completed Tasks'}"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <div class="card-title" th:text="${cancelledTaskCount+' Cancelled Tasks'}"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <div class="card-title" th:text="${clientCount+' Clients'}"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <div class="card-title" th:text="${serviceProviderCount+' Service Providers'}"></div>
+                            <h1 th:text="${pendingTaskCount}"></h1> Pending Tasks
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-3">
+
+                <!-- Collapsable Card Example -->
+                <div class="card border-left-warning shadow mt-4 mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#ongoingTasksCard" class="d-block card-header py-3" data-toggle="collapse"
+                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Ongoing Tasks</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse show">
+                        <div class="card-body">
+                            <h1 th:text="${ongoingTaskCount}"></h1> Ongoing Tasks
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+
+                <!-- Collapsable Card Example -->
+                <div class="card border-left-success shadow mt-4 mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#completedTasksCard" class="d-block card-header py-3" data-toggle="collapse"
+                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Completed Tasks</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse show">
+                        <div class="card-body">
+                            <h1 th:text="${completedTaskCount}"></h1> Completed Tasks
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+
+                <!-- Collapsable Card Example -->
+                <div class="card border-left-danger shadow mt-4 mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#cancelledTasksCard" class="d-block card-header py-3" data-toggle="collapse"
+                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Cancelled Tasks</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse show">
+                        <div class="card-body">
+                            <h1 th:text="${cancelledTaskCount}"></h1> Cancelled Tasks
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-3">
+
+                <!-- Collapsable Card Example -->
+                <div class="card border-left-secondary shadow mt-4 mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#clientCountCard" class="d-block card-header py-3" data-toggle="collapse"
+                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Client Count</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse show">
+                        <div class="card-body">
+                            <h1 th:text="${clientCount}"></h1> Clients
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+
+                <!-- Collapsable Card Example -->
+                <div class="card border-left-secondary shadow mt-4 mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#serviceProviderCountCard" class="d-block card-header py-3" data-toggle="collapse"
+                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Service Provider Count</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse show">
+                        <div class="card-body">
+                            <h1 th:text="${serviceProviderCount}"></h1> Service Providers
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
