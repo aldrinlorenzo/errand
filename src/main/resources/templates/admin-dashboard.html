@@ -141,7 +141,7 @@
                     <!-- Card Content - Collapse -->
                     <div class="collapse show">
                         <div class="card-body">
-                            <h1 th:text="${clientCount}"></h1> Clients
+                            <h1 th:text="${clientCount}" id="clients"></h1> Clients
                         </div>
                     </div>
                 </div>
@@ -159,13 +159,35 @@
                     <!-- Card Content - Collapse -->
                     <div class="collapse show">
                         <div class="card-body">
-                            <h1 th:text="${serviceProviderCount}"></h1> Service Providers
+                            <h1 th:text="${serviceProviderCount}" id="serviceProviders"></h1> Service Providers
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="col-lg-6">
+
+                <div class="card border-left-secondary shadow mt-4 mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#usersChart" class="d-block card-header py-3" data-toggle="collapse"
+                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">User Chart</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse show">
+                        <div class="card-body">
+                            <canvas id="usersChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
+
+        <!-- Page level custom scripts -->
+        <script type="text/javascript" th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/chart-pie-admin.js}"></script>
     </section>
 
 </body>
