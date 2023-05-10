@@ -70,7 +70,7 @@
                             <td th:text="${offer.serviceProvider.firstName + ' ' +offer.serviceProvider.lastName}"></td>
                             <td th:text="${offer.status}"></td>
                             <td style="text-align: center; white-space: nowrap;">
-                                <a th:href="@{/client/tasks/offers/{offerId}/approve(offerId=${offer.id})}"
+                                <a th:href="@{/client/tasks/{taskId}/offers/{offerId}/accept(taskId=${task.id},offerId=${offer.id})}"
                                    class="btn btn-success btn-circle btn-sm"
                                    title="Accept Offer"
                                    th:classappend="${offer.status != 'OFFERED' ? 'disabled' : ''}"

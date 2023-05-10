@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 import static com.errand.mapper.TaskMapper.mapToTask;
@@ -83,6 +84,14 @@ public class ClientController {
         model.addAttribute("offers", offers);
         model.addAttribute("client", clientService.getCurrentClient());
         return "client-tasks-offers";
+    }
+
+    @GetMapping("/tasks/{taskId}/offers/{offerId}/accept")
+    public String approveOffer(@PathVariable("taskId") Long taskId,
+                             @PathVariable("offerId") Long offerId){
+        TaskDto taskDto = taskService.findTaskById(taskId);
+        offerService.acceptOffer(offerId, taskDto);
+        return "redirect:/client/tasks/{taskId}/offers";
     }
 
     @PostMapping("/tasks/new")
