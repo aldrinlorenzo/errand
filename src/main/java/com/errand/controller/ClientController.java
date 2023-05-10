@@ -94,6 +94,14 @@ public class ClientController {
         return "redirect:/client/tasks/{taskId}/offers";
     }
 
+    @GetMapping("/tasks/{taskId}/offers/{offerId}/reject")
+    public String rejectOffer(@PathVariable("taskId") Long taskId,
+                               @PathVariable("offerId") Long offerId){
+        TaskDto taskDto = taskService.findTaskById(taskId);
+        offerService.rejectOffer(offerId);
+        return "redirect:/client/tasks/{taskId}/offers";
+    }
+
     @PostMapping("/tasks/new")
     public String saveTask(@Valid @ModelAttribute("task") TaskDto taskDto,
                            BindingResult result, Model model){
