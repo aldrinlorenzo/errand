@@ -78,6 +78,7 @@ public class TaskSeeder implements CommandLineRunner {
             taskByClient3.setBudget(new BigDecimal(1000));
             taskByClient3.setCity("Pasig");
             taskByClient3.setDescription("Cooking");
+            taskByClient3.setTargetDate(LocalDate.of(2022, 2, 8));
             taskByClient3.setPostalCode(new BigDecimal(123));
             taskByClient3.setStatus("COMPLETED");
             taskByClient3.setStreet("434 Block 234");
@@ -93,6 +94,7 @@ public class TaskSeeder implements CommandLineRunner {
             taskByClient4.setBudget(new BigDecimal(1000));
             taskByClient4.setCity("Pasig");
             taskByClient4.setDescription("Fix Laptop");
+            taskByClient4.setTargetDate(LocalDate.of(2022, 2, 8));
             taskByClient4.setPostalCode(new BigDecimal(123));
             taskByClient4.setStatus("CANCELLED");
             taskByClient4.setStreet("434 Block 234");
