@@ -21,6 +21,8 @@ public class Offer {
 
     private String description;
 
+    private String status;
+
     @OneToOne
     @JoinColumn(name = "serviceProviderId")
     private ServiceProvider serviceProvider;
