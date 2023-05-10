@@ -52,11 +52,6 @@
                 <form role="form" method="post"
                       th:action="@{/serviceProvider/{serviceProviderId}/profile/save(serviceProviderId=${serviceProviderId})}"
                       th:object="${serviceProvider}">
-                    <input type="hidden" th:field="*{firstName}">
-                    <input type="hidden" th:field="*{lastName}">
-                    <input type="hidden" th:field="*{email}">
-                    <input type="hidden" th:field="*{contactNumber}">
-                    <input type="hidden" th:field="*{businessName}">
                     <div class="form-group">
                         <label for="title">First Name</label>
                         <input type="text"

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ServiceProviderForDisplayDto {
+public class ServiceProviderDto {
 
     private Long id;
 

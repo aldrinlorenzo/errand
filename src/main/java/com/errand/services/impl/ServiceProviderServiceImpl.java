@@ -1,6 +1,6 @@
 package com.errand.services.impl;
 
-import com.errand.dto.ServiceProviderForDisplayDto;
+import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.ServiceProviderForUpdateDto;
 import com.errand.mapper.ServiceProviderMapper;
 import com.errand.models.ServiceProvider;
@@ -10,11 +10,12 @@ import com.errand.repository.UserRepository;
 import com.errand.security.SecurityUtil;
 import com.errand.services.ServiceProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -42,42 +43,38 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     }
 
     @Override
-    public Boolean updateServiceProviderDetails(ServiceProviderForUpdateDto serviceProviderDto, Long id) {
-
-        Objects.requireNonNull(id, "ID cannot be null");
-        Objects.requireNonNull(serviceProviderDto, "Service provider DTO cannot be null");
-
+    @Transactional
+    public Boolean updateServiceProviderDetails(@NonNull ServiceProviderDto serviceProviderDto, @NonNull Long id) {
         if (!serviceProviderRepository.existsById(id)) {
             throw new EntityNotFoundException("Service provider not found with ID: " + id);
+
         }
-
-        ServiceProvider serviceProvider = serviceProviderMapper.toServiceProvider(serviceProviderDto);
-        serviceProvider.setId(id);
-        serviceProviderRepository.save(serviceProvider);
-
-        return true;
+       serviceProviderRepository.update(serviceProviderDto.getFirstName(),
+                serviceProviderDto.getLastName(), serviceProviderDto.getEmail(),
+                serviceProviderDto.getContactNumber(),
+                serviceProviderDto.getBusinessName(),
+                id);
+       return  true;
     }
 
 
     @Override
-    public List<ServiceProviderForDisplayDto> getAllServiceProvider() {
+    public List<ServiceProviderDto> getAllServiceProvider() {
         return serviceProviderRepository.findAll()
                 .stream()
-                .map(serviceProviderMapper::toServiceProviderForDisplayDto)
+                .map(serviceProviderMapper::toServiceProviderDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public ServiceProviderForDisplayDto getCurrentServiceProvider() {
+    public ServiceProviderDto getCurrentServiceProvider() {
         ServiceProvider serviceProvider = new ServiceProvider();
         String username = SecurityUtil.getSessionUser();
         if (username != null) {
             Users user = userRepository.findFirstByUsername(username);
             serviceProvider = serviceProviderRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("Client not found"));
-            ;
-
         }
-        return serviceProviderMapper.toServiceProviderForDisplayDto(serviceProvider);
+        return serviceProviderMapper.toServiceProviderDto(serviceProvider);
 
 
     }

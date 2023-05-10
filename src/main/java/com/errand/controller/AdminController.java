@@ -2,9 +2,8 @@ package com.errand.controller;
 
 import com.errand.dto.ClientDto;
 import com.errand.dto.PendingTaskDto;
-import com.errand.dto.ServiceProviderForDisplayDto;
+import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.TaskDto;
-import com.errand.models.Task;
 import com.errand.models.Users;
 import com.errand.security.SecurityUtil;
 import com.errand.services.ClientService;
@@ -111,7 +110,7 @@ public class AdminController {
     @GetMapping("/serviceProviders")
     public String getAllServiceProviders(Model model){
         Users user = new Users();
-        List<ServiceProviderForDisplayDto> serviceProviders = serviceProviderService.getAllServiceProvider();
+        List<ServiceProviderDto> serviceProviders = serviceProviderService.getAllServiceProvider();
         String username = SecurityUtil.getSessionUser();
         if(username != null){
             user = userService.findByUsername(username);
