@@ -1,7 +1,9 @@
 package com.errand.controller;
 
 import com.errand.dto.BaseRegistrationDTO;
+import com.errand.models.Client;
 import com.errand.models.Users;
+import com.errand.security.SecurityUtil;
 import com.errand.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class AuthController {

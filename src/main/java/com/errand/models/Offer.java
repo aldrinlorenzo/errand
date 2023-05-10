@@ -3,6 +3,7 @@ package com.errand.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -17,7 +18,7 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private float price;
+    private BigDecimal price;
 
     private String description;
 
