@@ -10,6 +10,7 @@ import com.errand.repository.ClientRepository;
 import com.errand.repository.TaskRepository;
 import com.errand.repository.UserRepository;
 import com.errand.security.SecurityUtil;
+import com.errand.services.ClientService;
 import com.errand.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,15 +28,20 @@ public class TaskServiceImpl implements TaskService {
     private TaskRepository taskRepository;
     private UserRepository userRepository;
     private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @Autowired
     private TaskMapper taskMapper;
 
     @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository, UserRepository userRepository, ClientRepository clientRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository,
+                           UserRepository userRepository,
+                           ClientRepository clientRepository,
+                           ClientService clientService) {
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
         this.clientRepository = clientRepository;
+        this.clientService = clientService;
     }
 
     @Override
@@ -117,6 +123,13 @@ public class TaskServiceImpl implements TaskService {
         Optional<Task> optionalTask =taskRepository.findById(id);
         Task task = optionalTask.orElseThrow(() -> new RuntimeException("Task not found"));
         task.setStatus("CANCELLED");
+        taskRepository.save(task);
+    }
+
+    @Override
+    public void setStatusToOngoing(Task task) {
+        task.setClient(clientService.getCurrentClient());
+        task.setStatus("ONGOING");
         taskRepository.save(task);
     }
 

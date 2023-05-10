@@ -36,4 +36,6 @@ public interface TaskService {
 
     void cancelTask(Long id);
 
+    void setStatusToOngoing(Task task);
+
 }
