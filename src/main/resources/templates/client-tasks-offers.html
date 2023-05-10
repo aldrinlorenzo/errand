@@ -77,7 +77,7 @@
                                 >
                                     <i class="fas fa-check"></i>
                                 </a>
-                                <a th:href="@{/client/tasks/offers/{offerId}/approve(offerId=${offer.id})}"
+                                <a th:href="@{/client/tasks/{taskId}/offers/{offerId}/reject(taskId=${task.id},offerId=${offer.id})}"
                                    class="btn btn-danger btn-circle btn-sm"
                                    title="Reject Offer"
                                    th:classappend="${offer.status != 'OFFERED' ? 'disabled' : ''}"
