@@ -1,6 +1,6 @@
 package com.errand.mapper;
 
-import com.errand.dto.ServiceProviderForDisplayDto;
+import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.ServiceProviderForUpdateDto;
 import com.errand.models.ServiceProvider;
 import org.springframework.stereotype.Component;
@@ -18,18 +18,19 @@ public class ServiceProviderMapper {
                 .build();
     }
 
-    public ServiceProvider toServiceProvider(ServiceProviderForUpdateDto serviceProviderForUpdateDto) {
+    public ServiceProvider toServiceProvider(ServiceProviderDto serviceProviderDto) {
         return ServiceProvider.builder()
-                .firstName(serviceProviderForUpdateDto.getFirstName())
-                .lastName(serviceProviderForUpdateDto.getLastName())
-                .email(serviceProviderForUpdateDto.getEmail())
-                .contactNumber(serviceProviderForUpdateDto.getContactNumber())
-                .businessName(serviceProviderForUpdateDto.getBusinessName())
+                .id(serviceProviderDto.getId())
+                .firstName(serviceProviderDto.getFirstName())
+                .lastName(serviceProviderDto.getLastName())
+                .email(serviceProviderDto.getEmail())
+                .contactNumber(serviceProviderDto.getContactNumber())
+                .businessName(serviceProviderDto.getBusinessName())
                 .build();
     }
 
-    public ServiceProviderForDisplayDto toServiceProviderForDisplayDto(ServiceProvider serviceProvider){
-        return ServiceProviderForDisplayDto.builder()
+    public ServiceProviderDto toServiceProviderDto(ServiceProvider serviceProvider){
+        return ServiceProviderDto.builder()
                 .id(serviceProvider.getId())
                 .firstName(serviceProvider.getFirstName())
                 .lastName(serviceProvider.getLastName())
