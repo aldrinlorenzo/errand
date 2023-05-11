@@ -27,6 +27,12 @@ public class ServiceProviderController {
     @Autowired
     private ServiceProviderService serviceProviderService;
 
+    @Autowired
+    public ServiceProviderController(TaskService taskService, ServiceProviderService serviceProviderService, OfferService offerService) {
+        this.taskService = taskService;
+        this.serviceProviderService = serviceProviderService;
+        this.offerService = offerService;
+    }
 
     @GetMapping("/dashboard")
     public String getServiceProviderDetails(Model model) {
@@ -75,24 +81,14 @@ public class ServiceProviderController {
             return "error";
         }
     }
-//    @GetMapping("/tasks")
-//    public String  getAllTask(Model model) {
-//        ServiceProviderDto serviceProviderForDisplayDto = serviceProviderService.getCurrentServiceProvider();
-//        List<PendingTaskDto> pendingTaskDtoList = taskService.getPendingTask();
-//
-//        model.addAttribute("serviceProvider", serviceProviderService.getCurrentServiceProvider());
-//        model.addAttribute("pendingTaskDtoList",pendingTaskDtoList );
-//        return "serviceprovider-task";
-//
-//    }
 
     @GetMapping("tasks/{taskId}/offers")
     public String getPendingTask(@PathVariable("taskId")Long taskId, Model model, OfferDto offerDto){
         TaskDto taskDto = taskService.findTaskById(taskId);
 
+        setServiceProviderForDisplay(model);
         model.addAttribute("task" ,taskDto);
         model.addAttribute("offer", offerDto);
-        model.addAttribute("serviceProvider", serviceProviderService.getCurrentServiceProvider());
         return "serviceprovider-tasks-offer";
     }
     @PostMapping("tasks/{taskId}/offers/create")
@@ -104,9 +100,9 @@ public class ServiceProviderController {
             boolean isCreated = offerService.createOffer(offerDto);
 
             if (isCreated) {
+                setServiceProviderForDisplay(model);
                 model.addAttribute("offer" ,offerDto);
                 model.addAttribute("taskId",taskId);
-                model.addAttribute("serviceProvider",  serviceProviderService.getCurrentServiceProvider());
                 return "serviceprovider-tasks-offer";
             } else {
                 return "error";
@@ -117,7 +113,6 @@ public class ServiceProviderController {
         }
 
     }
-
 
     private void setServiceProviderForDisplay(Model model) {
         model.addAttribute("serviceProvider", serviceProviderService.getCurrentServiceProvider());
