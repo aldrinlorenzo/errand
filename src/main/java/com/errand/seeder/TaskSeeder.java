@@ -41,7 +41,7 @@ public class TaskSeeder implements CommandLineRunner {
             //task created by client1 Last Name Depp
             Task taskByClient = new Task();
 
-            //taskByClient.setClient(clientRepository.findByLastNameIgnoreCase("Depp"));
+            taskByClient.setClient(clientRepository.findByLastName("Depp"));
 
             taskByClient.setBudget(new BigDecimal(1000));
             taskByClient.setCity("Taguig");
@@ -57,7 +57,7 @@ public class TaskSeeder implements CommandLineRunner {
             //task created by client2 LastName Rizal
             Task taskByClient2 = new Task();
 
-            //taskByClient2.setClient(clientRepository.findByLastNameIgnoreCase("Rizal"));
+            taskByClient2.setClient(clientRepository.findByLastName("Rizal"));
 
             taskByClient2.setBudget(new BigDecimal(1000));
             taskByClient2.setCity("Makati");
@@ -73,7 +73,7 @@ public class TaskSeeder implements CommandLineRunner {
             //task created by client2 LastName Rizal
             Task taskByClient3 = new Task();
 
-            //taskByClient3.setClient(clientRepository.findByLastNameIgnoreCase("Rizal"));
+            taskByClient3.setClient(clientRepository.findByLastName("Rizal"));
 
             taskByClient3.setBudget(new BigDecimal(1000));
             taskByClient3.setCity("Pasig");
@@ -89,7 +89,7 @@ public class TaskSeeder implements CommandLineRunner {
             //task created by client2 LastName Rizal
             Task taskByClient4 = new Task();
 
-            //taskByClient4.setClient(clientRepository.findByLastNameIgnoreCase("Rizal"));
+            taskByClient4.setClient(clientRepository.findByLastName("Rizal"));
 
             taskByClient4.setBudget(new BigDecimal(1000));
             taskByClient4.setCity("Pasig");
