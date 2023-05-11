@@ -2,6 +2,7 @@ package com.errand.controller;
 
 import com.errand.dto.ClientDto;
 import com.errand.dto.PendingTaskDto;
+import com.errand.dto.RatingDto;
 import com.errand.dto.TaskDto;
 
 import com.errand.models.Offer;
@@ -28,17 +29,20 @@ public class ClientController {
     private TaskService taskService;
     private LabelService labelService;
     private OfferService offerService;
+    private RatingService ratingService;
 
     @Autowired
     public ClientController(UserService userService, ClientService clientService,
                             TaskService taskService,
                             LabelService labelService,
-                            OfferService offerService) {
+                            OfferService offerService,
+                            RatingService ratingService) {
         this.userService = userService;
         this.clientService = clientService;
         this.taskService = taskService;
         this.labelService = labelService;
         this.offerService = offerService;
+        this.ratingService = ratingService;
     }
 
     @GetMapping("/dashboard")
@@ -69,9 +73,10 @@ public class ClientController {
     }
 
     @GetMapping("/tasks")
-    public String getClientTasks(Model model){
+    public String getClientTasks(Model model, RatingDto rating){
         List<TaskDto> tasks = taskService.getTasksByClient(clientService.getCurrentClient());
         model.addAttribute("tasks", tasks);
+        model.addAttribute("rating", rating);
         model.addAttribute("client", clientService.getCurrentClient());
         return "client-tasks-list";
     }
@@ -164,6 +169,17 @@ public class ClientController {
         return "redirect:/client/profile";
     }
 
-
+    @PostMapping("/tasks/{taskId}/rate")
+    public String rateServiceProvider(@PathVariable("taskId")Long taskId,
+                                      @ModelAttribute("rating") RatingDto rating,
+                                      BindingResult result, Model model, Task task){
+        if(result.hasErrors()){
+            model.addAttribute("rating", rating);
+            return "client-tasks-List";
+        }
+        rating.setTaskDto(taskService.findTaskById(taskId));
+        ratingService.saveRateFromClient(rating);
+        return "redirect:/client/tasks";
+    }
 
 }
