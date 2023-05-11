@@ -30,33 +30,28 @@ public class ServiceProviderController {
 
     @GetMapping("/dashboard")
     public String getServiceProviderDetails( Model model) {
-
-        ServiceProviderDto serviceProviderForDisplayDto = serviceProviderService.getCurrentServiceProvider();
-        model.addAttribute("serviceProvider", serviceProviderForDisplayDto );
+        setServiceProviderForDisplay(model);
         return "serviceprovider-dashboard";
     }
     @GetMapping("/profile")
     public String  createUpdateProfileForm( Model model) {
-        ServiceProviderDto serviceProviderForDisplayDto = serviceProviderService.getCurrentServiceProvider();
-        model.addAttribute("serviceProvider",serviceProviderForDisplayDto );
+        setServiceProviderForDisplay(model);
         return "serviceprovider-profile-edit";
 
     }
     @GetMapping("/tasks/pending-tasks")
     public String  getAllTask(Model model) {
-        ServiceProviderDto serviceProviderForDisplayDto = serviceProviderService.getCurrentServiceProvider();
         List<PendingTaskDto> pendingTaskDtoList = taskService.getPendingTask();
-        model.addAttribute("serviceProvider", serviceProviderForDisplayDto);
+        setServiceProviderForDisplay(model);
         model.addAttribute("taskList",pendingTaskDtoList);
         return "serviceprovider-tasks-list";
     }
 
     @GetMapping("/tasks")
     public String getServiceProviderTasks(Model model) {
-        ServiceProviderDto serviceProviderForDisplayDto = serviceProviderService.getCurrentServiceProvider();
         List<TaskDto> taskDtoList = taskService.findTaskByServiceProvider(
                 serviceProviderService.getCurrentServiceProvider().getId());
-        model.addAttribute("serviceProvider", serviceProviderForDisplayDto);
+        setServiceProviderForDisplay(model);
         model.addAttribute("taskList", taskDtoList);
         return "serviceprovider-tasks-list";
     }
@@ -77,6 +72,10 @@ public class ServiceProviderController {
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
         }
+    }
+
+    private void setServiceProviderForDisplay (Model model) {
+        model.addAttribute("serviceProvider", serviceProviderService.getCurrentServiceProvider());
     }
 
 }
