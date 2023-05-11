@@ -4,6 +4,9 @@
     <title>Service Provider Task List</title>
 
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+    <link th:href="@{/vendor/datatables/searchPanes.bootstrap4.min.css}" rel="stylesheet">
+    <link th:href="@{/vendor/datatables/select.bootstrap4.min.css}" rel="stylesheet">
+
 </head>
 
 <body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
@@ -94,7 +97,11 @@
     </div>
 
     <script type="text/javascript" th:src="@{/vendor/datatables/jquery.dataTables.min.js}" defer></script>
+    <script type="text/javascript" th:src="@{/vendor/datatables/dataTables.searchPanes.min.js}" defer></script>
+    <script type="text/javascript" th:src="@{/vendor/datatables/dataTables.select.min.js}" defer></script>
     <script type="text/javascript" th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}" defer></script>
+    <script type="text/javascript" th:src="@{/vendor/datatables/searchPanes.bootstrap4.min.js}" defer></script>
+    <script type="text/javascript" th:src="@{/vendor/datatables/select.bootstrap4.min.js}" defer></script>
     <script type="text/javascript" th:src="@{/js/table-tasks-serviceprovider.js}" defer></script>
 
 </section>
