@@ -17,6 +17,7 @@ public interface TaskService {
 
     List<PendingTaskDto> getPendingTask();
 
+    List<PendingTaskDto> getPendingTaskByClient();
 
     List<TaskDto> getOngoingTask();
 

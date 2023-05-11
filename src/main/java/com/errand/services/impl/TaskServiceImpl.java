@@ -65,6 +65,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<PendingTaskDto> getPendingTaskByClient() {
+        List<Task> pendingTasks = taskRepository.searchTasksByClientAndStatus(clientService.getCurrentClient(), "PENDING");
+        return pendingTasks.stream().map((pendingTask) ->
+                        taskMapper.mapToPendingTaskDto(pendingTask))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<TaskDto> getOngoingTask() {
         List<Task> ongoingTasks = taskRepository.searchTasksByStatus("ONGOING");
         return ongoingTasks.stream().map((tasks) ->

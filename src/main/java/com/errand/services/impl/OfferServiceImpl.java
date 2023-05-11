@@ -47,6 +47,7 @@ public class OfferServiceImpl implements OfferService {
         offerRepository.save(offer);
 
         //Set the Task Status to Ongoing
+        task.setOfferId(offerId);
         taskService.setStatusToOngoing(task);
     }
 

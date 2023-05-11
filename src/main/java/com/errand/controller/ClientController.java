@@ -1,5 +1,6 @@
 package com.errand.controller;
 
+import com.errand.dto.PendingTaskDto;
 import com.errand.dto.TaskDto;
 
 import com.errand.models.Offer;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 import static com.errand.mapper.TaskMapper.mapToTask;
 
@@ -40,7 +42,9 @@ public class ClientController {
 
     @GetMapping("/dashboard")
     public String getClientDashboard(Model model){
+        BigDecimal pendingTaskCount = new BigDecimal(taskService.getPendingTaskByClient().size());
         model.addAttribute("client", clientService.getCurrentClient());
+        model.addAttribute("pendingTaskCount", pendingTaskCount);
         return "client-dashboard";
     }
 
