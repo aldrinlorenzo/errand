@@ -59,11 +59,13 @@ public class ServiceProviderController {
             return "error";
         }
     }
-    @GetMapping("/task")
-    public String  getAllTask( Model model) {
+    @GetMapping("/tasks")
+    public String  getAllTask(Model model) {
+        ServiceProviderDto serviceProviderForDisplayDto = serviceProviderService.getCurrentServiceProvider();
         List<PendingTaskDto> pendingTaskDtoList = taskService.getPendingTask();
-        model.addAttribute("serviceProvider",pendingTaskDtoList );
-        return "serviceprovider-task";
+        model.addAttribute("serviceProvider", serviceProviderForDisplayDto);
+        model.addAttribute("pendingTaskList",pendingTaskDtoList);
+        return "serviceprovider-tasks-list";
 
     }
 
