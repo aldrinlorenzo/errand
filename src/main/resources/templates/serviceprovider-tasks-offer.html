@@ -1,0 +1,94 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Service Provider Dashboard</title>
+</head>
+
+<body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<div layout:fragment="profile-name">
+    <span class="mr-2 d-none d-lg-inline text-gray-600 small"
+          th:text="${serviceProvider.firstName + ' ' + serviceProvider.lastName + ' (ServiceProvider)'}"></span>
+</div>
+
+<!-- Sidebar Navigation -->
+<section layout:fragment="sidebar-item" class="py-2">
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item active">
+        <a class="nav-link" th:href="@{/serviceProvider/dashboard}">
+
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Tasks
+    </div>
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/serviceProvider/task}">
+            <i class="fas fa-fw fa-briefcase"></i>
+            <span>New Request</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/serviceProvider/task}">
+            <i class="fas fa-fw fa-briefcase"></i>
+            <span>Task List</span>
+        </a>
+    </li>
+</section>
+
+<section layout:fragment="body" class="px-3 py-1">
+
+    <div class="container">
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Create Offer </h6>
+            </div>
+            <div class="card-body">
+
+                <form role="form" method="post" th:action="@{/serviceProvider/tasks/{taskId}/offers/create(taskId=${taskId})}" th:object="${offer}">
+                    <div class="form-group">
+                        <label for="price">Offer Price</label>
+                        <input type="number"
+                               class="form-control"
+                               id="price"
+                               th:field="*{price}"
+                               required="required"
+                        >
+                        <p th:if="${#fields.hasErrors('price')}" class="text-danger" th:errors="*{price}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Offer Description</label>
+                        <textarea
+                                class="form-control"
+                                id="description"
+                                rows="3"
+                                th:field="*{description}"
+                                required="required"
+                        >
+            </textarea>
+                        <p th:if="${#fields.hasErrors('description')}" class="text-danger"
+                           th:errors="*{description}"></p>
+                    </div>
+
+
+                    <div class="d-flex justify-content-end">
+                        <button type="reset" class="btn btn-secondary mx-2">Clear</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

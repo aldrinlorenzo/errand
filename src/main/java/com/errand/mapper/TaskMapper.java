@@ -52,7 +52,7 @@ public class TaskMapper {
         return taskDto;
     }
 
-    public PendingTaskDto toPendingTaskDto(Task task) {
+    public static PendingTaskDto toPendingTaskDto(Task task) {
         return PendingTaskDto.builder()
                 .title(task.getTitle())
                 .description(task.getDescription())
@@ -67,7 +67,7 @@ public class TaskMapper {
                 .build();
     }
 
-    public PendingTaskDto mapToPendingTaskDto(Task task) {
+    public static PendingTaskDto mapToPendingTaskDto(Task task) {
         return PendingTaskDto.builder()
                 .id(task.getId())
                 .title(task.getTitle())

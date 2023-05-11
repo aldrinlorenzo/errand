@@ -36,7 +36,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     public ServiceProviderForUpdateDto getServiceProviderById(Long id) {
         Optional<ServiceProvider> serviceProviderOptional = serviceProviderRepository.findById(id);
         if (serviceProviderOptional.isPresent()) {
-            return serviceProviderMapper.toServiceProviderForUpdateDto(serviceProviderOptional.get());
+            return ServiceProviderMapper.toServiceProviderForUpdateDto(serviceProviderOptional.get());
         } else {
             throw new IllegalArgumentException("Service provider with id " + id + " not found.");
         }
@@ -62,7 +62,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     public List<ServiceProviderDto> getAllServiceProvider() {
         return serviceProviderRepository.findAll()
                 .stream()
-                .map(serviceProviderMapper::toServiceProviderDto)
+                .map(ServiceProviderMapper::toServiceProviderDto)
                 .collect(Collectors.toList());
     }
 
@@ -74,20 +74,20 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
             Users user = userRepository.findFirstByUsername(username);
             serviceProvider = serviceProviderRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("Client not found"));
         }
-        return serviceProviderMapper.toServiceProviderDto(serviceProvider);
+        return ServiceProviderMapper.toServiceProviderDto(serviceProvider);
     }
 
 
     @Override
     public  List<ServiceProviderDto> findByFirstNameIgnoreCase(String name) {
         List<ServiceProvider> serviceProviders = serviceProviderRepository.findByFirstNameIgnoreCase(name);
-        return serviceProviders.stream().map((serviceProvider) -> serviceProviderMapper.toServiceProviderDto(serviceProvider)).collect(Collectors.toList());
+        return serviceProviders.stream().map(ServiceProviderMapper::toServiceProviderDto).collect(Collectors.toList());
     }
 
     @Override
     public  List<ServiceProviderDto> findByLastNameIgnoreCase(String name) {
         List<ServiceProvider> serviceProviders = serviceProviderRepository.findByLastNameIgnoreCase(name);
-        return serviceProviders.stream().map((serviceProvider) -> serviceProviderMapper.toServiceProviderDto(serviceProvider)).collect(Collectors.toList());
+        return serviceProviders.stream().map(ServiceProviderMapper::toServiceProviderDto).collect(Collectors.toList());
     }
 
 

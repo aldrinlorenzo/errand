@@ -1,6 +1,9 @@
 package com.errand.services.impl;
 
+import com.errand.dto.OfferDto;
 import com.errand.dto.TaskDto;
+import com.errand.mapper.OfferMapper;
+import com.errand.mapper.TaskMapper;
 import com.errand.models.Offer;
 import com.errand.models.Task;
 import com.errand.repository.OfferRepository;
@@ -20,6 +23,8 @@ public class OfferServiceImpl implements OfferService {
     private OfferRepository offerRepository;
     private TaskService taskService;
 
+    private OfferMapper offerMapper;
+
     @Autowired
     public OfferServiceImpl(OfferRepository offerRepository, TaskService taskService) {
         this.offerRepository = offerRepository;
@@ -30,6 +35,19 @@ public class OfferServiceImpl implements OfferService {
     public List<Offer> findOffersByTask(Task task) {
         return offerRepository.findOffersByTask(task);
     }
+
+    @Override
+    public Boolean createOffer(OfferDto offerDto) {
+        try {
+            Offer offer = OfferMapper.mapToOffer(offerDto);
+            offerRepository.save(offer);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     @Override
     public void acceptOffer(Long offerId, TaskDto taskDto) {
