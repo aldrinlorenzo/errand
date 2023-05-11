@@ -16,7 +16,8 @@
 <section layout:fragment="sidebar-item" class="py-2">
     <hr class="sidebar-divider my-0">
     <li class="nav-item active">
-        <a class="nav-link" th:href="@{|/serviceProvider/${serviceProviderId}/dashboard|}">
+        <a class="nav-link" th:href="@{/serviceProvider/dashboard}">
+
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
@@ -26,13 +27,13 @@
         Tasks
     </div>
     <li class="nav-item">
-        <a class="nav-link" href="/serviceProvider/tasks/new">
+        <a class="nav-link" th:href="@{/serviceProvider/task}">
             <i class="fas fa-fw fa-briefcase"></i>
             <span>New Request</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" th:href="@{|/serviceProvider/${serviceProviderId}/task|}">
+        <a class="nav-link" th:href="@{/serviceProvider/task}">
             <i class="fas fa-fw fa-briefcase"></i>
             <span>Task List</span>
         </a>
@@ -185,7 +186,7 @@
                                                 th:text="${serviceProvider.businessName}"></span></p>
                                     </div>
                                     <td style="text-align: center">
-                                        <a th:href="@{/serviceProvider/{serviceProviderId}/profile(serviceProviderId=${serviceProviderId})}"
+                                        <a th:href="@{/serviceProvider/profile}"
                                            class="btn btn-warning btn-circle btn-sm">
                                             <i class="fas fa-pen"></i>
                                         </a>
