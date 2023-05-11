@@ -65,10 +65,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<PendingTaskDto> getPendingTaskByClient() {
+    public List<TaskDto> getPendingTaskByClient() {
         List<Task> pendingTasks = taskRepository.searchTasksByClientAndStatus(clientService.getCurrentClient(), "PENDING");
         return pendingTasks.stream().map((pendingTask) ->
-                        taskMapper.mapToPendingTaskDto(pendingTask))
+                        taskMapper.mapToTaskDto(pendingTask))
                 .collect(Collectors.toList());
     }
 
@@ -80,6 +80,14 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<TaskDto> getOngoingTaskByClient() {
+        List<Task> ongoingTasks = taskRepository.searchTasksByClientAndStatus(clientService.getCurrentClient(), "ONGOING");
+        return ongoingTasks.stream()
+                .map((ongoingTask) -> taskMapper.mapToTaskDto(ongoingTask))
+                .collect(Collectors.toList());
+    }
+
     public List<TaskDto> getCompletedTaskOnAdmin() {
         List<Task> completedTasks = taskRepository.searchTasksByStatus("COMPLETED");
         return completedTasks.stream().map((tasks) ->
@@ -88,10 +96,26 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<TaskDto> getCompletedTaskByClient() {
+        List<Task> completedTasks = taskRepository.searchTasksByClientAndStatus(clientService.getCurrentClient(), "COMPLETED");
+        return completedTasks.stream()
+                .map((completedTask) -> taskMapper.mapToTaskDto(completedTask))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<TaskDto> getCancelledTaskOnAdmin() {
         List<Task> cancelledTasks = taskRepository.searchTasksByStatus("CANCELLED");
         return cancelledTasks.stream().map((tasks) ->
                         taskMapper.mapToTaskDto(tasks))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDto> getCancelledTaskByClient() {
+        List<Task> cancelledTasks = taskRepository.searchTasksByClientAndStatus(clientService.getCurrentClient(), "CANCELLED");
+        return cancelledTasks.stream()
+                .map((cancelledTask) -> taskMapper.mapToTaskDto(cancelledTask))
                 .collect(Collectors.toList());
     }
 

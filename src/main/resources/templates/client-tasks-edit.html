@@ -34,6 +34,12 @@
             <span>New Request</span></a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="/client/tasks/board">
+            <i class="fas fa-fw fa-th-large"></i>
+            <span>Board</span></a>
+    </li>
+
     <li class="nav-item active">
         <a class="nav-link" href="/client/tasks">
             <i class="fas fa-fw fa-list"></i>
@@ -143,13 +149,12 @@
 
                     <div class="form-group">
                         <label for="label">Label</label>
-                        <select class="form-control label-select" id="label" name="label" th:field="*{labels}">
+                        <select  class="form-control custom-select" id="label" name="label" th:field="*{labels}">
                             <option value="" disabled selected>Select a label</option>
-                            <option value="1">Food</option>
-                            <option value="2">Software</option>
-                            <option value="3">Hardware</option>
+                            <option th:each="label : ${taskLabels}"
+                                    th:value="${label.id}"
+                                    th:text="${label.name}"></option>
                         </select>
-                        <!--            <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>-->
                     </div>
 
 
