@@ -16,7 +16,7 @@
 <section layout:fragment="sidebar-item" class="py-2">
     <hr class="sidebar-divider my-0">
     <li class="nav-item active">
-        <a class="nav-link" th:href="@{/serviceProvider/{id}(id=${serviceProviderId})/dashboard}">
+        <a class="nav-link" th:href="@{/serviceProvider/dashboard}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
@@ -26,7 +26,7 @@
         Tasks
     </div>
     <li class="nav-item">
-        <a class="nav-link" href="/serviceProvider/tasks/new">
+        <a class="nav-link" th:href="@{/serviceProvider/task}">
             <i class="fas fa-fw fa-briefcase"></i>
             <span>New Request</span>
         </a>
