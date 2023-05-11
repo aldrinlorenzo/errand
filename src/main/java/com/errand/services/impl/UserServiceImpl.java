@@ -1,7 +1,6 @@
 package com.errand.services.impl;
 
-import com.errand.dto.ClientRegistrationDto;
-import com.errand.dto.ServiceProviderRegistrationDto;
+import com.errand.dto.BaseRegistrationDTO;
 import com.errand.models.Client;
 import com.errand.models.Role;
 import com.errand.models.ServiceProvider;
@@ -10,39 +9,34 @@ import com.errand.repository.ClientRepository;
 import com.errand.repository.RoleRepository;
 import com.errand.repository.ServiceProviderRepository;
 import com.errand.repository.UserRepository;
+import com.errand.security.SecurityUtil;
 import com.errand.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.Null;
 import java.util.Arrays;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private ClientRepository clientRepository;
-    private ServiceProviderRepository serviceProviderRepository;
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository,
-                           RoleRepository roleRepository,
-                           ClientRepository clientRepository,
-                           ServiceProviderRepository serviceProviderRepository,
-                           PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.clientRepository = clientRepository;
-        this.serviceProviderRepository = serviceProviderRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private ClientRepository clientRepository;
+    @Autowired
+    private ServiceProviderRepository serviceProviderRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
     @Transactional
-    public void saveUserClient(ClientRegistrationDto registrationDto) {
+    public void saveUserClient(BaseRegistrationDTO registrationDto) {
         Users user = new Users();
         user.setUsername(registrationDto.getUsername());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
@@ -52,17 +46,17 @@ public class UserServiceImpl implements UserService {
 
         Client client = new Client();
         client.setUser(user);
-        client.setFirstName(registrationDto.getClient().getFirstName());
-        client.setLastName(registrationDto.getClient().getLastName());
-        client.setEmail(registrationDto.getClient().getEmail());
-        client.setContactNumber(registrationDto.getClient().getContactNumber());
+        client.setId(user.getId());
+        client.setFirstName(registrationDto.getFirstName());
+        client.setLastName(registrationDto.getLastName());
+        client.setEmail(registrationDto.getEmail());
+        client.setContactNumber(registrationDto.getContactNumber());
         clientRepository.save(client);
     }
 
-
     @Override
     @Transactional
-    public void saveUserServiceProvider(ServiceProviderRegistrationDto registrationDto) {
+    public void saveUserServiceProvider(BaseRegistrationDTO registrationDto) {
         Users user = new Users();
         user.setUsername(registrationDto.getUsername());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
@@ -72,16 +66,31 @@ public class UserServiceImpl implements UserService {
 
         ServiceProvider serviceProvider = new ServiceProvider();
         serviceProvider.setUser(user);
-        serviceProvider.setFirstName(registrationDto.getServiceProvider().getFirstName());
-        serviceProvider.setLastName(registrationDto.getServiceProvider().getLastName());
-        serviceProvider.setEmail(registrationDto.getServiceProvider().getEmail());
-        serviceProvider.setContactNumber(registrationDto.getServiceProvider().getContactNumber());
+        serviceProvider.setId(user.getId());
+        serviceProvider.setFirstName(registrationDto.getFirstName());
+        serviceProvider.setLastName(registrationDto.getLastName());
+        serviceProvider.setEmail(registrationDto.getEmail());
+        serviceProvider.setContactNumber(registrationDto.getContactNumber());
+        serviceProvider.setBusinessName(registrationDto.getBusinessName());
         serviceProviderRepository.save(serviceProvider);
     }
 
 
     @Override
     public Users findByUsername(String username) {
-        return userRepository.findByUsername(username);
+
+        return userRepository.findFirstByUsername(username);
+
     }
+
+    @Override
+    public Users getCurrentUser() {
+        Users user = new Users();
+        String username = SecurityUtil.getSessionUser();
+        if(username != null){
+            user = userRepository.findFirstByUsername(username);
+        }
+        return user;
+    }
+
 }

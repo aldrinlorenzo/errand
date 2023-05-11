@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,7 +14,6 @@ import javax.persistence.*;
 public class ServiceProvider {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String firstName;

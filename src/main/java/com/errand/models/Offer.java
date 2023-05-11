@@ -18,9 +18,11 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private float price;
+    private BigDecimal price;
 
     private String description;
+
+    private String status;
 
     @OneToOne
     @JoinColumn(name = "serviceProviderId")

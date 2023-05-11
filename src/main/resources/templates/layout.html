@@ -4,7 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org"
 >
-<!--layout:decorate="~{layout}"-->
 
 <head>
     <meta charset="utf-8">
@@ -24,10 +23,7 @@
 
 
     <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">ERRAND</title>
-
 </head>
-
-
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -37,29 +33,13 @@
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-            <!--            <div class="sidebar-brand-icon ">-->
-
-            <!--                &lt;!&ndash;                <i class="fas fa-laugh-wink"></i>&ndash;&gt;-->
-            <!--            </div>-->
-            <img src="../assets/img/errandlogo-borderless.png" style="width: 20px; height: auto;" class="mr-2">
+            <img src="/assets/img/errandlogo-borderless.png" style="width: 20px; height: auto;" class="mr-2">
             <div class="sidebar-brand-text ">
                 ERRAND
             </div>
         </a>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
-        </li>
-
-
-
-
+        <body layout:fragment="sidebar-item"></body>
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
@@ -68,7 +48,6 @@
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
-
 
     </ul>
     <!-- End of Sidebar -->
@@ -88,18 +67,6 @@
                 </button>
 
                 <!-- Topbar Search -->
-                <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                               aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -134,9 +101,11 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrator</span>
-                            <img class="img-profile rounded-circle"
-                                 src="assets/img/CHAMP-Logo.jpg">
+                            <div layout:fragment="profile-name"></div>
+
+                            <i class="fas fa-user"></i>
+<!--                            <img class="img-profile rounded-circle"-->
+<!--                                 src="/assets/img/CHAMP-Logo.jpg">-->
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -165,8 +134,6 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-
-
             </div>
             <!-- /.container-fluid -->
 
@@ -174,13 +141,13 @@
         <!-- End of Main Content -->
 
         <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Errand 2023</span>
-                </div>
-            </div>
-        </footer>
+<!--        <footer class="sticky-footer bg-white">-->
+<!--            <div class="container my-auto">-->
+<!--                <div class="copyright text-center my-auto">-->
+<!--                    <span>Copyright &copy; Errand 2023</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </footer>-->
         <!-- End of Footer -->
 
     </div>
@@ -226,11 +193,5 @@
 
 <!-- Page level plugins -->
 <script src="/vendor/chart.js/Chart.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="/js/demo/chart-area-demo.js"></script>
-<script src="/js/demo/chart-pie-demo.js"></script>
-
-
 
 </html>

@@ -5,9 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ServiceProviderDto {
-
-    private Long id;
+public class ServiceProviderForUpdateDto {
 
     private String firstName;
 
@@ -18,7 +16,6 @@ public class ServiceProviderDto {
     private String contactNumber;
 
     private String businessName;
-
 
 
 }

@@ -1,0 +1,115 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+  <title>Service Provider Management</title>
+</head>
+
+<body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<div layout:fragment="profile-name">
+  <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${user.username + ' (Service Provider)'}"></span>
+</div>
+
+<!-- Sidebar Items-->
+<section layout:fragment="sidebar-item" class="py-2">
+
+  <hr class="sidebar-divider my-0">
+
+  <li class="nav-item">
+    <a class="nav-link" href="/admin/dashboard">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Dashboard</span></a>
+  </li>
+
+  <hr class="sidebar-divider">
+
+  <div class="sidebar-heading">
+    Management
+  </div>
+
+  <li class="nav-item">
+    <a class="nav-link" href="/admin/clients">
+      <i class="fas fa-fw fa-user-tie"></i>
+      <span>Clients</span></a>
+  </li>
+
+  <li class="nav-item active">
+    <a class="nav-link" href="/admin/serviceProviders">
+      <i class="fas fa-fw fa-tools"></i>
+      <span>Service Providers</span></a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="/admin/tasks">
+      <i class="fas fa-fw fa-briefcase"></i>
+      <span>Tasks</span></a>
+  </li>
+
+</section>
+
+<!-- Page Content-->
+<section layout:fragment="body" class="py-3">
+  <div class="container-fluid">
+
+    <div class="card shadow mb-4">
+
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Service Provider Management</h6>
+      </div>
+      <br>
+      <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+            th:action="@{/admin/serviceproviders/search}"
+            th:object="${serviceProviders}"
+            method="get">
+        <div class="input-group">
+          <input type="text" class="form-control bg-light border-0 small" placeholder="Search name..."
+                 aria-label="Search" aria-describedby="basic-addon2" name="name">
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+              <i class="fas fa-search fa-sm"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+            <thead>
+            <tr>
+              <th>ServiceProvider ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Contact Number</th>
+              <th>Business Name</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody th:each="serviceProvider :${serviceProviders}">
+            <tr>
+              <td th:text="${serviceProvider.id}"></td>
+              <td th:text="${serviceProvider.firstName}"></td>
+              <td th:text="${serviceProvider.lastName}"></td>
+              <td th:text="${serviceProvider.email}"></td>
+              <td th:text="${serviceProvider.contactNumber}"></td>
+              <td th:text="${serviceProvider.businessName}"></td>
+              <td><button class="btn btn-primary">View Task</button></td>
+            </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+</body>
+</html>

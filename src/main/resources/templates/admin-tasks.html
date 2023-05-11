@@ -1,0 +1,101 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+  <title>Tasks Management</title>
+</head>
+<body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
+
+  <div layout:fragment="profile-name">
+    <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${user.username + ' (Administrator)'}"></span>
+  </div>
+
+  <section layout:fragment="sidebar-item" class="py-2">
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/dashboard">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Dashboard</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <div class="sidebar-heading">
+      Management
+    </div>
+
+    <li  class="nav-item">
+      <a class="nav-link" href="/admin/clients">
+        <i class="fas fa-fw fa-user-tie"></i>
+        <span>Clients</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/serviceProviders">
+        <i class="fas fa-fw fa-tools"></i>
+        <span>Service Providers</span></a>
+    </li>
+
+    <li class="nav-item active">
+      <a class="nav-link" href="/admin/tasks">
+        <i class="fas fa-fw fa-briefcase"></i>
+        <span>Tasks</span></a>
+    </li>
+
+  </section>
+  <!-- Page Content-->
+  <section layout:fragment="body" class="py-3">
+
+    <div class="container-fluid">
+
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Tasks Management</h6>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <a class="btn btn-primary" th:href="@{/admin/tasks}">View All Tasks</a>
+            <a class="btn btn-warning" th:href="@{/admin/tasks/pending-tasks}">View Pending Tasks</a>
+            <a class="btn btn-success" th:href="@{/admin/tasks/ongoing-tasks}">View Ongoing Tasks</a>
+            <a class="btn btn-dark" th:href="@{/admin/tasks/completed-tasks}">View Completed Tasks</a>
+            <a class="btn btn-danger" th:href="@{/admin/tasks/cancelled-tasks}">View Cancelled Tasks</a>
+            <table class="table table-bordered" id="dataTable" STYLE="width='100%'; cellspacing='0'" >
+              <thead>
+              <tr>
+                <th>Task ID</th>
+                <th>Title</th>
+                <th>Descriptions</th>
+                <th>Budget</th>
+                <th>Created Date</th>
+                <th>Target Date</th>
+                <th>Location</th>
+                <th>Created By</th>
+                <th>Status</th>
+              </tr>
+              </thead>
+              <tbody th:each="task :${tasks}">
+              <tr>
+                <td th:text="${task.id}"></td>
+                <td th:text="${task.title}"></td>
+                <td th:text="${task.description}"></td>
+                <td th:text="${task.budget}"></td>
+                <td th:text="${task.createdDate}"></td>
+                <td th:text="${task.targetDate}"></td>
+                <td th:text="${task.street+', '+task.city+', '+task.postalCode}"></td>
+                <td th:text="${task.createdBy}"></td>
+                <td th:text="${task.Status}"></td>
+
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</body>
+</html>

@@ -1,14 +1,19 @@
 package com.errand.services;
 
-import com.errand.dto.ClientRegistrationDto;
-import com.errand.dto.ServiceProviderRegistrationDto;
+import com.errand.dto.BaseRegistrationDTO;
+import com.errand.models.Client;
 import com.errand.models.Users;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface UserService {
 
-    void saveUserClient(ClientRegistrationDto clientRegistrationDto);
+    void saveUserClient(BaseRegistrationDTO clientRegistrationDto);
 
-    void saveUserServiceProvider(ServiceProviderRegistrationDto serviceProviderRegistrationDto);
+    void saveUserServiceProvider(BaseRegistrationDTO serviceProviderRegistrationDto);
 
     Users findByUsername(String username);
+
+    Users getCurrentUser();
+
 }

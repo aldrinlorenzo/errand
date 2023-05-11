@@ -3,14 +3,13 @@
       xmlns:th="http://thymeleaf.org">
 
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Register</title>
+  <title>Errand Service Provider Registration</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -20,7 +19,6 @@
 
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin-2.css" rel="stylesheet">
-
 </head>
 
 <body class="bg-errand">
@@ -45,7 +43,7 @@
                   <input type="text"
                          class="form-control"
                          placeholder="First name"
-                         th:field="*{serviceProvider.firstName}"
+                         th:field="*{firstName}"
                          required="required"
                   >
                 </div>
@@ -53,7 +51,7 @@
                   <input type="text"
                          class="form-control"
                          placeholder="Last name"
-                         th:field="*{serviceProvider.lastName}"
+                         th:field="*{lastName}"
                          required="required"
                   >
                 </div>
@@ -62,14 +60,15 @@
                 <input type="text"
                        class="form-control"
                        placeholder="Contact Number"
-                       th:field="*{serviceProvider.contactNumber}"
+                       th:field="*{contactNumber}"
+                       required="required"
                 >
               </div>
               <div class="form-group">
-                <input type="text"
+                <input type="email"
                        class="form-control"
                        placeholder="Email"
-                       th:field="*{serviceProvider.email}"
+                       th:field="*{email}"
                        required="required"
                 >
               </div>
@@ -91,7 +90,23 @@
                   >
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary btn-user btn-block" th:href="@{/register}">
+              <div class="form-group">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Business Name (Optional)"
+                       th:field="*{businessName}"
+                >
+              </div>
+              <div th:if="${#fields.hasErrors()}">
+                <div class="alert alert-danger">
+                  <ul>
+                    <li th:each="err : ${#fields.errors()}">
+                      <span th:text="${err}"></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-user btn-block">
                 Register Account
               </button>
               <hr>
@@ -108,15 +123,14 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="../../../../../Desktop/startbootstrap-sb-admin-2-gh-pages/vendor/jquery/jquery.min.js"></script>
-<script src="../../../../../Desktop/startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="../../../../../Desktop/startbootstrap-sb-admin-2-gh-pages/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="../../../../../Desktop/startbootstrap-sb-admin-2-gh-pages/js/sb-admin-2.min.js"></script>
+<script src="/js/sb-admin-2.min.js"></script>
 
 </body>
-
 </html>

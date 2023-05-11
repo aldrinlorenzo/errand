@@ -39,11 +39,12 @@ public class AdminSeeder implements CommandLineRunner {
         if (userRepository.count() == 0) {
             Role adminRole = roleRepository.findByName("ADMIN");
             Users adminUser = new Users();
+
             adminUser.setUsername("admin");
             adminUser.setPassword(encoder.encode("admin"));
             adminUser.setRoles(Collections.singletonList(adminRole));
-
             userRepository.save(adminUser);
         }
     }
+
 }
