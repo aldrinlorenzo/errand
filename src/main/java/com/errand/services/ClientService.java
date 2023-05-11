@@ -10,9 +10,9 @@ public interface ClientService {
 
     Optional<Client> findById(Long id);
 
-    Client findByFirstName(String firstName);
+    List<ClientDto> findByFirstNameIgnoreCase(String firstName);
 
-    Client findByLastName(String lastName);
+    List<ClientDto> findByLastNameIgnoreCase(String lastName);
 
     List<ClientDto> findAllClients();
 

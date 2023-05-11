@@ -75,7 +75,20 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
             serviceProvider = serviceProviderRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("Client not found"));
         }
         return serviceProviderMapper.toServiceProviderDto(serviceProvider);
-
-
     }
+
+
+    @Override
+    public  List<ServiceProviderDto> findByFirstNameIgnoreCase(String name) {
+        List<ServiceProvider> serviceProviders = serviceProviderRepository.findByFirstNameIgnoreCase(name);
+        return serviceProviders.stream().map((serviceProvider) -> serviceProviderMapper.toServiceProviderDto(serviceProvider)).collect(Collectors.toList());
+    }
+
+    @Override
+    public  List<ServiceProviderDto> findByLastNameIgnoreCase(String name) {
+        List<ServiceProvider> serviceProviders = serviceProviderRepository.findByLastNameIgnoreCase(name);
+        return serviceProviders.stream().map((serviceProvider) -> serviceProviderMapper.toServiceProviderDto(serviceProvider)).collect(Collectors.toList());
+    }
+
+
 }

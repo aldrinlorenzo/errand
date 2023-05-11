@@ -16,6 +16,9 @@ public interface ServiceProviderService {
 
     Boolean updateServiceProviderDetails(ServiceProviderDto serviceProviderDto, Long id);
 
+    List<ServiceProviderDto> findByFirstNameIgnoreCase(String name);
+
+    List<ServiceProviderDto> findByLastNameIgnoreCase(String name);
 
     List<ServiceProviderDto> getAllServiceProvider();
 

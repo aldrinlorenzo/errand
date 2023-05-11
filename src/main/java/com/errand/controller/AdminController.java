@@ -4,6 +4,11 @@ import com.errand.dto.ClientDto;
 import com.errand.dto.PendingTaskDto;
 import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.TaskDto;
+
+import com.errand.models.Client;
+import com.errand.models.ServiceProvider;
+import com.errand.models.Task;
+
 import com.errand.models.Users;
 import com.errand.security.SecurityUtil;
 import com.errand.services.ClientService;
@@ -15,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -65,6 +71,8 @@ public class AdminController {
         return "admin-clients";
 
     }
+
+
 
     @GetMapping("/tasks")
     public String getAllTasks(Model model){
@@ -118,6 +126,30 @@ public class AdminController {
         }
         model.addAttribute("user", user);
         model.addAttribute("serviceProviders", serviceProviders);
+        return "admin-serviceproviders";
+    }
+
+    @GetMapping("/clients/search")
+    public String getAdminClientsByName(@RequestParam("name")String name, Model model){
+        List<ClientDto> clients = clientService.findByFirstNameIgnoreCase(name);
+        if(clients == null || clients.isEmpty()){
+            clients = clientService.findByLastNameIgnoreCase(name);
+        }
+        model.addAttribute("user", userService.getCurrentUser());
+        model.addAttribute("clients", clients);
+
+        return "admin-clients";
+    }
+
+    @GetMapping("/serviceproviders/search")
+    public String getAdminServiceProvidersByName(@RequestParam("name")String name, Model model){
+        List<ServiceProviderDto> serviceProviders = serviceProviderService.findByFirstNameIgnoreCase(name);
+        if(serviceProviders == null || serviceProviders.isEmpty()){
+            serviceProviders = serviceProviderService.findByLastNameIgnoreCase(name);
+        }
+        model.addAttribute("user", userService.getCurrentUser());
+        model.addAttribute("serviceProviders", serviceProviders);
+
         return "admin-serviceproviders";
     }
 
