@@ -32,7 +32,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" th:href="@{serviceProvider/{id}(id=${serviceProviderId})/task}">
+        <a class="nav-link" th:href="@{serviceProvider/task}">
             <i class="fas fa-fw fa-briefcase"></i>
             <span>Task List</span>
         </a>
@@ -50,7 +50,7 @@
             <div class="card-body">
 
                 <form role="form" method="post"
-                      th:action="@{/serviceProvider/{serviceProviderId}/profile/save(serviceProviderId=${serviceProviderId})}"
+                      th:action="@{/serviceProvider/profile/save}"
                       th:object="${serviceProvider}">
                     <div class="form-group">
                         <label for="title">First Name</label>

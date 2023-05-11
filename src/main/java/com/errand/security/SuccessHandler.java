@@ -41,8 +41,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
         } else if (authoritiesRole.contains(new SimpleGrantedAuthority("CLIENT"))){
             redirectStrategy.sendRedirect(request, response, "/client/dashboard");
         } else if(authoritiesRole.contains(new SimpleGrantedAuthority("SERVICE_PROVIDER"))){
-           Long serviceProviderId =  userService.findByUsername(authoritiesName).getId();
-            redirectStrategy.sendRedirect(request, response, "/serviceProvider/" + serviceProviderId + "/dashboard");
+            redirectStrategy.sendRedirect(request, response, "/serviceProvider/dashboard");
         }
     }
 
