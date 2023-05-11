@@ -42,6 +42,25 @@ public class ServiceProviderController {
         return "serviceprovider-profile-edit";
 
     }
+    @GetMapping("/tasks/pending-tasks")
+    public String  getAllTask(Model model) {
+        ServiceProviderDto serviceProviderForDisplayDto = serviceProviderService.getCurrentServiceProvider();
+        List<PendingTaskDto> pendingTaskDtoList = taskService.getPendingTask();
+        model.addAttribute("serviceProvider", serviceProviderForDisplayDto);
+        model.addAttribute("taskList",pendingTaskDtoList);
+        return "serviceprovider-tasks-list";
+    }
+
+    @GetMapping("/tasks")
+    public String getServiceProviderTasks(Model model) {
+        ServiceProviderDto serviceProviderForDisplayDto = serviceProviderService.getCurrentServiceProvider();
+        List<TaskDto> taskDtoList = taskService.findTaskByServiceProvider(
+                serviceProviderService.getCurrentServiceProvider().getId());
+        model.addAttribute("serviceProvider", serviceProviderForDisplayDto);
+        model.addAttribute("taskList", taskDtoList);
+        return "serviceprovider-tasks-list";
+    }
+
     @PostMapping("/profile/save")
     public String updateServiceProviderDetails( ServiceProviderDto serviceProviderDto, Model model) {
         try {
@@ -58,15 +77,6 @@ public class ServiceProviderController {
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
         }
-    }
-    @GetMapping("/tasks")
-    public String  getAllTask(Model model) {
-        ServiceProviderDto serviceProviderForDisplayDto = serviceProviderService.getCurrentServiceProvider();
-        List<PendingTaskDto> pendingTaskDtoList = taskService.getPendingTask();
-        model.addAttribute("serviceProvider", serviceProviderForDisplayDto);
-        model.addAttribute("pendingTaskList",pendingTaskDtoList);
-        return "serviceprovider-tasks-list";
-
     }
 
 }

@@ -1,3 +1,7 @@
 $(document).ready( function() {
-    $('#tasksTable').DataTable();
+    $('#tasksTable').DataTable({
+        columnDefs: [
+            { orderable: false, targets: 8 }
+        ]
+    });
 });
