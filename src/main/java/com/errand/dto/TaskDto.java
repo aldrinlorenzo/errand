@@ -4,7 +4,11 @@ import com.errand.models.Label;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.beans.factory.annotation.Required;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,22 +23,32 @@ public class TaskDto {
 
     private Long id;
 
+    @NotNull
+    @Pattern(regexp = "^(?!\\s*$)[a-zA-Z0-9!@#\\$%\\^\\&*\\)\\(+=._ -]+$", message = "Invalid Title")
     private String title;
-
+    @NotNull
+    @Pattern(regexp = "^(?!\\s*$)[a-zA-Z0-9!@#\\$%\\^\\&*\\)\\(+=._ -]+$", message = "Invalid Description")
     private String description;
 
     private BigDecimal budget;
 
+    @NotNull
+    @NotBlank
     private String street;
 
+    @NotNull
+    @NotBlank
     private String city;
 
+    @NotNull
     private BigDecimal postalCode;
 
     private String status;
 
     private Long offerId;
 
+    @NotNull
+    @NotBlank
     private String targetDate;
 
     private LocalDateTime completedDate;
@@ -43,6 +57,7 @@ public class TaskDto {
 
     private LocalDateTime modifiedDate;
 
+    @NotNull
     private Set<Label> labels;
 
     private String createdBy;

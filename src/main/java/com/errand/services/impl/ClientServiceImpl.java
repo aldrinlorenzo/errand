@@ -34,13 +34,15 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client findByFirstName(String firstName) {
-        return clientRepository.findByFirstName(firstName);
+    public List<ClientDto> findByFirstNameIgnoreCase(String firstName) {
+        List<Client> clients = clientRepository.findByFirstNameIgnoreCase(firstName);
+        return clients.stream().map((client) -> mapToClientDto(client)).collect(Collectors.toList());
     }
 
     @Override
-    public Client findByLastName(String lastName) {
-        return clientRepository.findByLastName(lastName);
+    public List<ClientDto> findByLastNameIgnoreCase(String lastName) {
+        List<Client> clients = clientRepository.findByLastNameIgnoreCase(lastName);
+        return clients.stream().map((client) -> mapToClientDto(client)).collect(Collectors.toList());
     }
 
     @Override

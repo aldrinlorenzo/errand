@@ -1,5 +1,7 @@
 package com.errand.repository;
 
+import com.errand.dto.ServiceProviderDto;
+import com.errand.models.Client;
 import com.errand.models.ServiceProvider;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,10 +9,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 
 public interface ServiceProviderRepository extends JpaRepository<ServiceProvider, Long> {
 
-    ServiceProvider findByFirstName(String firstName);
+    List<ServiceProvider> findByFirstNameIgnoreCase(String firstName);
 
 
     ServiceProvider findByLastName(String lastName);
@@ -21,4 +25,5 @@ public interface ServiceProviderRepository extends JpaRepository<ServiceProvider
                            @Param("email") String email, @Param("contactNumber") String contactNumber,
                            @Param("businessName") String businessName,
                            @Param("serviceProviderId") Long id);
+    List<ServiceProvider> findByLastNameIgnoreCase(String lastName);
 }
