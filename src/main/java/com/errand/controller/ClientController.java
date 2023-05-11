@@ -1,5 +1,6 @@
 package com.errand.controller;
 
+import com.errand.dto.ClientDto;
 import com.errand.dto.PendingTaskDto;
 import com.errand.dto.TaskDto;
 
@@ -52,6 +53,12 @@ public class ClientController {
         model.addAttribute("completedTaskCount", completedTaskCount);
         model.addAttribute("cancelledTaskCount", cancelledTaskCount);
         return "client-dashboard";
+    }
+
+    @GetMapping("/profile")
+    public String getClientProfile(Model model){
+        model.addAttribute("client", clientService.getCurrentClient());
+        return "client-profile";
     }
 
     @GetMapping("/tasks/board")
@@ -144,5 +151,19 @@ public class ClientController {
         taskService.updateTask(task, clientService.getCurrentClient());
         return "redirect:/client/tasks";
     }
+
+    @PostMapping("/profile/{clientId}/edit")
+    public String updateTask(@PathVariable("clientId") Long clientId,
+                             @Valid @ModelAttribute("client") ClientDto client,
+                             BindingResult result, Model model){
+        if(result.hasErrors()){
+            model.addAttribute("client", client);
+            return "client-profile";
+        }
+        clientService.updateClient(client);
+        return "redirect:/client/profile";
+    }
+
+
 
 }

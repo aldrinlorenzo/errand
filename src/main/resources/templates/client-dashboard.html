@@ -12,6 +12,13 @@
         <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${client.firstName + ' ' + client.lastName + ' (Client)'}"></span>
     </div>
 
+    <div layout:fragment="view-profile">
+        <a class="dropdown-item" href="/client/profile">
+            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+            Profile
+        </a>
+    </div>
+
     <section layout:fragment="sidebar-item" class="py-2">
 
         <hr class="sidebar-divider my-0">
@@ -127,6 +134,8 @@
             </div>
 
         </div>
+
+
 
     </section>
 

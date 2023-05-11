@@ -18,4 +18,6 @@ public interface ClientService {
 
     Client getCurrentClient();
 
+    void updateClient(ClientDto clientDto);
+
 }

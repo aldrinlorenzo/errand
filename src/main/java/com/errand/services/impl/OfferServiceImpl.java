@@ -76,4 +76,5 @@ public class OfferServiceImpl implements OfferService {
         offer.setStatus("REJECTED");
         offerRepository.save(offer);
     }
+
 }

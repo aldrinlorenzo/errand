@@ -2,6 +2,7 @@ package com.errand.services.impl;
 
 import com.errand.dto.ClientDto;
 import com.errand.models.Client;
+import com.errand.models.Task;
 import com.errand.models.Users;
 import com.errand.repository.ClientRepository;
 import com.errand.repository.UserRepository;
@@ -14,7 +15,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.errand.mapper.ClientMapper.mapToClient;
 import static com.errand.mapper.ClientMapper.mapToClientDto;
+import static com.errand.mapper.TaskMapper.mapToTask;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -63,6 +66,14 @@ public class ClientServiceImpl implements ClientService {
 
         }
         return client;
+    }
+
+    @Override
+    public void updateClient(ClientDto clientDto) {
+        Client client = mapToClient(clientDto);
+        client.setId(getCurrentClient().getId());
+        client.setUser(getCurrentClient().getUser());
+        clientRepository.save(client);
     }
 
 }
