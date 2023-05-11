@@ -45,6 +45,7 @@ public class TaskMapper {
                 .offerId(task.getOfferId())
                 .targetDate(task.getTargetDate().format(DateTimeFormatter.ISO_DATE))
                 .completedDate(task.getCompletedDate())
+                .labels(task.getLabels())
                 .createdDate(task.getCreatedDate())
                 .modifiedDate(task.getModifiedDate())
                 .build();

@@ -9,5 +9,5 @@ import java.util.Set;
 @Service
 public interface LabelService {
 
-    Set<Label> findAllTasks();
+    Set<Label> findAllLabels();
 }

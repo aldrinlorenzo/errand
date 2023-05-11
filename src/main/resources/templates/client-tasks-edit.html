@@ -150,10 +150,10 @@
                     <div class="form-group">
                         <label for="label">Label</label>
                         <select  class="form-control custom-select" id="label" name="label" th:field="*{labels}">
-                            <option value="" disabled selected>Select a label</option>
                             <option th:each="label : ${taskLabels}"
                                     th:value="${label.id}"
-                                    th:text="${label.name}"></option>
+                                    th:text="${label.name}">
+                            </option>
                         </select>
                     </div>
 

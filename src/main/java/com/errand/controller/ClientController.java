@@ -56,9 +56,8 @@ public class ClientController {
 
     @GetMapping("/tasks/board")
     public String getClientBoard(Model model){
-//        BigDecimal pendingTaskCount = new BigDecimal(taskService.getPendingTaskByClient().size());
         model.addAttribute("client", clientService.getCurrentClient());
-//        model.addAttribute("pendingTaskCount", pendingTaskCount);
+        model.addAttribute("pendingTasks", taskService.getPendingTaskByClient());
         return "client-tasks-board";
     }
 
@@ -73,7 +72,7 @@ public class ClientController {
     @GetMapping("/tasks/new")
     public String createTaskForm(Model model){
         Task task = new Task();
-        model.addAttribute("taskLabels", labelService.findAllTasks());
+        model.addAttribute("taskLabels", labelService.findAllLabels());
         model.addAttribute("client", clientService.getCurrentClient());
         model.addAttribute("task", task);
         return "client-tasks-create";
@@ -82,7 +81,7 @@ public class ClientController {
     @GetMapping("/tasks/{taskId}/edit")
     public String editTaskForm(@PathVariable("taskId") Long taskId, Model model){
         TaskDto task = taskService.findTaskById(taskId);
-        model.addAttribute("taskLabels", labelService.findAllTasks());
+        model.addAttribute("taskLabels", labelService.findAllLabels());
         model.addAttribute("client", clientService.getCurrentClient());
         model.addAttribute("task", task);
         return "client-tasks-edit";

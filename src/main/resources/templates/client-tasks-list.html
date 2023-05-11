@@ -69,6 +69,7 @@
                             <th>Created Date</th>
                             <th>Target Date</th>
                             <th>Location</th>
+                            <th>Label</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -82,6 +83,14 @@
                             <td th:text="${task.createdDate}"></td>
                             <td th:text="${task.targetDate}"></td>
                             <td th:text="${task.street+', '+task.city+', '+task.postalCode}"></td>
+
+                            <th:block th:if="${not #sets.isEmpty(task.labels)}" th:each="label : ${task.labels}">
+                                <td th:text="${label.name}"></td>
+                            </th:block>
+                            <th:block th:unless="${not #sets.isEmpty(task.labels)}">
+                                <td></td>
+                            </th:block>
+
                             <td th:text="${task.status}"></td>
                             <td style="text-align: center; white-space: nowrap;">
                                 <a th:href="@{/client/tasks/{taskId}/offers(taskId=${task.id})}"

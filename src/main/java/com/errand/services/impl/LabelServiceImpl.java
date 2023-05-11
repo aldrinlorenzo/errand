@@ -21,7 +21,7 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
-    public Set<Label> findAllTasks() {
+    public Set<Label> findAllLabels() {
         return new HashSet<>(labelRepository.findAll());
     }
 

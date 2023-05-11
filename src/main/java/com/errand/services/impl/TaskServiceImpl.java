@@ -128,6 +128,7 @@ public class TaskServiceImpl implements TaskService {
         Task task = mapToTask(taskDto);
         task.setStatus("PENDING");
         task.setClient(client);
+        task.setLabels(taskDto.getLabels());
         return taskRepository.save(task);
     }
 
@@ -147,6 +148,7 @@ public class TaskServiceImpl implements TaskService {
     public void updateTask(TaskDto taskDto, Client client) {
         Task task = mapToTask(taskDto);
         task.setClient(client);
+        task.setLabels(taskDto.getLabels());
         taskRepository.save(task);
     }
 
