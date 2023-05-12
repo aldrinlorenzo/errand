@@ -1,7 +1,6 @@
 package com.errand.controller;
 
 import com.errand.dto.ClientDto;
-import com.errand.dto.PendingTaskDto;
 import com.errand.dto.RatingDto;
 import com.errand.dto.TaskDto;
 
@@ -14,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
