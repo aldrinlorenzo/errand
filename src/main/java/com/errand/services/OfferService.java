@@ -13,7 +13,11 @@ public interface OfferService {
 
     List<Offer> findOffersByTask(Task task);
 
+    Boolean isOfferExist(Long taskId , Long serviceProviderId);
+
     Boolean createOffer(OfferDto offerDto);
+
+    Boolean updateOffer(OfferDto offerDto);
 
     void acceptOffer(Long offerId, TaskDto taskDto);
 

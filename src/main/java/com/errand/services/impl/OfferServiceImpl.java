@@ -37,10 +37,44 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
+    public Boolean isOfferExist(Long taskId, Long serviceProviderId) {
+        return offerRepository.findOfferByTaskAndServiceProvider(taskId, serviceProviderId) != null;
+    }
+
+
+    @Override
     public Boolean createOffer(OfferDto offerDto) {
         try {
+            // if exist  return false
+            if (isOfferExist(offerDto.getTaskDto().getId(), offerDto.getServiceProviderDto().getId())) {
+                return false; // Offer already exists
+            }
+            // Create a new offer
             Offer offer = OfferMapper.mapToOffer(offerDto);
             offerRepository.save(offer);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean updateOffer(OfferDto offerDto) {
+        try {
+            Offer existingOffer = offerRepository.findOfferByTaskAndServiceProvider(
+                    offerDto.getTaskDto().getId(),
+                    offerDto.getServiceProviderDto().getId());
+
+            //If offer does not exist -> return false
+            if (existingOffer == null) {
+                return false;
+            }
+            // Update the existing offer
+            existingOffer.setPrice(offerDto.getPrice());
+            existingOffer.setDescription(offerDto.getDescription());
+            existingOffer.setStatus(offerDto.getStatus());
+            offerRepository.save(existingOffer);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
