@@ -1,8 +1,10 @@
 package com.errand.services.impl;
 
 import com.errand.dto.OfferDto;
+import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.TaskDto;
 import com.errand.mapper.OfferMapper;
+import com.errand.mapper.ServiceProviderMapper;
 import com.errand.mapper.TaskMapper;
 import com.errand.models.Offer;
 import com.errand.models.Task;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.errand.mapper.TaskMapper.mapToTask;
 
@@ -34,6 +37,18 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public List<Offer> findOffersByTask(Task task) {
         return offerRepository.findOffersByTask(task);
+    }
+
+    @Override
+    public OfferDto findOfferByTaskIdAndServiceProviderId(Long taskId, Long serviceProviderId) {
+        Offer offer = offerRepository.findOfferByTaskAndServiceProvider(taskId, serviceProviderId);
+        return OfferMapper.mapToOfferDto(offer);
+    }
+
+    @Override
+    public List<OfferDto> findOfferByServiceProvider(ServiceProviderDto serviceProviderDto) {
+        List<Offer> offerList = offerRepository.findByServiceProvider(ServiceProviderMapper.toServiceProvider(serviceProviderDto));
+        return offerList.stream().map(OfferMapper::mapToOfferDto).collect(Collectors.toList());
     }
 
     @Override
@@ -62,9 +77,7 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public Boolean updateOffer(OfferDto offerDto) {
         try {
-            Offer existingOffer = offerRepository.findOfferByTaskAndServiceProvider(
-                    offerDto.getTaskDto().getId(),
-                    offerDto.getServiceProviderDto().getId());
+            Offer existingOffer = offerRepository.findOfferByTaskAndServiceProvider(offerDto.getTaskDto().getId(), offerDto.getServiceProviderDto().getId());
 
             //If offer does not exist -> return false
             if (existingOffer == null) {
@@ -89,7 +102,7 @@ public class OfferServiceImpl implements OfferService {
         //Reject offers except accepted offer
         List<Offer> offers = offerRepository.findOffersByTask(task);
         for (Offer offer : offers) {
-            if (offer.getId() != offerId){
+            if (offer.getId() != offerId) {
                 rejectOffer(offer.getId());
             }
         }

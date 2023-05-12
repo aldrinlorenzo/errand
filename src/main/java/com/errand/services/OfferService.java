@@ -1,6 +1,7 @@
 package com.errand.services;
 
 import com.errand.dto.OfferDto;
+import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.TaskDto;
 import com.errand.models.Offer;
 import com.errand.models.Task;
@@ -12,6 +13,10 @@ import java.util.List;
 public interface OfferService {
 
     List<Offer> findOffersByTask(Task task);
+
+    OfferDto findOfferByTaskIdAndServiceProviderId(Long taskId, Long serviceProviderId);
+
+    List<OfferDto> findOfferByServiceProvider(ServiceProviderDto serviceProviderDto);
 
     Boolean isOfferExist(Long taskId , Long serviceProviderId);
 

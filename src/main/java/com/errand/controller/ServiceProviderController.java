@@ -51,6 +51,11 @@ public class ServiceProviderController {
     public String getAllTask(Model model) {
         List<PendingTaskDto> pendingTaskDtoList = taskService.getPendingTask();
         setServiceProviderForDisplay(model);
+
+       List<OfferDto> offerByServiceProvider= offerService.findOfferByServiceProvider(serviceProviderService.getCurrentServiceProvider());
+
+
+        model.addAttribute("offerByServiceProvider",offerByServiceProvider);
         model.addAttribute("taskList", pendingTaskDtoList);
         model.addAttribute("spTaskPage", "pending");
         return "serviceprovider-tasks-list";
@@ -131,7 +136,7 @@ public class ServiceProviderController {
             setServiceProviderForDisplay(model);
             model.addAttribute("offer", offerDto);
             model.addAttribute("taskId", taskId);
-            return "serviceprovider-tasks-offer";
+            return "redirect:/serviceProvider/tasks/pending-tasks";
 
         } catch (EntityNotFoundException e) {
 

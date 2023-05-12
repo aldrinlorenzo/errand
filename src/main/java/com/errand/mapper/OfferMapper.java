@@ -19,6 +19,16 @@ public class OfferMapper {
                 .build();
     }
 
+    public static OfferDto mapToOfferDto(Offer offer){
+        return OfferDto.builder()
+                .price(offer.getPrice())
+                .description(offer.getDescription())
+                .status(offer.getStatus())
+                .taskDto(TaskMapper.mapToTaskDto(offer.getTask()))
+                .serviceProviderDto(ServiceProviderMapper.toServiceProviderDto(offer.getServiceProvider()))
+                .build();
+    }
+
 
 
 
