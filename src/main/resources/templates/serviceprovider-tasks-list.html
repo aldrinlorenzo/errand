@@ -20,7 +20,7 @@
 <!-- Sidebar Navigation -->
 <section layout:fragment="sidebar-item" class="py-2">
     <hr class="sidebar-divider my-0">
-    <li class="nav-item active">
+    <li class="nav-item">
         <a class="nav-link" th:href="@{/serviceProvider/dashboard}">
 
             <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -31,22 +31,25 @@
     <div class="sidebar-heading">
         Tasks
     </div>
-    <li class="nav-item">
+    <li class="nav-item"
+        th:classappend="${spTaskPage == 'ongoing' ? 'active' : ''}">
         <a class="nav-link" th:href="@{/serviceProvider/tasks/ongoing-tasks}">
             <i class="fas fa-fw fa-briefcase"></i>
             <span>My Ongoing Tasks</span>
         </a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item"
+        th:classappend="${spTaskPage == 'completed' ? 'active' : ''}">
         <a class="nav-link" th:href="@{/serviceProvider/tasks/completed-tasks}">
             <i class="fas fa-fw fa-briefcase"></i>
             <span>My Completed Tasks</span>
         </a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item"
+        th:classappend="${spTaskPage == 'pending' ? 'active' : ''}">
         <a class="nav-link" th:href="@{/serviceProvider/tasks/pending-tasks}">
             <i class="fas fa-fw fa-briefcase"></i>
-            <span>Available Task</span>
+            <span>Available Tasks</span>
         </a>
     </li>
 </section>

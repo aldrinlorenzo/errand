@@ -52,6 +52,7 @@ public class ServiceProviderController {
         List<PendingTaskDto> pendingTaskDtoList = taskService.getPendingTask();
         setServiceProviderForDisplay(model);
         model.addAttribute("taskList", pendingTaskDtoList);
+        model.addAttribute("spTaskPage", "pending");
         return "serviceprovider-tasks-list";
     }
 
@@ -61,6 +62,7 @@ public class ServiceProviderController {
                 serviceProviderService.getCurrentServiceProvider().getId(), "ONGOING");
         setServiceProviderForDisplay(model);
         model.addAttribute("taskList", taskDtoList);
+        model.addAttribute("spTaskPage", "ongoing");
         return "serviceprovider-tasks-list";
     }
 
@@ -70,6 +72,7 @@ public class ServiceProviderController {
                 serviceProviderService.getCurrentServiceProvider().getId(), "COMPLETED");
         setServiceProviderForDisplay(model);
         model.addAttribute("taskList", taskDtoList);
+        model.addAttribute("spTaskPage", "completed");
         return "serviceprovider-tasks-list";
     }
 
