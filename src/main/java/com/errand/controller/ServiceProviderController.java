@@ -62,8 +62,8 @@ public class ServiceProviderController {
                 serviceProviderService.getCurrentServiceProvider().getId(), "ONGOING");
         setServiceProviderForDisplay(model);
         model.addAttribute("taskList", taskDtoList);
-        model.addAttribute("spTaskPage", "ongoing");
-        return "serviceprovider-tasks-list";
+        model.addAttribute("spTaskPage", "myTasks");
+        return "serviceprovider-my-task-list";
     }
 
     @GetMapping("/tasks/completed-tasks")
@@ -72,8 +72,8 @@ public class ServiceProviderController {
                 serviceProviderService.getCurrentServiceProvider().getId(), "COMPLETED");
         setServiceProviderForDisplay(model);
         model.addAttribute("taskList", taskDtoList);
-        model.addAttribute("spTaskPage", "completed");
-        return "serviceprovider-tasks-list";
+        model.addAttribute("spTaskPage", "myTasks");
+        return "serviceprovider-my-task-list";
     }
 
     @PostMapping("/profile/save")
