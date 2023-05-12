@@ -29,7 +29,12 @@ public interface TaskRepository extends JpaRepository<Task,Long> {
     @Query("SELECT t FROM Task t, Offer o WHERE t.offerId = o.id AND o.serviceProvider.id = :serviceProviderId")
     List<Task> searchTaskByServiceProviderId(@Param("serviceProviderId") Long serviceProviderId);
 
+    @Query("SELECT t " +
+            "FROM Task t, Offer o " +
+            "WHERE t.offerId = o.id AND o.serviceProvider.id = :serviceProviderId " +
+            "AND t.status = :status")
+    List<Task> searchTaskByServiceProviderIdAndStatus(@Param("serviceProviderId") Long id, @Param("status") String status);
+
     @Query("SELECT t FROM Task t WHERE t.client = :client")
     List<Task> getTasksByClient(@Param("client") Client client);
-
 }

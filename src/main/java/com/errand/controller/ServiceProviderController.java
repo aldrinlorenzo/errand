@@ -55,10 +55,19 @@ public class ServiceProviderController {
         return "serviceprovider-tasks-list";
     }
 
-    @GetMapping("/tasks")
+    @GetMapping("/tasks/ongoing-tasks")
     public String getServiceProviderTasks(Model model) {
-        List<TaskDto> taskDtoList = taskService.findTaskByServiceProvider(
-                serviceProviderService.getCurrentServiceProvider().getId());
+        List<TaskDto> taskDtoList = taskService.findTaskByServiceProviderAndStatus(
+                serviceProviderService.getCurrentServiceProvider().getId(), "ONGOING");
+        setServiceProviderForDisplay(model);
+        model.addAttribute("taskList", taskDtoList);
+        return "serviceprovider-tasks-list";
+    }
+
+    @GetMapping("/tasks/completed-tasks")
+    public String getServiceProviderCompletedTasks(Model model) {
+        List<TaskDto> taskDtoList = taskService.findTaskByServiceProviderAndStatus(
+                serviceProviderService.getCurrentServiceProvider().getId(), "COMPLETED");
         setServiceProviderForDisplay(model);
         model.addAttribute("taskList", taskDtoList);
         return "serviceprovider-tasks-list";

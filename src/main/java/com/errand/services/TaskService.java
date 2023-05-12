@@ -36,6 +36,7 @@ public interface TaskService {
 
     List<TaskDto> findTaskByServiceProvider(Long id);
 
+    List<TaskDto> findTaskByServiceProviderAndStatus(Long id, String status);
 
     List<TaskDto> getTasksByClient(Client client);
 

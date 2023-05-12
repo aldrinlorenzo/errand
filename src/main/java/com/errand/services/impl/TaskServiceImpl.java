@@ -139,6 +139,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<TaskDto> findTaskByServiceProviderAndStatus(Long id, String status) {
+        List<Task> tasks = taskRepository.searchTaskByServiceProviderIdAndStatus(id, status);
+        return tasks.stream().map(TaskMapper::mapToTaskDto).collect(Collectors.toList());
+    }
+
+    @Override
     public List<TaskDto> getTasksByClient(Client client) {
         List<Task> tasks = taskRepository.getTasksByClient(client);
         return tasks.stream().map((task) -> mapToTaskDto(task)).collect(Collectors.toList());
