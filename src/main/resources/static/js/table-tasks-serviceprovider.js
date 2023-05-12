@@ -1,15 +1,15 @@
 $(document).ready( function() {
     $('#tasksTable').DataTable({
-        dom: 'Pfrtip',
+        dom: 'frtip',
         searchPanes: { },
         columnDefs: [
             { orderable: false, targets: 8 },
             { searchPanes: { show: false },
-                targets: [0, 1, 2, 3, 4, 5, 6, 8]
-            },
-            { searchPanes: { show: true },
-                targets: 7
+                targets: "_all"
             }
+            /*{ searchPanes: { show: true },
+                targets: 7
+            }*/
         ]
     });
 });
