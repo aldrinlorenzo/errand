@@ -83,35 +83,49 @@ public class ServiceProviderController {
     }
 
     @GetMapping("tasks/{taskId}/offers")
-    public String getPendingTask(@PathVariable("taskId")Long taskId, Model model, OfferDto offerDto){
+    public String getPendingTask(@PathVariable("taskId") Long taskId, Model model, OfferDto offerDto) {
         TaskDto taskDto = taskService.findTaskById(taskId);
 
         setServiceProviderForDisplay(model);
-        model.addAttribute("task" ,taskDto);
+        model.addAttribute("task", taskDto);
         model.addAttribute("offer", offerDto);
         return "serviceprovider-tasks-offer";
     }
+
     @PostMapping("tasks/{taskId}/offers/create")
-    public String createOffer(@PathVariable("taskId")Long taskId, OfferDto offerDto, Model model){
+    public String createOffer(@PathVariable("taskId") Long taskId, OfferDto offerDto, Model model) {
         try {
+            // Set the service provider and task for the offer
             offerDto.setServiceProviderDto(serviceProviderService.getCurrentServiceProvider());
             offerDto.setTaskDto(taskService.findTaskById(taskId));
             offerDto.setStatus("OFFERED");
-            boolean isCreated = offerService.createOffer(offerDto);
 
-            if (isCreated) {
-                setServiceProviderForDisplay(model);
-                model.addAttribute("offer" ,offerDto);
-                model.addAttribute("taskId",taskId);
-                return "serviceprovider-tasks-offer";
+
+            Boolean isOfferExist = offerService.isOfferExist(taskId, serviceProviderService.getCurrentServiceProvider().getId());
+
+            if (isOfferExist) {
+                 // just update offer
+                offerService.updateOffer(offerDto);
             } else {
-                return "error";
+               // else create a new offer
+                boolean isCreated = offerService.createOffer(offerDto);
+                if (!isCreated) {
+                    //if creation failed
+                    return "error";
+                }
             }
+
+
+            setServiceProviderForDisplay(model);
+            model.addAttribute("offer", offerDto);
+            model.addAttribute("taskId", taskId);
+            return "serviceprovider-tasks-offer";
+
         } catch (EntityNotFoundException e) {
+
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
         }
-
     }
 
     private void setServiceProviderForDisplay(Model model) {

@@ -1,7 +1,6 @@
 package com.errand.services.impl;
 
 import com.errand.dto.ServiceProviderDto;
-import com.errand.dto.ServiceProviderForUpdateDto;
 import com.errand.mapper.ServiceProviderMapper;
 import com.errand.models.ServiceProvider;
 import com.errand.models.Users;
@@ -33,10 +32,10 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     private ServiceProviderMapper serviceProviderMapper;
 
     @Override
-    public ServiceProviderForUpdateDto getServiceProviderById(Long id) {
+    public ServiceProviderDto getServiceProviderById(Long id) {
         Optional<ServiceProvider> serviceProviderOptional = serviceProviderRepository.findById(id);
         if (serviceProviderOptional.isPresent()) {
-            return ServiceProviderMapper.toServiceProviderForUpdateDto(serviceProviderOptional.get());
+            return ServiceProviderMapper.toServiceProviderDto(serviceProviderOptional.get());
         } else {
             throw new IllegalArgumentException("Service provider with id " + id + " not found.");
         }
