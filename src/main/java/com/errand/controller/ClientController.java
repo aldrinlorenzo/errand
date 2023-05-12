@@ -5,6 +5,7 @@ import com.errand.dto.RatingDto;
 import com.errand.dto.TaskDto;
 
 import com.errand.models.Offer;
+import com.errand.models.Rating;
 import com.errand.models.Task;
 import com.errand.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
+
+import static com.errand.mapper.RatingMapper.maptoRatingFromClient;
 import static com.errand.mapper.TaskMapper.mapToTask;
 
 @Controller
@@ -169,14 +172,20 @@ public class ClientController {
 
     @PostMapping("/tasks/{taskId}/rate")
     public String rateServiceProvider(@PathVariable("taskId")Long taskId,
-                                      @ModelAttribute("rating") RatingDto rating,
-                                      BindingResult result, Model model, Task task){
+                                      @ModelAttribute("rating") RatingDto ratingDto,
+                                      BindingResult result, Model model){
         if(result.hasErrors()){
-            model.addAttribute("rating", rating);
+            model.addAttribute("rating", ratingDto);
             return "client-tasks-List";
         }
-        rating.setTaskDto(taskService.findTaskById(taskId));
-        ratingService.saveRateFromClient(rating);
+        Task task = mapToTask(taskService.findTaskById(taskId));
+        Rating rating  = ratingService.getRatingByTask(task);
+        if( rating != null){
+            ratingService.updateRatingFromClient(rating, ratingDto);
+        }else{
+            ratingDto.setTaskDto(taskService.findTaskById(taskId));
+            ratingService.saveRateFromClient(ratingDto);
+        }
         return "redirect:/client/tasks";
     }
 

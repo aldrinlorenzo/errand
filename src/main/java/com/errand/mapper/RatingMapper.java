@@ -17,4 +17,13 @@ public class RatingMapper {
                 .build();
         return rating;
     }
+
+    public static Rating mapToRatingFromServiceProvider(RatingDto ratingDto){
+
+        Rating rating = Rating.builder()
+                .clientRatingDescription(ratingDto.getClientRatingDescription())
+                .clientRating(ratingDto.getClientRating())
+                .build();
+        return rating;
+    }
 }

@@ -1,20 +1,23 @@
 package com.errand.controller;
 
-import com.errand.dto.OfferDto;
-import com.errand.dto.PendingTaskDto;
-import com.errand.dto.ServiceProviderDto;
-import com.errand.dto.TaskDto;
+import com.errand.dto.*;
+import com.errand.models.Rating;
+import com.errand.models.Task;
 import com.errand.services.OfferService;
+import com.errand.services.RatingService;
 import com.errand.services.ServiceProviderService;
 import com.errand.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+
+import static com.errand.mapper.TaskMapper.mapToTask;
 
 @Controller
 @RequestMapping("/serviceProvider")
@@ -28,10 +31,17 @@ public class ServiceProviderController {
     private ServiceProviderService serviceProviderService;
 
     @Autowired
-    public ServiceProviderController(TaskService taskService, ServiceProviderService serviceProviderService, OfferService offerService) {
+    RatingService ratingService;
+
+    @Autowired
+    public ServiceProviderController(TaskService taskService,
+                                     ServiceProviderService serviceProviderService,
+                                     OfferService offerService,
+                                     RatingService ratingService) {
         this.taskService = taskService;
         this.serviceProviderService = serviceProviderService;
         this.offerService = offerService;
+        this.ratingService = ratingService;
     }
 
     @GetMapping("/dashboard")
@@ -72,11 +82,12 @@ public class ServiceProviderController {
     }
 
     @GetMapping("/tasks/completed-tasks")
-    public String getServiceProviderCompletedTasks(Model model) {
+    public String getServiceProviderCompletedTasks(Model model, RatingDto rating) {
         List<TaskDto> taskDtoList = taskService.findTaskByServiceProviderAndStatus(
                 serviceProviderService.getCurrentServiceProvider().getId(), "COMPLETED");
         setServiceProviderForDisplay(model);
         model.addAttribute("taskList", taskDtoList);
+        model.addAttribute("rating", rating);
         model.addAttribute("spTaskPage", "myTasks");
         return "serviceprovider-my-task-list";
     }
@@ -149,6 +160,25 @@ public class ServiceProviderController {
         model.addAttribute("serviceProvider", serviceProviderService.getCurrentServiceProvider());
 
 
+    }
+
+    @PostMapping("/tasks/{taskId}/rate")
+    public String rateServiceProvider(@PathVariable("taskId")Long taskId,
+                                      @ModelAttribute("rating") RatingDto ratingDto,
+                                      BindingResult result, Model model){
+        if(result.hasErrors()){
+            model.addAttribute("rating", ratingDto);
+            return "serviceprovider-my-task-list";
+        }
+        Task task = mapToTask(taskService.findTaskById(taskId));
+        Rating rating  = ratingService.getRatingByTask(task);
+        if( rating != null){
+            ratingService.updateRatingFromServiceProvider(rating, ratingDto);
+        }else{
+            ratingDto.setTaskDto(taskService.findTaskById(taskId));
+            ratingService.saveRateFromServiceProvider(ratingDto);
+        }
+        return "redirect:/serviceProvider/tasks/completed-tasks";
     }
 
 

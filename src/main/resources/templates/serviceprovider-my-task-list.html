@@ -73,6 +73,7 @@
                             <th>Location</th>
                             <th>Status</th>
                             <th>Action</th>
+                            <th>Rate</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -92,6 +93,55 @@
                                        th:classappend="${task.status != 'PENDING' ? 'disabled' : ''}">
                                         <i class="fas fa-handshake"></i>
                                     </a>
+                                </td>
+                                <td style="text-align: center; white-space: nowrap;">
+                                    <a data-toggle="modal" data-target="#Modal"
+                                       title="Rate Service Provider"
+                                       class="btn btn-info btn-circle btn-sm">
+                                        <i class="fas fa-star"></i>
+                                    </a>
+
+                                    <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Rate your Service Provider</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form class="rating" th:action="@{/serviceProvider/tasks/{taskId}/rate(taskId=${task.id})}"  th:object="${rating}" method="post">
+                                                        <div class="form-group row">
+                                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                                <label>Rate your Service Provider:</label>
+                                                                <input type="number"
+                                                                       class="form-control"
+                                                                       placeholder="0-5"
+                                                                       min="0" max="5"
+                                                                       th:field="*{clientRating}"
+                                                                       required="required">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <label>Rating Description:</label>
+                                                            <textarea type="text"
+                                                                      class="form-control custom-textarea"
+                                                                      th:field="*{clientRatingDescription}"
+                                                                      required="required"></textarea>
+                                                        </div>
+                                                        <br>
+                                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                                            Submit Rating
+                                                        </button>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                 </td>
                             </tr>
                         </tbody>
