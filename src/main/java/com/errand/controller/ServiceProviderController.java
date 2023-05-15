@@ -1,6 +1,7 @@
 package com.errand.controller;
 
 import com.errand.dto.*;
+import com.errand.models.Offer;
 import com.errand.models.Rating;
 import com.errand.models.Task;
 import com.errand.services.OfferService;
@@ -87,22 +88,24 @@ public class ServiceProviderController {
         List<PendingTaskDto> pendingTaskDtoList = taskService.getPendingTask();
         setServiceProviderForDisplay(model);
 
-       List<OfferDto> offerByServiceProvider= offerService.findOfferByServiceProvider(serviceProviderService.getCurrentServiceProvider());
+        List<OfferDto> offerByServiceProvider = offerService.findOfferByServiceProvider(serviceProviderService.getCurrentServiceProvider());
 
 
-        model.addAttribute("offerByServiceProvider",offerByServiceProvider);
+        model.addAttribute("offerByServiceProvider", offerByServiceProvider);
         model.addAttribute("taskList", pendingTaskDtoList);
         model.addAttribute("spTaskPage", "pending");
         return "serviceprovider-tasks-list";
     }
 
     @GetMapping("/tasks/ongoing-tasks")
-    public String getServiceProviderTasks(Model model, RatingDto rating) {
+
+    public String getServiceProviderTasks(Model model, RatingDto ratingDto) {
         List<TaskDto> taskDtoList = taskService.findTaskByServiceProviderAndStatus(
                 serviceProviderService.getCurrentServiceProvider().getId(), "ONGOING");
         setServiceProviderForDisplay(model);
+
         model.addAttribute("taskList", taskDtoList);
-        model.addAttribute("rating", rating);
+        model.addAttribute("rating", ratingDto);
         model.addAttribute("spTaskPage", "myTasks");
         return "serviceprovider-my-task-list";
     }
@@ -146,6 +149,20 @@ public class ServiceProviderController {
         return "serviceprovider-tasks-offer";
     }
 
+    @GetMapping("tasks/{taskId}/offers/{offerId}/delete")
+
+    public String deletePendingTask(@PathVariable("taskId") Long taskId, @PathVariable("offerId") Long offerId) throws Exception {
+
+        boolean deleted = offerService.deleteOffer(offerId);
+        if (deleted) {
+            return "redirect:/serviceProvider/tasks/pending-tasks";
+        } else {
+            throw new Exception("Failed to delete offer");
+        }
+
+
+    }
+
     @PostMapping("tasks/{taskId}/offers/create")
     public String createOffer(@PathVariable("taskId") Long taskId, OfferDto offerDto, Model model) {
         try {
@@ -158,10 +175,10 @@ public class ServiceProviderController {
             Boolean isOfferExist = offerService.isOfferExist(taskId, serviceProviderService.getCurrentServiceProvider().getId());
 
             if (isOfferExist) {
-                 // just update offer
+                // just update offer
                 offerService.updateOffer(offerDto);
             } else {
-               // else create a new offer
+                // else create a new offer
                 boolean isCreated = offerService.createOffer(offerDto);
                 if (!isCreated) {
                     //if creation failed
@@ -189,19 +206,19 @@ public class ServiceProviderController {
     }
 
     @PostMapping("/tasks/{taskId}/rate")
-    public String rateServiceProvider(@PathVariable("taskId")Long taskId,
+    public String rateServiceProvider(@PathVariable("taskId") Long taskId,
                                       @ModelAttribute("rating") RatingDto ratingDto,
-                                      BindingResult result, Model model){
-        if(result.hasErrors()){
+                                      BindingResult result, Model model) {
+        if (result.hasErrors()) {
             model.addAttribute("rating", ratingDto);
             return "serviceprovider-my-task-list";
         }
         Task task = mapToTask(taskService.findTaskById(taskId));
-        Rating rating  = ratingService.getRatingByTask(task);
-        if( rating != null){
+        Rating rating = ratingService.getRatingByTask(task);
+        if (rating != null) {
             ratingDto.setServiceProviderDto(toServiceProviderDto(serviceProviderService.getLoggedInServiceProvider()));
             ratingService.updateRatingFromServiceProvider(rating, ratingDto);
-        }else{
+        } else {
             ratingDto.setServiceProviderDto(serviceProviderService.getCurrentServiceProvider());
             ratingDto.setTaskDto(taskService.findTaskById(taskId));
             ratingService.saveRateFromServiceProvider(ratingDto);

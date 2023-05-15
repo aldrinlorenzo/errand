@@ -12,7 +12,9 @@ import com.errand.repository.OfferRepository;
 import com.errand.services.OfferService;
 import com.errand.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -93,6 +95,34 @@ public class OfferServiceImpl implements OfferService {
             e.printStackTrace();
             return false;
         }
+    }
+
+
+    @Override
+    @Transactional
+    public Boolean deleteOffer(Long offerId) throws Exception {
+
+        try {
+
+
+            offerRepository.deleteOfferById(offerId);
+            offerRepository.flush();
+            System.out.println("Deleted");
+            return true;
+        } catch (EmptyResultDataAccessException e) {
+            throw new IllegalArgumentException("Offer not found with ID: " + offerId);
+
+        }
+
+
+    }
+
+
+    @Override
+    public OfferDto findOfferById(Long id) {
+        Offer offer = offerRepository.findById(id).orElseThrow(() -> new RuntimeException("Offer not found"));
+        return OfferMapper.mapToOfferDto(offer);
+
     }
 
 

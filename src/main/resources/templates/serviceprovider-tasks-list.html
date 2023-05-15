@@ -130,12 +130,18 @@
                                 <a th:href="@{/serviceProvider/tasks/{taskId}/offers(taskId=${offer.taskDto.id})}"
                                    title="Edit Offer"
                                    class="btn btn-info btn-circle btn-sm"
-                                   th:classappend="${offer.taskDto.status != 'PENDING' ? 'disabled' : ''}">
+                                   th:classappend="${offer.status != 'PENDING' ? 'disabled' : ''}">
                                     <i class="fas fa-handshake"></i>
+                                </a>
+                                <a th:href="@{/serviceProvider/tasks/{taskId}/offers/{offerId}/delete/(taskId=${offer.taskDto.id},offerId=${offer.id})}
+"
+                                   title="Delete Offer"
+                                   class="btn btn-danger btn-circle btn-sm"
+                                   th:classappend="${offer.status != 'OFFERED' ? 'disabled' : ''}">
+                                    <i class="fas fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
-                        </tbody>
                     </table>
                     <div class="card-body">
 
