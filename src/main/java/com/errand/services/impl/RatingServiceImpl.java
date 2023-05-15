@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.errand.mapper.ClientMapper.mapToClient;
-import static com.errand.mapper.RatingMapper.mapToRatingFromServiceProvider;
-import static com.errand.mapper.RatingMapper.maptoRatingFromClient;
+import static com.errand.mapper.RatingMapper.*;
 import static com.errand.mapper.ServiceProviderMapper.toServiceProvider;
 import static com.errand.mapper.TaskMapper.mapToTask;
 
@@ -81,6 +81,18 @@ public class RatingServiceImpl implements RatingService {
     public List<Rating> getRatingByServiceProvider(ServiceProviderDto serviceProviderDto) {
         List<Rating> rating =  ratingRepository.findByServiceProvider(toServiceProvider(serviceProviderDto));
         return rating;
+    }
+
+    @Override
+    public List<RatingDto> getRatingsByClient(Client client) {
+        List<Rating> ratings = ratingRepository.findRatingsByClient(client);
+        return ratings.stream().map((rating) -> maptoRatingDtoFromServiceProvider(rating)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RatingDto> getRatingsByServiceProvider(ServiceProvider serviceProvider) {
+        List<Rating> ratings = ratingRepository.findRatingsByServiceProvider(serviceProvider);
+        return ratings.stream().map((rating) -> mapToRatingDtoFromClient(rating)).collect(Collectors.toList());
     }
 
 }

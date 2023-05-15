@@ -4,8 +4,11 @@ import com.errand.dto.RatingDto;
 import com.errand.models.Rating;
 
 import static com.errand.mapper.ClientMapper.mapToClient;
+import static com.errand.mapper.ClientMapper.mapToClientDto;
 import static com.errand.mapper.ServiceProviderMapper.toServiceProvider;
+import static com.errand.mapper.ServiceProviderMapper.toServiceProviderDto;
 import static com.errand.mapper.TaskMapper.mapToTask;
+import static com.errand.mapper.TaskMapper.mapToTaskDto;
 
 public class RatingMapper {
 
@@ -29,5 +32,25 @@ public class RatingMapper {
                 .serviceProvider(toServiceProvider(ratingDto.getServiceProviderDto()))
                 .build();
         return rating;
+    }
+
+    public static RatingDto maptoRatingDtoFromServiceProvider(Rating rating){
+        RatingDto ratingDto = RatingDto.builder()
+                .clientRating(rating.getClientRating())
+                .clientRatingDescription(rating.getClientRatingDescription())
+                .taskDto(mapToTaskDto(rating.getTask()))
+                .serviceProviderDto(toServiceProviderDto(rating.getServiceProvider()))
+                .build();
+        return ratingDto;
+    }
+
+    public static RatingDto mapToRatingDtoFromClient(Rating rating){
+        RatingDto ratingDto = RatingDto.builder()
+                .serviceProviderRating(rating.getServiceProviderRating())
+                .serviceProviderRatingDescription(rating.getServiceProviderRatingDescription())
+                .taskDto(mapToTaskDto(rating.getTask()))
+                .clientDto(mapToClientDto(rating.getClient()))
+                .build();
+        return ratingDto;
     }
 }
