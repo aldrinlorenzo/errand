@@ -1,10 +1,10 @@
 package com.errand.services;
 
 import com.errand.dto.ServiceProviderDto;
-
-
 import java.util.List;
 
+import com.errand.models.ServiceProvider;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.springframework.stereotype.Service;
 
 
@@ -22,6 +22,8 @@ public interface ServiceProviderService {
     List<ServiceProviderDto> getAllServiceProvider();
 
     ServiceProviderDto getCurrentServiceProvider();
+
+    ServiceProvider getLoggedInServiceProvider();
 
 
 

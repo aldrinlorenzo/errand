@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.errand.mapper.ClientMapper.mapToClient;
 import static com.errand.mapper.RatingMapper.mapToRatingFromServiceProvider;
 import static com.errand.mapper.RatingMapper.maptoRatingFromClient;
+import static com.errand.mapper.ServiceProviderMapper.toServiceProvider;
 import static com.errand.mapper.TaskMapper.mapToTask;
 
 @Service
@@ -54,6 +56,7 @@ public class RatingServiceImpl implements RatingService {
         ratingDto.setClientRatingDescription(rating.getClientRatingDescription());
         rating.setServiceProviderRating(ratingDto.getServiceProviderRating());
         rating.setServiceProviderRatingDescription(ratingDto.getServiceProviderRatingDescription());
+        rating.setClient(mapToClient(ratingDto.getClientDto()));
         ratingRepository.save(rating);
     }
 
@@ -63,6 +66,7 @@ public class RatingServiceImpl implements RatingService {
         ratingDto.setServiceProviderRatingDescription(rating.getServiceProviderRatingDescription());
         rating.setClientRating(ratingDto.getClientRating());
         rating.setClientRatingDescription(ratingDto.getClientRatingDescription());
+        rating.setServiceProvider(toServiceProvider(ratingDto.getServiceProviderDto()));
         ratingRepository.save(rating);
     }
 

@@ -33,4 +33,7 @@ public class Client{
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Task> tasks = new ArrayList<>();
 
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+    private Rating rating;
+
 }
