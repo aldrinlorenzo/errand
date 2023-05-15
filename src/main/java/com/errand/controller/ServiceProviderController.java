@@ -58,6 +58,10 @@ public class ServiceProviderController {
                 serviceProviderId, "ONGOING").size();
         int completedTaskCount = taskService.findTaskByServiceProviderAndStatus(
                 serviceProviderId, "COMPLETED").size();
+        int ongoingPercentage = ongoingTaskCount + completedTaskCount > 0 ?
+                (ongoingTaskCount * 100) / (completedTaskCount + ongoingTaskCount) : 0;
+        int completedPercentage = ongoingTaskCount + completedTaskCount > 0 ?
+                (completedTaskCount * 100) / (completedTaskCount + ongoingTaskCount) : 0;
         List<Long> taskIds = completedTaskDto.stream().map(TaskDto::getId).collect(Collectors.toList());
         BigDecimal totalEarnings = taskIds.stream().map((task) -> offerService.findOfferByTaskIdAndServiceProviderId(
                 task, serviceProviderId).getPrice()).reduce(new BigDecimal(0), BigDecimal::add);
@@ -66,6 +70,8 @@ public class ServiceProviderController {
         model.addAttribute("pendingTaskCount", pendingTaskCount);
         model.addAttribute("ongoingTaskCount", ongoingTaskCount);
         model.addAttribute("completedTaskCount", completedTaskCount);
+        model.addAttribute("ongoingPercentage", ongoingPercentage);
+        model.addAttribute("completedPercentage", completedPercentage);
         return "serviceprovider-dashboard";
     }
 

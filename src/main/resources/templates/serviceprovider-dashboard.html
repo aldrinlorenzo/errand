@@ -100,6 +100,10 @@
                                         Ongoing Requests
                                     </div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${ongoingTaskCount}">18</div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" role="progressbar" th:style="|width: ${ongoingPercentage}%|"
+                                             aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${ongoingPercentage}"></div>
+                                    </div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-spinner fa-2x text-gray-300"></i>
@@ -120,6 +124,10 @@
                                         Completed Requests
                                     </div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${completedTaskCount}">18</div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" th:style="|width: ${completedPercentage}%|"
+                                            aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${completedPercentage}"></div>
+                                    </div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-check-square fa-2x text-gray-300"></i>
