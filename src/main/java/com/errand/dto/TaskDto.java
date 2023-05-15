@@ -1,6 +1,7 @@
 package com.errand.dto;
 
 import com.errand.models.Label;
+import com.errand.models.Rating;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -56,6 +57,8 @@ public class TaskDto {
     private Set<Label> labels;
 
     private String createdBy;
+
+    private Rating rating;
 
 
 }

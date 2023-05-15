@@ -106,32 +106,34 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Rate your Service Provider</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Rate your Client</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form class="rating" th:action="@{/serviceProvider/tasks/{taskId}/rate(taskId=${task.id})}"  th:object="${rating}" method="post">
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                <label>Rate your Service Provider:</label>
+                                                        <div class="form-group">
+
+                                                                <label for="rating" style="text-align: left;">Rate your Client:</label>
                                                                 <input type="number"
                                                                        class="form-control"
+                                                                       id="rating"
                                                                        placeholder="0-5"
                                                                        min="0" max="5"
                                                                        th:field="*{clientRating}"
                                                                        required="required">
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-sm-12">
+                                                                <label>Rating Description:</label>
+                                                                <textarea type="text"
+                                                                          class="form-control custom-textarea"
+                                                                          th:field="*{clientRatingDescription}"
+                                                                          required="required"></textarea>
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-12">
-                                                            <label>Rating Description:</label>
-                                                            <textarea type="text"
-                                                                      class="form-control custom-textarea"
-                                                                      th:field="*{clientRatingDescription}"
-                                                                      required="required"></textarea>
-                                                        </div>
-                                                        <br>
                                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                                             Submit Rating
                                                         </button>

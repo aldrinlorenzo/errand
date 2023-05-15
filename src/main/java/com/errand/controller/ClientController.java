@@ -95,7 +95,9 @@ public class ClientController {
     @GetMapping("/tasks")
     public String getClientTasks(Model model, RatingDto rating){
         List<TaskDto> tasks = taskService.getTasksByClient(clientService.getCurrentClient());
+
         model.addAttribute("tasks", tasks);
+
         model.addAttribute("rating", rating);
         model.addAttribute("client", clientService.getCurrentClient());
         return "client-tasks-list";

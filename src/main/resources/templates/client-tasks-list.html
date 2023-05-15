@@ -138,9 +138,9 @@
                             <td style="text-align: center; white-space: nowrap;">
                                 <a data-toggle="modal" data-target="#Modal"
                                    title="Rate Service Provider"
-                                   class="btn btn-primary btn-circle btn-sm"
-                                   th:classappend="${task.status != 'COMPLETED' ? 'disabled' : ''}"
-                                >
+                                   class="btn btn-secondary btn-circle btn-sm"
+                                   th:classappend="${(task.status == 'COMPLETED' && (task.rating == null || ( task.rating!= null && task.rating.serviceProviderRating == '0.0'))) ? '' : 'disabled'}">
+
                                     <i class="fas fa-star"></i>
                                 </a>
 

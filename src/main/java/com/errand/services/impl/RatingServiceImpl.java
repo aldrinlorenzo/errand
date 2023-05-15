@@ -13,6 +13,7 @@ import com.errand.mapper.RatingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,7 +51,7 @@ public class RatingServiceImpl implements RatingService {
         Rating rating = mapToRatingFromServiceProvider(ratingDto);
         return ratingRepository.save(rating);
     }
-
+    @Transactional
     @Override
     public void updateRatingFromClient(Rating rating, RatingDto ratingDto) {
         ratingDto.setClientRating(rating.getClientRating());

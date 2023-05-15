@@ -48,6 +48,7 @@ public class TaskMapper {
                 .labels(task.getLabels())
                 .createdDate(task.getCreatedDate())
                 .modifiedDate(task.getModifiedDate())
+                .rating(task.getRating())
                 .build();
         return taskDto;
     }
