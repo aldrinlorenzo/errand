@@ -97,7 +97,8 @@
                                 <td style="text-align: center; white-space: nowrap;">
                                     <a data-toggle="modal" data-target="#Modal"
                                        title="Rate Service Provider"
-                                       class="btn btn-info btn-circle btn-sm">
+                                       class="btn btn-info btn-circle btn-sm"
+                                       th:classappend="${task.status != 'COMPLETED' ? 'disabled' : ''}">
                                         <i class="fas fa-star"></i>
                                     </a>
 

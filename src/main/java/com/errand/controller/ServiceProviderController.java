@@ -91,11 +91,12 @@ public class ServiceProviderController {
     }
 
     @GetMapping("/tasks/ongoing-tasks")
-    public String getServiceProviderTasks(Model model) {
+    public String getServiceProviderTasks(Model model, RatingDto rating) {
         List<TaskDto> taskDtoList = taskService.findTaskByServiceProviderAndStatus(
                 serviceProviderService.getCurrentServiceProvider().getId(), "ONGOING");
         setServiceProviderForDisplay(model);
         model.addAttribute("taskList", taskDtoList);
+        model.addAttribute("rating", rating);
         model.addAttribute("spTaskPage", "myTasks");
         return "serviceprovider-my-task-list";
     }
