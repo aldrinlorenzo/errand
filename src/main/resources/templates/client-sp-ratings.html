@@ -88,10 +88,10 @@
                             <td th:text="${rating.task.title}"></td>
                             <td th:text="${rating.serviceProviderRating}"></td>
                             <td th:text="${rating.serviceProviderRatingDescription}"></td>
-                            <td th:text="${rating.client.firstName} + ' ' + ${rating.client.lastName}"></td>
+                            <td th:if="${rating.client != null}" th:text="${rating.client.firstName} + ' ' + ${rating.client.lastName}"></td>
+                            <td th:unless="${rating.client != null}"></td>
                         </tr>
-
-
+                        
                         </tbody>
                     </table>
                 </div>
