@@ -6,13 +6,13 @@
     <title>Client Tasks</title>
 
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-
 </head>
 
 <body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <div layout:fragment="profile-name">
-    <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${client.firstName + ' ' + client.lastName + ' (Client)'}"></span>
+    <span class="mr-2 d-none d-lg-inline text-gray-600 small"
+          th:text="${client.firstName + ' ' + client.lastName + ' (Client)'}"></span>
 </div>
 
 <div layout:fragment="view-profile">
@@ -72,7 +72,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="clientTasksTable" STYLE="width='100%'; cellspacing='0'" >
+                    <table class="table table-bordered" id="clientTasksTable" STYLE="width='100%'; cellspacing='0'">
                         <thead>
                         <tr>
                             <th>Task ID</th>
@@ -88,7 +88,7 @@
                             <th>Rate</th>
                         </tr>
                         </thead>
-                        <tbody >
+                        <tbody>
                         <tr th:each="task :${tasks}">
                             <td th:text="${task.id}"></td>
                             <td th:text="${task.title}"></td>
@@ -99,7 +99,8 @@
                             <td th:text="${task.street+', '+task.city+', '+task.postalCode}"></td>
 
                             <th:block th:if="${not #sets.isEmpty(task.labels)}" th:each="label : ${task.labels}">
-                                <td th:text="${label.name}"></td>
+                                <td style="text-align:center;"><span class="badge badge-primary"
+                                                                     th:text="${label.name}"></span></td>
                             </th:block>
                             <th:block th:unless="${not #sets.isEmpty(task.labels)}">
                                 <td></td>
@@ -113,7 +114,7 @@
                                     <i class="fas fa-handshake"></i>
                                 </a>
                                 <a th:href="@{/client/tasks/{taskId}/edit(taskId=${task.id})}"
-                                class="btn btn-warning btn-circle btn-sm"
+                                   class="btn btn-warning btn-circle btn-sm"
                                    title="Edit Task"
                                    th:classappend="${task.status != 'PENDING' ? 'disabled' : ''}"
                                 >
@@ -134,17 +135,22 @@
                                     <i class="fas fa-star"></i>
                                 </a>
 
-                                <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="Modal" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Rate your Service Provider</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <h5 class="modal-title" id="exampleModalLabel">Rate your Service
+                                                    Provider</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form class="rating" th:action="@{/client/tasks/{taskId}/rate(taskId=${task.id})}"  th:object="${rating}" method="post">
+                                                <form class="rating"
+                                                      th:action="@{/client/tasks/{taskId}/rate(taskId=${task.id})}"
+                                                      th:object="${rating}" method="post">
                                                     <div class="form-group row">
                                                         <div class="col-sm-6 mb-3 mb-sm-0">
                                                             <label>Rate your Service Provider:</label>

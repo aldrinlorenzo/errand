@@ -1,14 +1,11 @@
 package com.errand.services;
 
 import com.errand.dto.RatingDto;
-import com.errand.dto.TaskDto;
-import com.errand.models.Client;
+import com.errand.dto.ServiceProviderDto;
 import com.errand.models.Rating;
-import com.errand.models.ServiceProvider;
 import com.errand.models.Task;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface RatingService {
     Rating saveRateFromClient(RatingDto ratingDto);
@@ -20,4 +17,6 @@ public interface RatingService {
     void updateRatingFromServiceProvider(Rating rating, RatingDto ratingDto);
 
     Rating getRatingByTask(Task task);
+
+    List<Rating> getRatingByServiceProvider(ServiceProviderDto serviceProviderDto);
 }

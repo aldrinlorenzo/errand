@@ -5,12 +5,9 @@ import com.errand.dto.RatingDto;
 import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.TaskDto;
 
-import com.errand.models.Client;
 import com.errand.models.Offer;
 import com.errand.models.Rating;
 import com.errand.models.Task;
-import com.errand.models.Users;
-import com.errand.security.SecurityUtil;
 import com.errand.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +20,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static com.errand.mapper.ClientMapper.mapToClientDto;
-import static com.errand.mapper.RatingMapper.maptoRatingFromClient;
 import static com.errand.mapper.TaskMapper.mapToTask;
 
 @Controller
@@ -82,6 +78,17 @@ public class ClientController {
         model.addAttribute("client", clientService.getCurrentClient());
         model.addAttribute("serviceProviders", serviceProviders);
         return "client-sp-list";
+    }
+
+    @GetMapping("/serviceProviders/{serviceProviderId}/ratings")
+    public String getServiceProviderRatings(@PathVariable("serviceProviderId") Long serviceProviderId,
+                                            Model model){
+        ServiceProviderDto serviceProvider = serviceProviderService.getServiceProviderById(serviceProviderId);
+        List<Rating> ratings = ratingService.getRatingByServiceProvider(serviceProvider);
+        model.addAttribute("client", clientService.getCurrentClient());
+        model.addAttribute("serviceProvider", serviceProvider);
+        model.addAttribute("ratings", ratings);
+        return "client-sp-ratings";
     }
 
     @GetMapping("/tasks")

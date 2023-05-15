@@ -1,11 +1,8 @@
 package com.errand.dto;
 
-import com.errand.models.ServiceProvider;
-import com.errand.models.Task;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data

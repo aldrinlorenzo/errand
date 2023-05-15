@@ -5,10 +5,6 @@ import com.errand.dto.PendingTaskDto;
 import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.TaskDto;
 
-import com.errand.models.Client;
-import com.errand.models.ServiceProvider;
-import com.errand.models.Task;
-
 import com.errand.models.Users;
 import com.errand.security.SecurityUtil;
 import com.errand.services.ClientService;

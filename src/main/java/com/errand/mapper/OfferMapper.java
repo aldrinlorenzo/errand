@@ -2,7 +2,6 @@ package com.errand.mapper;
 
 import com.errand.dto.OfferDto;
 import com.errand.models.Offer;
-import com.errand.models.ServiceProvider;
 import org.springframework.stereotype.Component;
 
 @Component
