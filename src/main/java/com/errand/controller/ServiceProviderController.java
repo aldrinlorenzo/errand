@@ -1,8 +1,8 @@
 package com.errand.controller;
 
 import com.errand.dto.*;
-import com.errand.models.Offer;
 import com.errand.models.Rating;
+import com.errand.models.ServiceProvider;
 import com.errand.models.Task;
 import com.errand.services.OfferService;
 import com.errand.services.RatingService;
@@ -226,6 +226,14 @@ public class ServiceProviderController {
         return "redirect:/serviceProvider/tasks/completed-tasks";
     }
 
+    @GetMapping("/viewMyRatings")
+    public String getRatingsOfCurrentClient(Model model, ServiceProvider serviceProvider, Task task){
+        serviceProvider = serviceProviderService.getLoggedInServiceProvider();
+        List<RatingDto> ratings = ratingService.getRatingsByServiceProvider(serviceProvider);
+        model.addAttribute("ratings", ratings);
+        model.addAttribute("serviceProvider", serviceProvider);
+        return "serviceprovider-ratings";
+    }
 
 }
 
