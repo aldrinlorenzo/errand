@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Builder
 public class OfferDto {
 
+    private Long id;
 
     private BigDecimal price;
 

@@ -10,6 +10,7 @@ public class OfferMapper {
 
     public static Offer mapToOffer(OfferDto offerDto){
         return Offer.builder()
+                .id(offerDto.getId())
                 .price(offerDto.getPrice())
                 .description(offerDto.getDescription())
                 .status(offerDto.getStatus())
@@ -20,6 +21,7 @@ public class OfferMapper {
 
     public static OfferDto mapToOfferDto(Offer offer){
         return OfferDto.builder()
+                .id(offer.getId())
                 .price(offer.getPrice())
                 .description(offer.getDescription())
                 .status(offer.getStatus())

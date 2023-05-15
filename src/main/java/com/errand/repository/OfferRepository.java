@@ -4,6 +4,7 @@ import com.errand.models.Offer;
 import com.errand.models.ServiceProvider;
 import com.errand.models.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -23,5 +24,8 @@ public interface OfferRepository extends JpaRepository<Offer,Long> {
 
     @Query("SELECT o FROM Offer o WHERE o.serviceProvider = :serviceProvider")
     List<Offer> findByServiceProvider(@Param("serviceProvider") ServiceProvider serviceProvider);
+    @Modifying
+    @Query("DELETE FROM Offer o WHERE o.id = :offerId")
+    void deleteOfferById(@Param("offerId") Long offerId);
 
 }

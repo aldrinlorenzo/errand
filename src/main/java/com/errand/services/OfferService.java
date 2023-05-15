@@ -24,6 +24,12 @@ public interface OfferService {
 
     Boolean updateOffer(OfferDto offerDto);
 
+    Boolean deleteOffer(Long taskId) throws Exception;
+
+
+    OfferDto findOfferById(Long id);
+
+
     void acceptOffer(Long offerId, TaskDto taskDto);
 
     void rejectOffer(Long id);
