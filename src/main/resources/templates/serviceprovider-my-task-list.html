@@ -90,7 +90,7 @@
                                     <a th:href="@{/serviceProvider/tasks/{taskId}/offers(taskId=${task.id})}"
                                        title="Make New Offer"
                                        class="btn btn-info btn-circle btn-sm"
-                                       th:classappend="${task.status != 'PENDING' ? 'disabled' : ''}">
+                                       th:classappend="${task.status != 'PENDING' ? 'd-none' : ''}">
                                         <i class="fas fa-handshake"></i>
                                     </a>
                                 </td>
@@ -98,7 +98,7 @@
                                     <a data-toggle="modal" data-target="#Modal"
                                        title="Rate Service Provider"
                                        class="btn btn-info btn-circle btn-sm"
-                                       th:classappend="${task.status != 'COMPLETED' ? 'disabled' : ''}">
+                                       th:classappend="${task.status != 'COMPLETED' ? 'd-none' : ''}">
                                         <i class="fas fa-star"></i>
                                     </a>
 
