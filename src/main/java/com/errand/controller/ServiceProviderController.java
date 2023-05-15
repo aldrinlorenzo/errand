@@ -15,7 +15,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.errand.mapper.TaskMapper.mapToTask;
 
@@ -46,7 +48,15 @@ public class ServiceProviderController {
 
     @GetMapping("/dashboard")
     public String getServiceProviderDetails(Model model) {
+        List<TaskDto> taskDtoList = taskService.findTaskByServiceProviderAndStatus(
+                serviceProviderService.getCurrentServiceProvider().getId(), "COMPLETED"
+        );
+        List<Long> taskIds = taskDtoList.stream().map(TaskDto::getId).collect(Collectors.toList());
+        BigDecimal totalEarnings = taskIds.stream().map((task) -> offerService.findOfferByTaskIdAndServiceProviderId(
+                task, serviceProviderService.getCurrentServiceProvider().getId()
+        ).getPrice()).reduce(new BigDecimal(0), BigDecimal::add);
         setServiceProviderForDisplay(model);
+        model.addAttribute("totalEarnings", totalEarnings);
         return "serviceprovider-dashboard";
     }
 
