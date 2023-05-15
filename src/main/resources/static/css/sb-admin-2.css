@@ -9945,7 +9945,7 @@ a:focus {
 }
 
 .bg-errand{
-    background-color: #001219;
+    background-color: white;
 }
 
 .bg-gradient-info {
@@ -10896,14 +10896,14 @@ a:focus {
   background: url("../assets/img/errandlogo.png");
   background-position: center;
   background-size: cover;
-  background-color: #CA6702;
+  background-color: #3E64D3;
 }
 
 .bg-register-image {
   background: url("../assets/img/errandlogo.png");
   background-position: center;
   background-size: cover;
-  background-color: #CA6702;
+  background-color: #3E64D3;
 }
 
 .bg-password-image {
