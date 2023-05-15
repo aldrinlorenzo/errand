@@ -48,15 +48,23 @@ public class ServiceProviderController {
 
     @GetMapping("/dashboard")
     public String getServiceProviderDetails(Model model) {
-        List<TaskDto> taskDtoList = taskService.findTaskByServiceProviderAndStatus(
-                serviceProviderService.getCurrentServiceProvider().getId(), "COMPLETED"
-        );
-        List<Long> taskIds = taskDtoList.stream().map(TaskDto::getId).collect(Collectors.toList());
+        long serviceProviderId = serviceProviderService.getCurrentServiceProvider().getId();
+        List<TaskDto> completedTaskDto = taskService.findTaskByServiceProviderAndStatus(
+                serviceProviderId, "COMPLETED");
+        int pendingTaskCount = taskService.findTaskByServiceProviderAndStatus(
+                serviceProviderId, "PENDING").size();
+        int ongoingTaskCount = taskService.findTaskByServiceProviderAndStatus(
+                serviceProviderId, "ONGOING").size();
+        int completedTaskCount = taskService.findTaskByServiceProviderAndStatus(
+                serviceProviderId, "COMPLETED").size();
+        List<Long> taskIds = completedTaskDto.stream().map(TaskDto::getId).collect(Collectors.toList());
         BigDecimal totalEarnings = taskIds.stream().map((task) -> offerService.findOfferByTaskIdAndServiceProviderId(
-                task, serviceProviderService.getCurrentServiceProvider().getId()
-        ).getPrice()).reduce(new BigDecimal(0), BigDecimal::add);
+                task, serviceProviderId).getPrice()).reduce(new BigDecimal(0), BigDecimal::add);
         setServiceProviderForDisplay(model);
         model.addAttribute("totalEarnings", totalEarnings);
+        model.addAttribute("pendingTaskCount", pendingTaskCount);
+        model.addAttribute("ongoingTaskCount", ongoingTaskCount);
+        model.addAttribute("completedTaskCount", completedTaskCount);
         return "serviceprovider-dashboard";
     }
 

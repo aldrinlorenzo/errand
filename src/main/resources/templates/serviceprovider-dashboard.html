@@ -78,7 +78,7 @@
                                     <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
                                         Pending Offers
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${pendingTaskCount}">18</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-hourglass fa-2x text-gray-300"></i>
@@ -96,7 +96,7 @@
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                         Ongoing Requests
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${ongoingTaskCount}">18</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-spinner fa-2x text-gray-300"></i>
@@ -114,7 +114,7 @@
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                         Completed Requests
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${completedTaskCount}">18</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-check-square fa-2x text-gray-300"></i>
