@@ -158,6 +158,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public void completeTask(Long id) {
+        Optional<Task> optionalTask =taskRepository.findById(id);
+        Task task = optionalTask.orElseThrow(() -> new RuntimeException("Task not found"));
+        task.setStatus("COMPLETED");
+        taskRepository.save(task);
+    }
+
+    @Override
     public void cancelTask(Long id) {
         Optional<Task> optionalTask =taskRepository.findById(id);
         Task task = optionalTask.orElseThrow(() -> new RuntimeException("Task not found"));

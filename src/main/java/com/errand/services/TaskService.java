@@ -42,6 +42,8 @@ public interface TaskService {
 
     void updateTask(TaskDto task, Client client);
 
+    void completeTask(Long id);
+
     void cancelTask(Long id);
 
     void setStatusToOngoing(Task task);

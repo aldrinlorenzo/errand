@@ -125,6 +125,12 @@ public class ClientController {
         return "redirect:/client/tasks";
     }
 
+    @GetMapping("/tasks/{taskId}/complete")
+    public String completeTask(@PathVariable("taskId") Long taskId){
+        taskService.completeTask(taskId);
+        return "redirect:/client/tasks";
+    }
+
     @GetMapping("/tasks/{taskId}/offers")
     public String getTaskOffers(@PathVariable("taskId") Long taskId, Model model){
         TaskDto taskDto = taskService.findTaskById(taskId);
