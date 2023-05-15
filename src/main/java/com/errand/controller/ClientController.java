@@ -5,6 +5,7 @@ import com.errand.dto.RatingDto;
 import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.TaskDto;
 
+import com.errand.models.Client;
 import com.errand.models.Offer;
 import com.errand.models.Rating;
 import com.errand.models.Task;
@@ -208,4 +209,14 @@ public class ClientController {
         }
         return "redirect:/client/tasks";
     }
+
+    @GetMapping("/viewMyRatings")
+    public String getRatingsOfCurrentClient(Model model, Client client, Task task){
+        client = clientService.getCurrentClient();
+        List<RatingDto> ratings = ratingService.getRatingsByClient(client);
+        model.addAttribute("ratings", ratings);
+        model.addAttribute("client", client);
+        return "client-ratings";
+    }
+
 }

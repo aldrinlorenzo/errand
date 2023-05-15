@@ -1,5 +1,6 @@
 package com.errand.repository;
 
+import com.errand.models.Client;
 import com.errand.models.Rating;
 import com.errand.models.ServiceProvider;
 import com.errand.models.Task;
@@ -14,6 +15,12 @@ public interface RatingRepository extends JpaRepository<Rating,Long> {
     Rating findByClientRating(float clientRating);
 
     Rating findByServiceProviderRating(float serviceProviderRating);
+
+    @Query("SELECT r FROM Rating r WHERE r.client = :client")
+    List<Rating> findRatingsByClient(Client client);
+
+    @Query("SELECT r FROM Rating r WHERE r.serviceProvider = :serviceProvider")
+    List<Rating> findRatingsByServiceProvider(ServiceProvider serviceProvider);
 
     @Query("SELECT r FROM Rating r WHERE r.task = :task")
     Rating findByTaskId(@Param("task") Task task);
