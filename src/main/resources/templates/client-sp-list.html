@@ -80,7 +80,7 @@
               <th>Email</th>
               <th>Contact Number</th>
               <th>Business Name</th>
-              <th>Rating</th>
+              <th class="center-element">Ratings</th>
             </tr>
             </thead>
             <tbody >
@@ -90,7 +90,13 @@
               <td th:text="${serviceProvider.email}"></td>
               <td th:text="${serviceProvider.contactNumber}"></td>
               <td th:text="${serviceProvider.businessName}"></td>
-              <td>No Ratings Yet</td>
+              <td class="center-element">
+                <a th:href="@{/client/serviceProviders/{serviceProviderId}/ratings(serviceProviderId=${serviceProvider.id})}"
+                   title="View Ratings"
+                   class="btn btn-secondary btn-circle btn-sm">
+                  <i class="fas fa-star"></i>
+                </a>
+              </td>
             </tr>
 
 

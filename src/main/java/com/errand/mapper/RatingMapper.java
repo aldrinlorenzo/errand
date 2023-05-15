@@ -1,9 +1,7 @@
 package com.errand.mapper;
 
 import com.errand.dto.RatingDto;
-import com.errand.models.Client;
 import com.errand.models.Rating;
-import com.errand.models.Task;
 
 import static com.errand.mapper.ClientMapper.mapToClient;
 import static com.errand.mapper.ServiceProviderMapper.toServiceProvider;

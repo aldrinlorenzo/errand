@@ -1,6 +1,7 @@
 package com.errand.services.impl;
 
 import com.errand.dto.RatingDto;
+import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.TaskDto;
 import com.errand.models.*;
 import com.errand.repository.ClientRepository;
@@ -73,6 +74,12 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public Rating getRatingByTask(Task task) {
        Rating rating =  ratingRepository.findByTaskId(task);
+       return rating;
+    }
+
+    @Override
+    public List<Rating> getRatingByServiceProvider(ServiceProviderDto serviceProviderDto) {
+        List<Rating> rating =  ratingRepository.findByServiceProvider(toServiceProvider(serviceProviderDto));
         return rating;
     }
 
