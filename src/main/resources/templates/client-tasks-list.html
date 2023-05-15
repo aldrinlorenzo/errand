@@ -116,7 +116,7 @@
                                 <a th:href="@{/client/tasks/{taskId}/edit(taskId=${task.id})}"
                                    class="btn btn-warning btn-circle btn-sm"
                                    title="Edit Task"
-                                   th:classappend="${task.status != 'PENDING' ? 'disabled' : ''}"
+                                   th:classappend="${task.status != 'PENDING' ? 'd-none' : ''}"
                                 >
                                     <i class="fas fa-pen"></i>
                                 </a>
