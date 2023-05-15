@@ -143,7 +143,7 @@ public class ClientController {
     }
 
     @GetMapping("/tasks/{taskId}/offers/{offerId}/accept")
-    public String approveOffer(@PathVariable("taskId") Long taskId,
+    public String acceptOffer(@PathVariable("taskId") Long taskId,
                              @PathVariable("offerId") Long offerId){
         TaskDto taskDto = taskService.findTaskById(taskId);
         offerService.acceptOffer(offerId, taskDto);
