@@ -56,8 +56,7 @@ public class ServiceProviderController {
                 serviceProviderId, "PENDING").size();
         int ongoingTaskCount = taskService.findTaskByServiceProviderAndStatus(
                 serviceProviderId, "ONGOING").size();
-        int completedTaskCount = taskService.findTaskByServiceProviderAndStatus(
-                serviceProviderId, "COMPLETED").size();
+        int completedTaskCount = completedTaskDto.size();
         int ongoingPercentage = ongoingTaskCount + completedTaskCount > 0 ?
                 (ongoingTaskCount * 100) / (completedTaskCount + ongoingTaskCount) : 0;
         int completedPercentage = ongoingTaskCount + completedTaskCount > 0 ?
@@ -66,12 +65,20 @@ public class ServiceProviderController {
         BigDecimal totalEarnings = taskIds.stream().map((task) -> offerService.findOfferByTaskIdAndServiceProviderId(
                 task, serviceProviderId).getPrice()).reduce(new BigDecimal(0), BigDecimal::add);
         setServiceProviderForDisplay(model);
+        List<Rating> ratingList = ratingService
+                .getRatingByServiceProvider(serviceProviderService.getCurrentServiceProvider());
+        Float currentRating = ratingList.size() > 0 ?
+                ratingList
+                        .stream()
+                        .map(Rating::getServiceProviderRating)
+                        .reduce(0f, Float::sum) / ratingList.size() : 0;
         model.addAttribute("totalEarnings", totalEarnings);
         model.addAttribute("pendingTaskCount", pendingTaskCount);
         model.addAttribute("ongoingTaskCount", ongoingTaskCount);
         model.addAttribute("completedTaskCount", completedTaskCount);
         model.addAttribute("ongoingPercentage", ongoingPercentage);
         model.addAttribute("completedPercentage", completedPercentage);
+        model.addAttribute("currentRating", currentRating);
         return "serviceprovider-dashboard";
     }
 
@@ -182,12 +189,6 @@ public class ServiceProviderController {
         }
     }
 
-    private void setServiceProviderForDisplay(Model model) {
-        model.addAttribute("serviceProvider", serviceProviderService.getCurrentServiceProvider());
-
-
-    }
-
     @PostMapping("/tasks/{taskId}/rate")
     public String rateServiceProvider(@PathVariable("taskId")Long taskId,
                                       @ModelAttribute("rating") RatingDto ratingDto,
@@ -209,6 +210,9 @@ public class ServiceProviderController {
         return "redirect:/serviceProvider/tasks/completed-tasks";
     }
 
+    private void setServiceProviderForDisplay(Model model) {
+        model.addAttribute("serviceProvider", serviceProviderService.getCurrentServiceProvider());
+    }
 
 }
 
