@@ -2,12 +2,15 @@ package com.errand.controller;
 
 import com.errand.dto.ClientDto;
 import com.errand.dto.RatingDto;
+import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.TaskDto;
 
 import com.errand.models.Client;
 import com.errand.models.Offer;
 import com.errand.models.Rating;
 import com.errand.models.Task;
+import com.errand.models.Users;
+import com.errand.security.SecurityUtil;
 import com.errand.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,19 +32,23 @@ public class ClientController {
 
     private UserService userService;
     private ClientService clientService;
+    private ServiceProviderService serviceProviderService;
     private TaskService taskService;
     private LabelService labelService;
     private OfferService offerService;
     private RatingService ratingService;
 
     @Autowired
-    public ClientController(UserService userService, ClientService clientService,
+    public ClientController(UserService userService,
+                            ClientService clientService,
+                            ServiceProviderService serviceProviderService,
                             TaskService taskService,
                             LabelService labelService,
                             OfferService offerService,
                             RatingService ratingService) {
         this.userService = userService;
         this.clientService = clientService;
+        this.serviceProviderService = serviceProviderService;
         this.taskService = taskService;
         this.labelService = labelService;
         this.offerService = offerService;
@@ -68,11 +75,13 @@ public class ClientController {
         return "client-profile";
     }
 
-    @GetMapping("/tasks/board")
+    @GetMapping("/serviceProviders")
     public String getClientBoard(Model model){
+
+        List<ServiceProviderDto> serviceProviders = serviceProviderService.getAllServiceProvider();
         model.addAttribute("client", clientService.getCurrentClient());
-        model.addAttribute("pendingTasks", taskService.getPendingTaskByClient());
-        return "client-tasks-board";
+        model.addAttribute("serviceProviders", serviceProviders);
+        return "client-sp-list";
     }
 
     @GetMapping("/tasks")
