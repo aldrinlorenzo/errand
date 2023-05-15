@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.errand.mapper.ServiceProviderMapper.toServiceProviderDto;
 import static com.errand.mapper.TaskMapper.mapToTask;
 
 @Controller
@@ -191,8 +192,10 @@ public class ServiceProviderController {
         Task task = mapToTask(taskService.findTaskById(taskId));
         Rating rating  = ratingService.getRatingByTask(task);
         if( rating != null){
+            ratingDto.setServiceProviderDto(toServiceProviderDto(serviceProviderService.getLoggedInServiceProvider()));
             ratingService.updateRatingFromServiceProvider(rating, ratingDto);
         }else{
+            ratingDto.setServiceProviderDto(serviceProviderService.getCurrentServiceProvider());
             ratingDto.setTaskDto(taskService.findTaskById(taskId));
             ratingService.saveRateFromServiceProvider(ratingDto);
         }

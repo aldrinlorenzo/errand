@@ -13,4 +13,8 @@ public class RatingDto {
     private String serviceProviderRatingDescription;
 
     private TaskDto taskDto;
+
+    private ServiceProviderDto serviceProviderDto;
+
+    private ClientDto clientDto;
 }

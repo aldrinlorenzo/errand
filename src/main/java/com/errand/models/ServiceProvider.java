@@ -33,4 +33,7 @@ public class ServiceProvider {
     @OneToOne(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
     private Offer offer;
 
+    @OneToOne(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
+    private Rating rating;
+
 }

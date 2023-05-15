@@ -2,11 +2,15 @@ package com.errand.controller;
 
 import com.errand.dto.ClientDto;
 import com.errand.dto.RatingDto;
+import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.TaskDto;
 
+import com.errand.models.Client;
 import com.errand.models.Offer;
 import com.errand.models.Rating;
 import com.errand.models.Task;
+import com.errand.models.Users;
+import com.errand.security.SecurityUtil;
 import com.errand.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +22,7 @@ import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.errand.mapper.ClientMapper.mapToClientDto;
 import static com.errand.mapper.RatingMapper.maptoRatingFromClient;
 import static com.errand.mapper.TaskMapper.mapToTask;
 
@@ -27,19 +32,23 @@ public class ClientController {
 
     private UserService userService;
     private ClientService clientService;
+    private ServiceProviderService serviceProviderService;
     private TaskService taskService;
     private LabelService labelService;
     private OfferService offerService;
     private RatingService ratingService;
 
     @Autowired
-    public ClientController(UserService userService, ClientService clientService,
+    public ClientController(UserService userService,
+                            ClientService clientService,
+                            ServiceProviderService serviceProviderService,
                             TaskService taskService,
                             LabelService labelService,
                             OfferService offerService,
                             RatingService ratingService) {
         this.userService = userService;
         this.clientService = clientService;
+        this.serviceProviderService = serviceProviderService;
         this.taskService = taskService;
         this.labelService = labelService;
         this.offerService = offerService;
@@ -66,11 +75,13 @@ public class ClientController {
         return "client-profile";
     }
 
-    @GetMapping("/tasks/board")
+    @GetMapping("/serviceProviders")
     public String getClientBoard(Model model){
+
+        List<ServiceProviderDto> serviceProviders = serviceProviderService.getAllServiceProvider();
         model.addAttribute("client", clientService.getCurrentClient());
-        model.addAttribute("pendingTasks", taskService.getPendingTaskByClient());
-        return "client-tasks-board";
+        model.addAttribute("serviceProviders", serviceProviders);
+        return "client-sp-list";
     }
 
     @GetMapping("/tasks")
@@ -172,7 +183,7 @@ public class ClientController {
 
     @PostMapping("/tasks/{taskId}/rate")
     public String rateServiceProvider(@PathVariable("taskId")Long taskId,
-                                      @ModelAttribute("rating") RatingDto ratingDto,
+                                      @ModelAttribute("rating")RatingDto ratingDto,
                                       BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("rating", ratingDto);
@@ -180,13 +191,14 @@ public class ClientController {
         }
         Task task = mapToTask(taskService.findTaskById(taskId));
         Rating rating  = ratingService.getRatingByTask(task);
-        if( rating != null){
+        if(rating != null){
+            ratingDto.setClientDto(mapToClientDto(clientService.getCurrentClient()));
             ratingService.updateRatingFromClient(rating, ratingDto);
         }else{
+            ratingDto.setClientDto(mapToClientDto(clientService.getCurrentClient()));
             ratingDto.setTaskDto(taskService.findTaskById(taskId));
             ratingService.saveRateFromClient(ratingDto);
         }
         return "redirect:/client/tasks";
     }
-
 }

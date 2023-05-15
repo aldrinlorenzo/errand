@@ -42,15 +42,17 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/client/tasks/board">
-                <i class="fas fa-fw fa-th-large"></i>
-                <span>Board</span></a>
-        </li>
-
-        <li class="nav-item">
             <a class="nav-link" th:href="@{/client/tasks}">
                 <i class="fas fa-fw fa-list"></i>
                 <span>Task List</span></a>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <li class="nav-item">
+            <a class="nav-link" href="/client/serviceProviders">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Service Providers</span></a>
         </li>
 
     </section>
@@ -137,22 +139,8 @@
 
         <div class="row">
 
-            <!-- Bar Chart -->
-            <div class="col-xl-8 col-lg-7">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Tasks By Label</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="chart-bar">
-                            <canvas id="myBarChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Pie Chart -->
-            <div class="col-xl-4 col-lg-5">
+            <div class="col-xl-7 col-lg-8">
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -179,6 +167,24 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="col-xl-5 col-lg-4">
+                <!-- Illustrations -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Get the service you need, when you need it.</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                 src="/assets/img/undraw_add_tasks.svg" alt="...">
+                        </div>
+                        <p>Get the services you need, from professionals you can trust. We're here to make your life easier, with hassle-free service.</p>
+                        <a  th:href="@{/client/serviceProviders}">Connect with trusted service providers. &rarr;</a>
+                    </div>
+                </div>
+
             </div>
 
         </div>

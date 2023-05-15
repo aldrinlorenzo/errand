@@ -2,6 +2,7 @@ package com.errand.services.impl;
 
 import com.errand.dto.ServiceProviderDto;
 import com.errand.mapper.ServiceProviderMapper;
+import com.errand.models.Client;
 import com.errand.models.ServiceProvider;
 import com.errand.models.Users;
 import com.errand.repository.ServiceProviderRepository;
@@ -74,6 +75,20 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
             serviceProvider = serviceProviderRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("Client not found"));
         }
         return ServiceProviderMapper.toServiceProviderDto(serviceProvider);
+    }
+
+    @Override
+    public ServiceProvider getLoggedInServiceProvider() {
+        ServiceProvider serviceProvider = new ServiceProvider();
+        String username = SecurityUtil.getSessionUser();
+        if(username != null){
+            Users user = userRepository.findFirstByUsername(username);
+            Optional<ServiceProvider> optionalClient = serviceProviderRepository.findById(user.getId());
+            serviceProvider = optionalClient.orElseThrow(() -> new RuntimeException("Client not found"));
+
+
+        }
+        return serviceProvider;
     }
 
 

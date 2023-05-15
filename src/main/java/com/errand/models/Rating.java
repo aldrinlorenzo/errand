@@ -29,4 +29,12 @@ public class Rating {
     @JoinColumn(name = "taskId")
     private Task task;
 
+    @OneToOne
+    @JoinColumn(name = "clientId")
+    private Client client;
+
+    @OneToOne
+    @JoinColumn(name = "serviceProviderId")
+    private ServiceProvider serviceProvider;
+
 }

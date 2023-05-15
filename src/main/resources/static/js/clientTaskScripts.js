@@ -6,3 +6,7 @@ $(document).ready( function() {
     $('#offerTable').DataTable();
 });
 
+$(document).ready( function() {
+    $('#serviceProvidersTable').DataTable();
+});
+
