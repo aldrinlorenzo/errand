@@ -67,20 +67,12 @@ public class ServiceProviderController {
         BigDecimal totalEarnings = taskIds.stream().map((task) -> offerService.findOfferByTaskIdAndServiceProviderId(
                 task, serviceProviderId).getPrice()).reduce(new BigDecimal(0), BigDecimal::add);
         setServiceProviderForDisplay(model);
-        List<Rating> ratingList = ratingService
-                .getRatingByServiceProvider(serviceProviderService.getCurrentServiceProvider());
-        Float currentRating = ratingList.size() > 0 ?
-                ratingList
-                        .stream()
-                        .map(Rating::getServiceProviderRating)
-                        .reduce(0f, Float::sum) / ratingList.size() : 0;
         model.addAttribute("totalEarnings", totalEarnings);
         model.addAttribute("pendingTaskCount", pendingTaskCount);
         model.addAttribute("ongoingTaskCount", ongoingTaskCount);
         model.addAttribute("completedTaskCount", completedTaskCount);
         model.addAttribute("ongoingPercentage", ongoingPercentage);
         model.addAttribute("completedPercentage", completedPercentage);
-        model.addAttribute("currentRating", currentRating);
         return "serviceprovider-dashboard";
     }
 
