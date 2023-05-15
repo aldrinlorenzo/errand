@@ -1,11 +1,11 @@
 package com.errand.services.impl;
 
 import com.errand.dto.OfferDto;
+import com.errand.dto.OfferStatisticDto;
 import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.TaskDto;
 import com.errand.mapper.OfferMapper;
 import com.errand.mapper.ServiceProviderMapper;
-import com.errand.mapper.TaskMapper;
 import com.errand.models.Offer;
 import com.errand.models.Task;
 import com.errand.repository.OfferRepository;
@@ -114,6 +114,32 @@ public class OfferServiceImpl implements OfferService {
 
         }
 
+
+    }
+
+    @Override
+    public OfferStatisticDto getOfferStatistic(ServiceProviderDto serviceProviderDto) {
+        List<OfferDto> offerList = findOfferByServiceProvider(serviceProviderDto);
+
+        long acceptedTotal = offerList.stream()
+                .filter(offer -> offer.getStatus().equals("ACCEPTED"))
+                .count();
+
+        long pendingTotal = offerList.stream()
+                .filter(offer -> offer.getStatus().equals("OFFERED"))
+                .count();
+
+        long rejectedTotal = offerList.stream()
+                .filter(offer -> offer.getStatus().equals(""))
+                .count();
+
+        OfferStatisticDto offerStatisticDto = new OfferStatisticDto();
+        offerStatisticDto.setTotalAcceptedOffer(acceptedTotal);
+        offerStatisticDto.setTotalRejectedOffer(rejectedTotal);
+        offerStatisticDto.setTotalPendingOffer(pendingTotal);
+
+
+        return offerStatisticDto;
 
     }
 

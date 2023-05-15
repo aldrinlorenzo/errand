@@ -88,7 +88,9 @@ public class ServiceProviderController {
         setServiceProviderForDisplay(model);
 
         List<OfferDto> offerByServiceProvider = offerService.findOfferByServiceProvider(serviceProviderService.getCurrentServiceProvider());
+        OfferStatisticDto offerStatisticDto = offerService.getOfferStatistic(serviceProviderService.getCurrentServiceProvider());
 
+        model.addAttribute("offerStatisticDto",offerStatisticDto);
 
         model.addAttribute("offerByServiceProvider", offerByServiceProvider);
         model.addAttribute("taskList", pendingTaskDtoList);

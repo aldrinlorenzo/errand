@@ -8,7 +8,7 @@ $(document).ready( function() {
             }
         ]
     });
-
+    $('#offerListTable').DataTable();
     $('#clientTasksTable').DataTable();
 });
 

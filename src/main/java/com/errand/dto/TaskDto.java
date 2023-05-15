@@ -40,6 +40,8 @@ public class TaskDto {
 
     private Long offerId;
 
+    private OfferDto offerDto;
+
     @NotNull
     @NotBlank
     private String targetDate;
