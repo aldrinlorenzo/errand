@@ -8,7 +8,6 @@ import com.errand.repository.ServiceProviderRepository;
 import com.errand.repository.UserRepository;
 import com.errand.security.SecurityUtil;
 import com.errand.services.ServiceProviderService;
-import com.errand.services.impl.ServiceProviderServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
