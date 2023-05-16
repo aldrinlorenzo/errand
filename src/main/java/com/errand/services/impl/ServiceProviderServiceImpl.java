@@ -23,14 +23,19 @@ import java.util.stream.Collectors;
 public class ServiceProviderServiceImpl implements ServiceProviderService {
 
 
-    @Autowired
     private ServiceProviderRepository serviceProviderRepository;
-
-    @Autowired
     private UserRepository userRepository;
+    private ServiceProviderMapper serviceProviderMapper;
 
     @Autowired
-    private ServiceProviderMapper serviceProviderMapper;
+    public ServiceProviderServiceImpl(
+            ServiceProviderRepository serviceProviderRepository,
+            UserRepository userRepository,
+            ServiceProviderMapper serviceProviderMapper) {
+        this.serviceProviderRepository = serviceProviderRepository;
+        this.userRepository = userRepository;
+        this.serviceProviderMapper = serviceProviderMapper;
+    }
 
     @Override
     public ServiceProviderDto getServiceProviderById(Long id) {
