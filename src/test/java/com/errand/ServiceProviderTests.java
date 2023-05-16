@@ -21,8 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ServiceProviderTests {
@@ -86,9 +85,9 @@ public class ServiceProviderTests {
             mockedStatic.when(SecurityUtil::getSessionUser).thenReturn("username");
             assert(ServiceProviderMapper.toServiceProviderDto(serviceProvider)
                     .equals(serviceProviderService.getCurrentServiceProvider()));
-            mockedStatic.verify(SecurityUtil::getSessionUser);
+            assert(serviceProvider.equals(serviceProviderService.getLoggedInServiceProvider()));
+            mockedStatic.verify(SecurityUtil::getSessionUser, times(2));
         }
-        assert(serviceProvider.equals(serviceProviderService.getLoggedInServiceProvider()));
     }
 
 }
