@@ -90,4 +90,16 @@ public class ServiceProviderTests {
         }
     }
 
+    @Test
+    public void testFindByName() {
+        List<ServiceProvider> serviceProviderList = new ArrayList<>();
+        serviceProviderList.add(serviceProvider);
+        List<ServiceProviderDto> serviceProviderDtoList = new ArrayList<>();
+        serviceProviderDtoList.add(ServiceProviderMapper.toServiceProviderDto(serviceProvider));
+        when(serviceProviderRepository.findByFirstNameIgnoreCase(any())).thenReturn(serviceProviderList);
+        when(serviceProviderRepository.findByLastNameIgnoreCase(any())).thenReturn(serviceProviderList);
+        assert(serviceProviderDtoList.equals(serviceProviderService.findByFirstNameIgnoreCase("firstname")));
+        assert(serviceProviderDtoList.equals(serviceProviderService.findByLastNameIgnoreCase("lastname")));
+    }
+
 }
