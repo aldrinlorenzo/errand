@@ -27,12 +27,9 @@ public interface OfferService {
 
     Boolean deleteOffer(Long taskId) throws Exception;
 
-
     OfferStatisticDto getOfferStatistic(ServiceProviderDto serviceProviderDto);
 
-
     OfferDto findOfferById(Long id);
-
 
     void acceptOffer(Long offerId, TaskDto taskDto);
 

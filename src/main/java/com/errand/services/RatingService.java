@@ -10,6 +10,7 @@ import com.errand.models.Task;
 import java.util.List;
 
 public interface RatingService {
+
     Rating saveRateFromClient(RatingDto ratingDto);
 
     Rating saveRateFromServiceProvider(RatingDto ratingDto);
