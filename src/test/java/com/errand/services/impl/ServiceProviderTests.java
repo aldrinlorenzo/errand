@@ -1,4 +1,4 @@
-package com.errand;
+package com.errand.services.impl;
 
 import com.errand.dto.ServiceProviderDto;
 import com.errand.mapper.ServiceProviderMapper;
