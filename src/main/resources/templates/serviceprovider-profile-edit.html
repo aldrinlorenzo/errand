@@ -44,89 +44,110 @@
 <section layout:fragment="body" class="px-3 py-1">
 
     <div class="container">
+        <div class="row">
+            <div class="col-xl-4">
+                <!-- Profile picture card-->
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header">Profile Picture</div>
+                    <div class="card-body text-center">
+                        <!-- Profile picture image-->
+                        <img class="img-account-profile rounded-circle mb-2" src="/assets/img/undraw_profile_2.svg"
+                             alt="">
 
-        <div class="card shadow mb-4 mx-7">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Edit Profile</h6>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
+            <div class="col-xl-8">
+                <div class="card mb-8 mb-xl-0">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Edit Profile</h6>
+                    </div>
+                    <div class="card-body">
 
-                <form role="form" method="post"
-                      th:action="@{/serviceProvider/profile/save}"
-                      th:object="${serviceProvider}">
-                    <div class="form-group">
-                        <label for="title">First Name</label>
-                        <input type="text"
-                               class="form-control"
-                               id="title"
-                               th:field="*{firstName}"
-                               required="required"
+
+                        <form role="form" method="post"
+                              th:action="@{/serviceProvider/profile/save}"
+                              th:object="${serviceProvider}"
                         >
-                        <p th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></p>
+                            <div class="form-group">
+                                <label for="title">First Name</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="title"
+                                       th:field="*{firstName}"
+                                       required="required"
+                                >
+                                <p th:if="${#fields.hasErrors('firstName')}" class="text-danger"
+                                   th:errors="*{firstName}"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="lastName"
+                                       th:field="*{lastName}"
+                                       required="required"
+                                >
+                                <p th:if="${#fields.hasErrors('lastName')}" class="text-danger"
+                                   th:errors="*{lastName}"></p>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label for="email">Email</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="email"
+                                           th:field="*{email}"
+                                           required="required"
+                                    >
+                                    <p th:if="${#fields.hasErrors('email')}" class="text-danger"
+                                       th:errors="*{email}"></p>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="contactNumber">Contact Number</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="contactNumber"
+                                           th:field="*{contactNumber}"
+
+                                    >
+                                    <p th:if="${#fields.hasErrors('contactNumber')}" class="text-danger"
+                                       th:errors="*{contactNumber}"></p>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-6 mb-sm-0">
+                                    <label for="businessName">Business Name</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="businessName"
+                                           th:field="*{businessName}"
+                                           required="required"
+                                    >
+                                    <p th:if="${#fields.hasErrors('businessName')}" class="text-danger"
+                                       th:errors="*{businessName}"></p>
+                                </div>
+
+
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="reset" class="btn btn-secondary mx-2 flex-fill">Clear</button>
+                                <button type="submit" class="btn btn-primary mx-2 flex-fill">Save</button>
+                            </div>
+
+                        </form>
+
                     </div>
-
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text"
-                               class="form-control"
-                               id="lastName"
-                               th:field="*{lastName}"
-                               required="required"
-                        >
-                        <p th:if="${#fields.hasErrors('lastName')}" class="text-danger"
-                           th:errors="*{lastName}"></p>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <label for="email">Email</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="email"
-                                   th:field="*{email}"
-                                   required="required"
-                            >
-                            <p th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></p>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <label for="contactNumber">Contact Number</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="contactNumber"
-                                   th:field="*{contactNumber}"
-
-                            >
-                            <p th:if="${#fields.hasErrors('contactNumber')}" class="text-danger"
-                               th:errors="*{contactNumber}"></p>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row">
-                        <div class="col-sm-4 mb-3 mb-sm-0">
-                            <label for="businessName">Business Name</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="businessName"
-                                   th:field="*{businessName}"
-                                   required="required"
-                            >
-                            <p th:if="${#fields.hasErrors('businessName')}" class="text-danger"
-                               th:errors="*{businessName}"></p>
-                        </div>
-
-                        <div class="d-flex justify-content-end">
-                            <button type="reset" class="btn btn-secondary mx-2">Clear</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </form>
-
+                </div>
             </div>
         </div>
-
     </div>
+
 </section>
 
 </body>
