@@ -3,22 +3,25 @@ package com.errand;
 import com.errand.dto.ServiceProviderDto;
 import com.errand.mapper.ServiceProviderMapper;
 import com.errand.models.ServiceProvider;
+import com.errand.models.Users;
 import com.errand.repository.ServiceProviderRepository;
 import com.errand.repository.UserRepository;
+import com.errand.security.SecurityUtil;
 import com.errand.services.ServiceProviderService;
 import com.errand.services.impl.ServiceProviderServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.xml.ws.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,7 +30,7 @@ public class ServiceProviderTests {
     private ServiceProviderRepository serviceProviderRepository;
     @Mock
     private UserRepository userRepository;
-    private ServiceProviderMapper serviceProviderMapper = new ServiceProviderMapper();
+    private final ServiceProviderMapper serviceProviderMapper = new ServiceProviderMapper();
 
     private ServiceProviderService serviceProviderService;
     private ServiceProvider serviceProvider;
@@ -71,6 +74,21 @@ public class ServiceProviderTests {
         List<ServiceProviderDto> serviceProviderDtoList = new ArrayList<>();
         serviceProviderDtoList.add(ServiceProviderMapper.toServiceProviderDto(serviceProvider));
         assert(serviceProviderDtoList.equals(serviceProviderService.getAllServiceProvider()));
+    }
+
+    @Test
+    public void testGetCurrentAndLoggedIn() {
+        Users user = new Users();
+        user.setId(1L);
+        when(userRepository.findFirstByUsername(any())).thenReturn(user);
+        when(serviceProviderRepository.findById(any())).thenReturn(Optional.of(serviceProvider));
+        try (MockedStatic<SecurityUtil> mockedStatic = mockStatic(SecurityUtil.class)) {
+            mockedStatic.when(SecurityUtil::getSessionUser).thenReturn("username");
+            assert(ServiceProviderMapper.toServiceProviderDto(serviceProvider)
+                    .equals(serviceProviderService.getCurrentServiceProvider()));
+            mockedStatic.verify(SecurityUtil::getSessionUser);
+        }
+        assert(serviceProvider.equals(serviceProviderService.getLoggedInServiceProvider()));
     }
 
 }
