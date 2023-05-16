@@ -13,8 +13,8 @@
 <body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <div layout:fragment="profile-name">
-    <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-          th:text="${serviceProvider.firstName + ' ' + serviceProvider.lastName + ' (ServiceProvider)'}"></span>
+<span class="mr-2 d-none d-lg-inline text-gray-600 small"
+      th:text="${serviceProvider.firstName + ' ' + serviceProvider.lastName + ' (ServiceProvider)'}"></span>
 </div>
 
 
@@ -48,7 +48,6 @@
     </li>
 </section>
 
-
 <!-- Page Content-->
 <section layout:fragment="body" class="py-5">
 
@@ -56,11 +55,11 @@
 
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Task List</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Available Tasks</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="tasksTable" STYLE="width='100%'; cellspacing='0'">
+                    <table class="table table-bordered" id="tasksTable" STYLE="width='100%'; cellspacing='0'" >
                         <thead>
                         <tr>
                             <th>Task ID</th>
@@ -245,6 +244,7 @@
 
         </div>
     </div>
+
     <script type="text/javascript" th:src="@{/vendor/datatables/jquery.dataTables.min.js}" defer></script>
     <script type="text/javascript" th:src="@{/vendor/datatables/dataTables.searchPanes.min.js}" defer></script>
     <script type="text/javascript" th:src="@{/vendor/datatables/dataTables.select.min.js}" defer></script>

@@ -81,7 +81,7 @@
                             <td th:text="${ratings.taskDto.title}"></td>
                             <td th:text="${ratings.taskDto.title}"></td>
                             <td th:text="${ratings.clientRating}"></td>
-                            <td th:text="${ratings.clientRatingDescription}"></td>
+                            <td th:text="${ratings.clientRatingDescription ?: 'No rating yet from your Service Provider'}"></td>
                         </tr>
                         </tbody>
                     </table>

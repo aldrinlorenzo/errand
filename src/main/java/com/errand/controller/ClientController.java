@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static com.errand.mapper.ClientMapper.mapToClientDto;
+import static com.errand.mapper.RatingMapper.mapToRatingFromServiceProvider;
 import static com.errand.mapper.TaskMapper.mapToTask;
 
 @Controller
