@@ -9,4 +9,5 @@ import java.util.Set;
 public interface LabelService {
 
     Set<Label> findAllLabels();
+
 }

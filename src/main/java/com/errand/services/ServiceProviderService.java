@@ -24,7 +24,4 @@ public interface ServiceProviderService {
 
     ServiceProvider getLoggedInServiceProvider();
 
-
-
-
 }

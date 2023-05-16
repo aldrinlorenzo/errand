@@ -33,7 +33,6 @@ public interface TaskService {
 
     Task saveTask(TaskDto taskDto);
 
-
     List<TaskDto> findTaskByServiceProvider(Long id);
 
     List<TaskDto> findTaskByServiceProviderAndStatus(Long id, String status);

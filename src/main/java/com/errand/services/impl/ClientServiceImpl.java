@@ -2,7 +2,6 @@ package com.errand.services.impl;
 
 import com.errand.dto.ClientDto;
 import com.errand.models.Client;
-import com.errand.models.Task;
 import com.errand.models.Users;
 import com.errand.repository.ClientRepository;
 import com.errand.repository.UserRepository;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 
 import static com.errand.mapper.ClientMapper.mapToClient;
 import static com.errand.mapper.ClientMapper.mapToClientDto;
-import static com.errand.mapper.TaskMapper.mapToTask;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -33,7 +31,12 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Optional<Client> findById(Long id) {
-        return clientRepository.findById(id);
+        try {
+            return clientRepository.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -62,7 +65,6 @@ public class ClientServiceImpl implements ClientService {
             Users user = userRepository.findFirstByUsername(username);
             Optional<Client> optionalClient = clientRepository.findById(user.getId());
             client = optionalClient.orElseThrow(() -> new RuntimeException("Client not found"));
-
 
         }
         return client;
