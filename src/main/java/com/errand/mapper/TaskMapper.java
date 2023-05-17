@@ -57,21 +57,6 @@ public class TaskMapper {
         return taskDto;
     }
 
-    public static PendingTaskDto toPendingTaskDto(Task task) {
-        return PendingTaskDto.builder()
-                .title(task.getTitle())
-                .description(task.getDescription())
-                .budget(task.getBudget())
-                .street(task.getStreet())
-                .city(task.getCity())
-                .postalCode(task.getPostalCode())
-                .targetDate(task.getTargetDate())
-                .createdDate(task.getCreatedDate())
-                .targetDate(task.getTargetDate())
-                .createdDate(task.getCreatedDate())
-                .build();
-    }
-
     public static PendingTaskDto mapToPendingTaskDto(Task task) {
         return PendingTaskDto.builder()
                 .id(task.getId())
