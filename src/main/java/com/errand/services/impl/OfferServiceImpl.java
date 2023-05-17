@@ -83,9 +83,7 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public Boolean isOfferExist(Long taskId, Long serviceProviderId) {
         return offerRepository.findOfferByTaskAndServiceProvider(taskId, serviceProviderId) != null;
-    }
-
-    @Override
+    }@Override
     public Boolean createOffer(OfferDto offerDto) {
         try {
             if (isOfferExist(offerDto.getTaskDto().getId(), offerDto.getServiceProviderDto().getId())) {

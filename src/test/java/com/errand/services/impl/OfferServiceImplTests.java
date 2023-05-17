@@ -54,7 +54,22 @@ public class OfferServiceImplTests {
         MockitoAnnotations.openMocks(this);
         offerService = new OfferServiceImpl(offerRepository, taskService);
         Set<Label> labels = new HashSet<>();
-        TaskDto taskDto = TaskDto.builder().id(1L).title("Fix Pc").description("Hotdog").budget(new BigDecimal("100.00")).street("Street").city("City").postalCode(new BigDecimal("12345")).status("Status").offerId(2L).offerDto(null).targetDate("2023-05-16").completedDate(LocalDateTime.now()).createdDate(LocalDateTime.now()).modifiedDate(LocalDateTime.now()).labels(labels).createdBy("User").rating(null).build();
+        TaskDto taskDto = TaskDto.builder().
+                id(1L).title("Fix Pc")
+                .description("Hotdog")
+                .budget(new BigDecimal("100.00"))
+                .street("Street").city("City")
+                .postalCode(new BigDecimal("12345"))
+                .status("Status")
+                .offerId(2L)
+                .offerDto(null)
+                .targetDate("2023-05-16")
+                .completedDate(LocalDateTime.now())
+                .createdDate(LocalDateTime.now())
+                .modifiedDate(LocalDateTime.now())
+                .labels(labels).createdBy("User")
+                .rating(null)
+                .build();
 
     }
 
@@ -69,7 +84,7 @@ public class OfferServiceImplTests {
         // Assert
         Assertions.assertNotNull(actual);
         Assertions.assertTrue(actual.stream().allMatch(Objects::nonNull));
-
+        verify(taskMapper).mapToTask(taskDto);
         }
     }
 
@@ -120,6 +135,7 @@ public class OfferServiceImplTests {
             OfferDto result = offerService.findOfferByTaskIdAndServiceProviderId(taskId, serviceProviderId);
 
             //Assert
+
             assertNotNull(offerDto);
         }
         ;
@@ -144,11 +160,14 @@ public class OfferServiceImplTests {
     @Test
     public void findOfferByTaskIdAndServiceProviderId_validParametersButNoOffer_ThrowRunTimeException() {
 
-        when(offerRepository.findOfferByTaskAndServiceProvider(anyLong(), anyLong())).thenThrow(new RuntimeException("Test Exception"));
+        when(offerRepository.findOfferByTaskAndServiceProvider(anyLong(), anyLong())).thenReturn(null);
+
         // Act and Assert
         assertThrows(RuntimeException.class, () -> {
             offerService.findOfferByTaskIdAndServiceProviderId(anyLong(), anyLong());
         });
+
+
     }
 
     @Test

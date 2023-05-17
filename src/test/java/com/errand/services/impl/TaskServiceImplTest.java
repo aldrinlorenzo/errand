@@ -3,27 +3,28 @@ package com.errand.services.impl;
 import com.errand.dto.PendingTaskDto;
 import com.errand.dto.TaskDto;
 import com.errand.mapper.TaskMapper;
-import com.errand.models.Client;
-import com.errand.models.Task;
-import com.errand.models.Users;
+import com.errand.models.*;
 import com.errand.repository.ClientRepository;
 import com.errand.repository.TaskRepository;
 import com.errand.repository.UserRepository;
+import com.errand.security.SecurityUtil;
 import com.errand.services.ClientService;
 import com.errand.services.TaskService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TaskServiceImplTest {
@@ -40,8 +41,11 @@ public class TaskServiceImplTest {
     private Task task;
     private List<Task> taskList;
     private List<TaskDto> taskDtoList;
+    private TaskDto taskDto;
     private List<PendingTaskDto> pendingTaskDtoList;
     private Client client;
+
+    private ServiceProvider serviceProvider;
     private Users user;
 
     @BeforeEach
@@ -57,7 +61,25 @@ public class TaskServiceImplTest {
         task = new Task();
         client = new Client();
         user = new Users();
-
+        Set<Label> labels = new HashSet<>();
+        taskDto = TaskDto.builder().
+                id(1L).title("Fix Pc")
+                .description("Hotdog")
+                .budget(new BigDecimal("100.00"))
+                .street("Street").city("City")
+                .postalCode(new BigDecimal("12345"))
+                .status("PENDING")
+                .offerId(2L)
+                .offerDto(null)
+                .targetDate("2023-05-16")
+                .completedDate(LocalDateTime.now())
+                .createdDate(LocalDateTime.now())
+                .modifiedDate(LocalDateTime.now())
+                .labels(labels).createdBy("User")
+                .rating(null)
+                .build();
+        serviceProvider = new ServiceProvider();
+        serviceProvider.setId(1L);
 
         user.setUsername("username");
 
@@ -78,43 +100,105 @@ public class TaskServiceImplTest {
     @Test
     public void testFindAllTask() {
         when(taskRepository.findAll()).thenReturn(taskList);
-        assert(taskDtoList.equals(taskService.findAllTask()));
+        assert (taskDtoList.equals(taskService.findAllTask()));
     }
 
     @Test
     public void testFindTaskById() {
         TaskDto taskDto = TaskMapper.mapToTaskDto(task);
         when(taskRepository.findById(any())).thenReturn(Optional.of(task));
-        assert(taskDto.equals(taskService.findTaskById(1L)));
+        assert (taskDto.equals(taskService.findTaskById(1L)));
     }
 
     @Test
     public void testGetPendingTask() {
         when(taskRepository.searchTasksByStatus(any())).thenReturn(taskList);
-        assert(pendingTaskDtoList.equals(taskService.getPendingTask()));
+        assert (pendingTaskDtoList.equals(taskService.getPendingTask()));
     }
 
     @Test
-    public void testGetPendingTaskByClient() {;
+    public void testGetPendingTaskByClient() {
+        ;
         when(taskRepository.searchTasksByClientAndStatus(any(), any())).thenReturn(taskList);
-        assert(taskDtoList.equals(taskService.getPendingTaskByClient()));
+        assert (taskDtoList.equals(taskService.getPendingTaskByClient()));
     }
 
     @Test
-    public void testGetOngoingTask() {;
+    public void testGetOngoingTask() {
+        ;
         when(taskRepository.searchTasksByStatus(any())).thenReturn(taskList);
-        assert(taskDtoList.equals(taskService.getOngoingTask()));
+        assert (taskDtoList.equals(taskService.getOngoingTask()));
     }
 
     @Test
     public void testGetOngoingTaskByClient() {
         when(taskRepository.searchTasksByClientAndStatus(any(), any())).thenReturn(taskList);
-        assert(taskDtoList.equals(taskService.getOngoingTaskByClient()));
+        assert (taskDtoList.equals(taskService.getOngoingTaskByClient()));
     }
 
     @Test
     public void testGetCompletedTaskOnAdmin() {
         when(taskRepository.searchTasksByStatus(any())).thenReturn(taskList);
-        assert(taskDtoList.equals(taskService.getCompletedTaskOnAdmin()));
+        assert (taskDtoList.equals(taskService.getCompletedTaskOnAdmin()));
     }
+
+    @Test
+    public void testGetCompletedTaskByClient() {
+        when(taskRepository.searchTasksByClientAndStatus(any(Client.class), eq("COMPLETED"))).thenReturn(taskList);
+        when(clientService.getCurrentClient()).thenReturn(client);
+        List<TaskDto> actual = taskService.getCompletedTaskByClient();
+        assertEquals(taskDtoList, actual);
+    }
+
+    @Test
+    public void testGetCancelledTaskOnAdmin() {
+        when(taskRepository.searchTasksByStatus("CANCELLED")).thenReturn(taskList);
+        assert (taskDtoList.equals(taskService.getCancelledTaskOnAdmin()));
+        verify(taskRepository).searchTasksByStatus("CANCELLED");
+    }
+
+    @Test
+    public void testGetCancelledTaskByClient() {
+        when(taskRepository.searchTasksByClientAndStatus(any(Client.class), eq("CANCELLED"))).thenReturn(taskList);
+        when(clientService.getCurrentClient()).thenReturn(client);
+        List<TaskDto> actual = taskService.getCancelledTaskByClient();
+        assertEquals(taskDtoList, actual);
+    }
+
+    @Test
+    public void testSaveTask() {
+        try (MockedStatic<SecurityUtil> mockedStatic = mockStatic(SecurityUtil.class)) {
+
+            when(userRepository.findByUsername(any())).thenReturn(user);
+            when(clientRepository.findById(user.getId())).thenReturn(Optional.of(client));
+            try (MockedStatic<TaskMapper> mapperMockedStatic = mockStatic(TaskMapper.class)) {
+                when(taskRepository.save(any(Task.class))).thenReturn(task);
+                when(TaskMapper.mapToTask(taskDto)).thenReturn(task);
+                Task result = taskService.saveTask(taskDto);
+
+                assertEquals("PENDING", result.getStatus());
+                assertEquals(client, result.getClient());
+                assertEquals(taskDto.getLabels(), result.getLabels());
+
+
+            }
+
+
+        }
+
+
+    }
+    @Test
+    public void testFindTaskByServiceProvider(){
+
+
+        try(MockedStatic<TaskMapper> mockedStatic = mockStatic(TaskMapper.class)){
+            when(taskRepository.searchTaskByServiceProviderId(anyLong())).thenReturn(taskList);
+            when(TaskMapper.mapToTaskDto(any(Task.class))).thenReturn(any(TaskDto.class));
+            List<TaskDto> result = taskService.findTaskByServiceProvider(serviceProvider.getId());
+            assertEquals(taskList.size(), result.size());
+        }
+    }
+
+
 }
