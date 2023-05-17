@@ -34,6 +34,9 @@ public class RatingMapper {
         if (rating.getClient() != null){
             builder.clientDto(mapToClientDto(rating.getClient()));
         }
+        if(rating.getServiceProvider() != null){
+            builder.serviceProviderDto(toServiceProviderDto(rating.getServiceProvider()));
+        }
         return builder.build();
     }
 
@@ -55,6 +58,9 @@ public class RatingMapper {
                 .clientRatingDescription(rating.getClientRatingDescription())
                 .taskDto(mapToTaskDto(rating.getTask()));
 
+        if (rating.getClient() != null){
+            builder.clientDto(mapToClientDto(rating.getClient()));
+        }
         if(rating.getServiceProvider() != null){
             builder.serviceProviderDto(toServiceProviderDto(rating.getServiceProvider()));
         }
