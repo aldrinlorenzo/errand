@@ -10,6 +10,16 @@
 
 <div layout:fragment="profile-name">
     <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${client.firstName + ' ' + client.lastName + ' (Client)'}"></span>
+
+    <img class="img-profile rounded-circle"
+         th:if="${client.profileImageFileName != null and not #strings.isEmpty(client.profileImageFileName)}"
+         th:src="'/assets/profile-images/' + ${client.profileImageFileName}"
+         alt="Profile Image">
+
+    <img class="img-profile rounded-circle"
+         th:if="${client.profileImageFileName == null or #strings.isEmpty(client.profileImageFileName)}"
+         src="/assets/img/undraw_profile.svg"
+         alt="Default Image">
 </div>
 
 <div layout:fragment="view-profile">
@@ -23,7 +33,7 @@
 
     <hr class="sidebar-divider my-0">
 
-    <li class="nav-item active">
+    <li class="nav-item">
         <a class="nav-link" href="/client/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
@@ -70,7 +80,29 @@
                     <div class="card-header">Profile Picture</div>
                     <div class="card-body text-center">
                         <!-- Profile picture image-->
-                        <img class="img-account-profile rounded-circle mb-2" src="/assets/img/undraw_profile_2.svg" alt="">
+                        <div class="d-flex justify-content-center mb-3">
+                        <div style="width: 10rem; height: 10rem; overflow: hidden; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid black;">
+<!--                            <img  style="width: 100%; height: 100%; object-fit: cover; " th:src="'/assets/profile-images/' + ${client.profileImageFileName}" alt="">-->
+                            <img style="width: 100%; height: 100%; object-fit: cover; "
+                                 th:if="${client.profileImageFileName != null and not #strings.isEmpty(client.profileImageFileName)}"
+                                 th:src="'/assets/profile-images/' + ${client.profileImageFileName}"
+                                 alt="Profile Image">
+
+                            <img style="width: 100%; height: 100%; object-fit: cover; "
+                                 th:if="${client.profileImageFileName == null or #strings.isEmpty(client.profileImageFileName)}"
+                                 src="/assets/img/undraw_profile.svg"
+                                 alt="Default Image">
+                        </div>
+                            </div>
+<!--                        <img th:src="@{${image.url}}" alt="${image.name}" height="60px" />-->
+<!--                        src="/assets/img/undraw_profile_2.svg"-->
+
+                        <form id="uploadForm" method="post" th:action="@{/client/profile/upload}" enctype="multipart/form-data">
+                            <input class="form-control mb-3" id="input-file" type="file" name="file" accept="image/png, image/jpeg" />
+                            <button class="btn btn-primary" type="submit">
+                                Upload Image
+                            </button>
+                        </form>
 
                     </div>
                 </div>

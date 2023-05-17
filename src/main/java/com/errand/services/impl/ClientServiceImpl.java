@@ -112,4 +112,18 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
+    @Override
+    public void updateClientImage(Client client) {
+
+        try {
+            client.setId(getCurrentClient().getId());
+            client.setUser(getCurrentClient().getUser());
+            clientRepository.save(client);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            throw new RuntimeException("Failed to update client. Please try again later.");
+        }
+    }
+
 }

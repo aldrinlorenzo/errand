@@ -5,10 +5,13 @@ import com.errand.dto.*;
 import com.errand.models.*;
 import com.errand.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
@@ -32,6 +35,7 @@ public class ClientController {
     private LabelService labelService;
     private OfferService offerService;
     private RatingService ratingService;
+    private FileStorageService fileStorageService;
 
     @Autowired
     public ClientController(UserService userService,
@@ -40,7 +44,8 @@ public class ClientController {
                             TaskService taskService,
                             LabelService labelService,
                             OfferService offerService,
-                            RatingService ratingService) {
+                            RatingService ratingService,
+                            FileStorageService fileStorageService) {
         this.userService = userService;
         this.clientService = clientService;
         this.serviceProviderService = serviceProviderService;
@@ -48,6 +53,7 @@ public class ClientController {
         this.labelService = labelService;
         this.offerService = offerService;
         this.ratingService = ratingService;
+        this.fileStorageService = fileStorageService;
     }
 
     @GetMapping("/dashboard")
@@ -68,6 +74,23 @@ public class ClientController {
     public String getClientProfile(Model model) {
         model.addAttribute("client", clientService.getCurrentClient());
         return "client-profile";
+    }
+
+    @PostMapping("/profile/upload")
+    public String uploadImage(Model model, @RequestParam("file") MultipartFile file) {
+        String message = "";
+
+        try {
+            fileStorageService.saveClientImage(file, clientService.getCurrentClient());
+
+            message = "Uploaded the image successfully: " + file.getOriginalFilename();
+            model.addAttribute("message", message);
+        } catch (Exception e) {
+            message = "Could not upload the image: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
+            model.addAttribute("message", message);
+        }
+
+        return "redirect:/client/profile";
     }
 
     @GetMapping("/serviceProviders")

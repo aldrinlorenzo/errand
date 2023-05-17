@@ -26,6 +26,8 @@ public class Client{
 
     private String contactNumber;
 
+    private String profileImageFileName;
+
     @OneToOne
     @JoinColumn(name = "userId")
     private Users user;

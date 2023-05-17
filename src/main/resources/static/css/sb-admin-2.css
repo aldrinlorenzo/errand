@@ -73,9 +73,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
     height: 10rem;
 }
 
-.rounded-circle {
-    border-radius: 50% !important;
-}
+
 
 .center-element {
     text-align:center;
@@ -6635,6 +6633,7 @@ button.bg-dark:focus {
 
 .rounded-circle {
   border-radius: 50% !important;
+  border: 2px solid black;
 }
 
 .rounded-pill {

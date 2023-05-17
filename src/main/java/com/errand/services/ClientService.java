@@ -22,4 +22,6 @@ public interface ClientService {
 
     void updateClient(ClientDto clientDto);
 
+    void updateClientImage(Client client);
+
 }
