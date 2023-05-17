@@ -216,8 +216,11 @@ public class ClientController {
                                       @ModelAttribute("rating")RatingDto ratingDto,
                                       BindingResult result, Model model){
         TaskDto task = taskService.findTaskById(taskId);
+        ServiceProviderDto serviceProvider = offerService.findOfferById(task.getOfferId()).getServiceProviderDto();
+
         model.addAttribute("taskLabels", labelService.findAllLabels());
         model.addAttribute("client", clientService.getCurrentClient());
+        model.addAttribute("serviceProvider", serviceProvider);
         model.addAttribute("task", task);
         return "rating-from-client";
     }
