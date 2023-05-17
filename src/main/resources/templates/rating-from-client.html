@@ -82,6 +82,27 @@
                       th:action="@{/client/tasks/{taskId}/rate(taskId=${task.id})}"
                       th:object="${rating}" method="post">
 
+                    <div class="d-flex justify-content-center mb-3">
+                        <div style="width: 10rem; height: 10rem; overflow: hidden; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid black;">
+                            <img style="width: 100%; height: 100%; object-fit: cover; "
+                                 th:if="${serviceProvider.profileImageFileName != null and not #strings.isEmpty(serviceProvider.profileImageFileName)}"
+                                 th:src="'/assets/profile-images/' + ${serviceProvider.profileImageFileName}"
+                                 alt="Profile Image">
+
+                            <img style="width: 100%; height: 100%; object-fit: cover; "
+                                 th:if="${serviceProvider.profileImageFileName == null or #strings.isEmpty(serviceProvider.profileImageFileName)}"
+                                 src="/assets/img/undraw_profile_3.svg"
+                                 alt="Default Image">
+                        </div>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <b th:text="${serviceProvider.firstName} + ' ' + ${serviceProvider.lastName}"></b>
+                    </div>
+
+                    
+
+
                     <div class="form-group">
                         <label>Rate your Service Provider:</label>
                         <input type="number"
