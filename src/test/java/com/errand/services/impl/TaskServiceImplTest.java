@@ -109,4 +109,14 @@ public class TaskServiceImplTest {
         when(taskRepository.searchTasksByStatus(any())).thenReturn(taskList);
         assert(taskDtoList.equals(taskService.getOngoingTask()));
     }
+
+    @Test
+    public void testGetOngoingTaskByClient() {
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(task);
+        List<TaskDto> taskDtoList = new ArrayList<>();
+        taskDtoList.add(TaskMapper.mapToTaskDto(task));
+        when(taskRepository.searchTasksByClientAndStatus(any(), any())).thenReturn(taskList);
+        assert(taskDtoList.equals(taskService.getOngoingTaskByClient()));
+    }
 }
