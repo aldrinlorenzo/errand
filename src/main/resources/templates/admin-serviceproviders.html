@@ -86,7 +86,7 @@
               <td th:text="${serviceProvider.contactNumber}"></td>
               <td th:text="${serviceProvider.businessName}"></td>
               <td class="center-element">
-                <a th:href="@{/client/serviceProviders/{serviceProviderId}/ratings(serviceProviderId=${serviceProvider.id})}"
+                <a th:href="@{/admin/serviceProviders/{serviceProviderId}/ratings(serviceProviderId=${serviceProvider.id})}"
                    title="View Ratings"
                    class="btn btn-secondary btn-circle btn-sm">
                   <i class="fas fa-star"></i>
