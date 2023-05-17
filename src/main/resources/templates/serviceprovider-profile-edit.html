@@ -9,6 +9,15 @@
 <div layout:fragment="profile-name">
     <span class="mr-2 d-none d-lg-inline text-gray-600 small"
           th:text="${serviceProvider.firstName + ' ' + serviceProvider.lastName + ' (ServiceProvider)'}"></span>
+    <img class="img-profile rounded-circle"
+         th:if="${serviceProvider.profileImageFileName != null and not #strings.isEmpty(serviceProvider.profileImageFileName)}"
+         th:src="'/assets/profile-images/' + ${serviceProvider.profileImageFileName}"
+         alt="Profile Image">
+
+    <img class="img-profile rounded-circle"
+         th:if="${serviceProvider.profileImageFileName == null or #strings.isEmpty(serviceProvider.profileImageFileName)}"
+         src="/assets/img/undraw_profile_3.svg"
+         alt="Default Image">
 </div>
 
 
@@ -51,8 +60,26 @@
                     <div class="card-header">Profile Picture</div>
                     <div class="card-body text-center">
                         <!-- Profile picture image-->
-                        <img class="img-account-profile rounded-circle mb-2" src="/assets/img/undraw_profile_2.svg"
-                             alt="">
+                        <div class="d-flex justify-content-center mb-3">
+                            <div style="width: 10rem; height: 10rem; overflow: hidden; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid black;">
+                                <img style="width: 100%; height: 100%; object-fit: cover; "
+                                     th:if="${serviceProvider.profileImageFileName != null and not #strings.isEmpty(serviceProvider.profileImageFileName)}"
+                                     th:src="'/assets/profile-images/' + ${serviceProvider.profileImageFileName}"
+                                     alt="Profile Image">
+
+                                <img style="width: 100%; height: 100%; object-fit: cover; "
+                                     th:if="${serviceProvider.profileImageFileName == null or #strings.isEmpty(serviceProvider.profileImageFileName)}"
+                                     src="/assets/img/undraw_profile_3.svg"
+                                     alt="Default Image">
+                            </div>
+                        </div>
+
+                        <form id="uploadForm" method="post" th:action="@{/serviceProvider/profile/upload}" enctype="multipart/form-data">
+                            <input class="form-control mb-3" id="input-file" type="file" name="file" accept="image/png, image/jpeg" />
+                            <button class="btn btn-primary" type="submit">
+                                Upload Image
+                            </button>
+                        </form>
 
                     </div>
                 </div>
@@ -69,6 +96,7 @@
                               th:action="@{/serviceProvider/profile/save}"
                               th:object="${serviceProvider}"
                         >
+                            <input type="hidden" th:field="*{profileImageFileName}">
                             <div class="form-group">
                                 <label for="title">First Name</label>
                                 <input type="text"

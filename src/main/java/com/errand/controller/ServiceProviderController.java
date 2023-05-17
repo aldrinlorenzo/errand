@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
@@ -40,16 +41,20 @@ public class ServiceProviderController {
     @Autowired
     LabelService labelService;
 
+    private FileStorageService fileStorageService;
+
     @Autowired
     public ServiceProviderController(TaskService taskService,
                                      ServiceProviderService serviceProviderService,
                                      OfferService offerService,
-                                     RatingService ratingService, LabelService labelService) {
+                                     RatingService ratingService, LabelService labelService,
+                                     FileStorageService fileStorageService) {
         this.taskService = taskService;
         this.serviceProviderService = serviceProviderService;
         this.offerService = offerService;
         this.ratingService = ratingService;
         this.labelService = labelService;
+        this.fileStorageService = fileStorageService;
     }
 
     @GetMapping("/dashboard")
@@ -84,6 +89,23 @@ public class ServiceProviderController {
         setServiceProviderForDisplay(model);
         return "serviceprovider-profile-edit";
 
+    }
+
+    @PostMapping("/profile/upload")
+    public String uploadImage(Model model, @RequestParam("file") MultipartFile file) {
+        String message = "";
+
+        try {
+            fileStorageService.saveServiceProviderImage(file, serviceProviderService.getCurrentServiceProvider());
+
+            message = "Uploaded the image successfully: " + file.getOriginalFilename();
+            model.addAttribute("message", message);
+        } catch (Exception e) {
+            message = "Could not upload the image: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
+            model.addAttribute("message", message);
+        }
+
+        return "redirect:/serviceProvider/profile";
     }
 
     @GetMapping("/tasks/pending-tasks")

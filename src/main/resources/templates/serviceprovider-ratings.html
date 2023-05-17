@@ -11,6 +11,15 @@
 
 <div layout:fragment="profile-name">
     <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${serviceProvider.firstName + ' ' + serviceProvider.lastName + ' (serviceProvider)'}"></span>
+    <img class="img-profile rounded-circle"
+         th:if="${serviceProvider.profileImageFileName != null and not #strings.isEmpty(serviceProvider.profileImageFileName)}"
+         th:src="'/assets/profile-images/' + ${serviceProvider.profileImageFileName}"
+         alt="Profile Image">
+
+    <img class="img-profile rounded-circle"
+         th:if="${serviceProvider.profileImageFileName == null or #strings.isEmpty(serviceProvider.profileImageFileName)}"
+         src="/assets/img/undraw_profile_3.svg"
+         alt="Default Image">
 </div>
 
 <div layout:fragment="view-profile">

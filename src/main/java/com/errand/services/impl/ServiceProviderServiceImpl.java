@@ -58,7 +58,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
                 serviceProviderDto.getLastName(), serviceProviderDto.getEmail(),
                 serviceProviderDto.getContactNumber(),
                 serviceProviderDto.getBusinessName(),
-                id);
+                id, serviceProviderDto.getProfileImageFileName());
        return  true;
     }
 
@@ -96,6 +96,19 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         return serviceProvider;
     }
 
+    @Override
+    @Transactional
+    public void updateServiceProviderImage(ServiceProviderDto serviceProviderDto) {
+
+        serviceProviderRepository.update(serviceProviderDto.getFirstName(),
+                serviceProviderDto.getLastName(), serviceProviderDto.getEmail(),
+                serviceProviderDto.getContactNumber(),
+                serviceProviderDto.getBusinessName(),
+                serviceProviderDto.getId(),
+                serviceProviderDto.getProfileImageFileName()
+        );
+
+    }
 
     @Override
     public  List<ServiceProviderDto> findByFirstNameIgnoreCase(String name) {

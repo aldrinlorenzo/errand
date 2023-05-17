@@ -82,7 +82,6 @@
                         <!-- Profile picture image-->
                         <div class="d-flex justify-content-center mb-3">
                         <div style="width: 10rem; height: 10rem; overflow: hidden; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid black;">
-<!--                            <img  style="width: 100%; height: 100%; object-fit: cover; " th:src="'/assets/profile-images/' + ${client.profileImageFileName}" alt="">-->
                             <img style="width: 100%; height: 100%; object-fit: cover; "
                                  th:if="${client.profileImageFileName != null and not #strings.isEmpty(client.profileImageFileName)}"
                                  th:src="'/assets/profile-images/' + ${client.profileImageFileName}"
@@ -94,8 +93,6 @@
                                  alt="Default Image">
                         </div>
                             </div>
-<!--                        <img th:src="@{${image.url}}" alt="${image.name}" height="60px" />-->
-<!--                        src="/assets/img/undraw_profile_2.svg"-->
 
                         <form id="uploadForm" method="post" th:action="@{/client/profile/upload}" enctype="multipart/form-data">
                             <input class="form-control mb-3" id="input-file" type="file" name="file" accept="image/png, image/jpeg" />

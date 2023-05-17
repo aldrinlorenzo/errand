@@ -20,10 +20,11 @@ public interface ServiceProviderRepository extends JpaRepository<ServiceProvider
     ServiceProvider findByLastName(String lastName);
 
     @Modifying
-    @Query("UPDATE ServiceProvider SET firstName = :firstName, lastName = :lastName , email = :email, contactNumber = :contactNumber , businessName = :businessName  where id = :serviceProviderId ")
+    @Query("UPDATE ServiceProvider SET firstName = :firstName, lastName = :lastName , email = :email, contactNumber = :contactNumber , businessName = :businessName , profileImageFileName = :profileImageFileName where id = :serviceProviderId ")
     void update(@Param("firstName") String firstName, @Param("lastName") String lastName,
                            @Param("email") String email, @Param("contactNumber") String contactNumber,
                            @Param("businessName") String businessName,
-                           @Param("serviceProviderId") Long id);
+                           @Param("serviceProviderId") Long id,
+                           @Param("profileImageFileName") String profileImageFileName);
     List<ServiceProvider> findByLastNameIgnoreCase(String lastName);
 }

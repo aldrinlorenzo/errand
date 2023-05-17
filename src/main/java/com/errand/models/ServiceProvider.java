@@ -26,6 +26,8 @@ public class ServiceProvider {
 
     private String businessName;
 
+    private String profileImageFileName;
+
     @OneToOne
     @JoinColumn(name = "userId")
     private Users user;

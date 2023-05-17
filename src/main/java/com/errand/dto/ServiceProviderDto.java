@@ -19,6 +19,6 @@ public class ServiceProviderDto {
 
     private String businessName;
 
-
+    private String profileImageFileName;
 
 }

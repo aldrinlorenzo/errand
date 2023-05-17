@@ -37,6 +37,7 @@ public class ServiceProviderMapper {
                 .email(serviceProvider.getEmail())
                 .contactNumber(serviceProvider.getContactNumber())
                 .businessName(serviceProvider.getBusinessName())
+                .profileImageFileName(serviceProvider.getProfileImageFileName())
                 .build();
     }
 
