@@ -15,6 +15,7 @@ import com.errand.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -162,6 +163,7 @@ public class TaskServiceImpl implements TaskService {
         Optional<Task> optionalTask =taskRepository.findById(id);
         Task task = optionalTask.orElseThrow(() -> new RuntimeException("Task not found"));
         task.setStatus("COMPLETED");
+        task.setCompletedDate(LocalDateTime.now());
         taskRepository.save(task);
     }
 

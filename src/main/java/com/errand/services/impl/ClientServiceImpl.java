@@ -104,6 +104,7 @@ public class ClientServiceImpl implements ClientService {
             Client client = mapToClient(clientDto);
             client.setId(getCurrentClient().getId());
             client.setUser(getCurrentClient().getUser());
+            client.setProfileImageFileName(getCurrentClient().getProfileImageFileName());
             clientRepository.save(client);
         } catch (Exception e) {
             e.printStackTrace();
