@@ -38,6 +38,9 @@ public class TaskServiceImplTest {
     private TaskMapper taskMapper = new TaskMapper();
     private TaskService taskService;
     private Task task;
+    private List<Task> taskList;
+    private List<TaskDto> taskDtoList;
+    private List<PendingTaskDto> pendingTaskDtoList;
     private Client client;
     private Users user;
 
@@ -55,20 +58,25 @@ public class TaskServiceImplTest {
         client = new Client();
         user = new Users();
 
+
         user.setUsername("username");
 
         client.setUser(user);
 
         task.setClient(client);
         task.setTargetDate(LocalDate.now());
+
+        taskList = new ArrayList<>();
+        taskDtoList = new ArrayList<>();
+        pendingTaskDtoList = new ArrayList<>();
+
+        taskList.add(task);
+        taskDtoList.add(TaskMapper.mapToTaskDto(task));
+        pendingTaskDtoList.add(TaskMapper.mapToPendingTaskDto(task));
     }
 
     @Test
     public void testFindAllTask() {
-        List<Task> taskList = new ArrayList<>();
-        taskList.add(task);
-        List<TaskDto> taskDtoList = new ArrayList<>();
-        taskDtoList.add(TaskMapper.mapToTaskDto(task));
         when(taskRepository.findAll()).thenReturn(taskList);
         assert(taskDtoList.equals(taskService.findAllTask()));
     }
@@ -82,40 +90,24 @@ public class TaskServiceImplTest {
 
     @Test
     public void testGetPendingTask() {
-        List<Task> taskList = new ArrayList<>();
-        taskList.add(task);
-        List<PendingTaskDto> pendingTaskDtoList = new ArrayList<>();
-        pendingTaskDtoList.add(TaskMapper.mapToPendingTaskDto(task));
         when(taskRepository.searchTasksByStatus(any())).thenReturn(taskList);
         assert(pendingTaskDtoList.equals(taskService.getPendingTask()));
     }
 
     @Test
-    public void testGetPendingTaskByClient() {
-        List<Task> taskList = new ArrayList<>();
-        taskList.add(task);
-        List<TaskDto> taskDtoList = new ArrayList<>();
-        taskDtoList.add(TaskMapper.mapToTaskDto(task));
+    public void testGetPendingTaskByClient() {;
         when(taskRepository.searchTasksByClientAndStatus(any(), any())).thenReturn(taskList);
         assert(taskDtoList.equals(taskService.getPendingTaskByClient()));
     }
 
     @Test
-    public void testGetOngoingTask() {
-        List<Task> taskList = new ArrayList<>();
-        taskList.add(task);
-        List<TaskDto> taskDtoList = new ArrayList<>();
-        taskDtoList.add(TaskMapper.mapToTaskDto(task));
+    public void testGetOngoingTask() {;
         when(taskRepository.searchTasksByStatus(any())).thenReturn(taskList);
         assert(taskDtoList.equals(taskService.getOngoingTask()));
     }
 
     @Test
     public void testGetOngoingTaskByClient() {
-        List<Task> taskList = new ArrayList<>();
-        taskList.add(task);
-        List<TaskDto> taskDtoList = new ArrayList<>();
-        taskDtoList.add(TaskMapper.mapToTaskDto(task));
         when(taskRepository.searchTasksByClientAndStatus(any(), any())).thenReturn(taskList);
         assert(taskDtoList.equals(taskService.getOngoingTaskByClient()));
     }
