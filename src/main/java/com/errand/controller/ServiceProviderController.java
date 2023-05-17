@@ -1,13 +1,11 @@
 package com.errand.controller;
 
 import com.errand.dto.*;
+import com.errand.models.Offer;
 import com.errand.models.Rating;
 import com.errand.models.ServiceProvider;
 import com.errand.models.Task;
-import com.errand.services.OfferService;
-import com.errand.services.RatingService;
-import com.errand.services.ServiceProviderService;
-import com.errand.services.TaskService;
+import com.errand.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -20,6 +18,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.errand.mapper.ClientMapper.mapToClientDto;
+import static com.errand.mapper.OfferMapper.mapToOffer;
 import static com.errand.mapper.ServiceProviderMapper.toServiceProviderDto;
 import static com.errand.mapper.TaskMapper.mapToTask;
 
@@ -38,14 +38,18 @@ public class ServiceProviderController {
     RatingService ratingService;
 
     @Autowired
+    LabelService labelService;
+
+    @Autowired
     public ServiceProviderController(TaskService taskService,
                                      ServiceProviderService serviceProviderService,
                                      OfferService offerService,
-                                     RatingService ratingService) {
+                                     RatingService ratingService, LabelService labelService) {
         this.taskService = taskService;
         this.serviceProviderService = serviceProviderService;
         this.offerService = offerService;
         this.ratingService = ratingService;
+        this.labelService = labelService;
     }
 
     @GetMapping("/dashboard")
@@ -201,7 +205,7 @@ public class ServiceProviderController {
     }
 
     @PostMapping("/tasks/{taskId}/rate")
-    public String rateServiceProvider(@PathVariable("taskId") Long taskId,
+    public String saveRateServiceProvider(@PathVariable("taskId") Long taskId,
                                       @ModelAttribute("rating") RatingDto ratingDto,
                                       BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -214,11 +218,26 @@ public class ServiceProviderController {
             ratingDto.setServiceProviderDto(toServiceProviderDto(serviceProviderService.getLoggedInServiceProvider()));
             ratingService.updateRatingFromServiceProvider(rating, ratingDto);
         } else {
+            Offer offer  = mapToOffer(offerService.findOfferById(task.getId()));
+            ratingDto.setClientDto(mapToClientDto(task.getClient()));
             ratingDto.setServiceProviderDto(serviceProviderService.getCurrentServiceProvider());
             ratingDto.setTaskDto(taskService.findTaskById(taskId));
             ratingService.saveRateFromServiceProvider(ratingDto);
         }
         return "redirect:/serviceProvider/tasks/completed-tasks";
+    }
+
+    @GetMapping("/tasks/{taskId}/rate")
+    public String rateClient(@PathVariable("taskId") Long taskId,
+                             @ModelAttribute("rating") RatingDto ratingDto,
+                             BindingResult result, Model model){
+
+        TaskDto task = taskService.findTaskById(taskId);
+        model.addAttribute("taskLabels", labelService.findAllLabels());
+        model.addAttribute("serviceProvider", serviceProviderService.getLoggedInServiceProvider());
+        model.addAttribute("task", task);
+
+        return "rating-from-serviceprovider";
     }
 
 
@@ -232,6 +251,7 @@ public class ServiceProviderController {
         List<RatingDto> ratings = ratingService.getRatingsByServiceProvider(serviceProvider);
         model.addAttribute("ratings", ratings);
         model.addAttribute("serviceProvider", serviceProvider);
+        model.addAttribute("task",task);
         return "serviceprovider-ratings";
     }
 

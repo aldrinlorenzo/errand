@@ -19,8 +19,22 @@ public class RatingMapper {
                 .serviceProviderRatingDescription(ratingDto.getServiceProviderRatingDescription())
                 .task(mapToTask(ratingDto.getTaskDto()))
                 .client(mapToClient(ratingDto.getClientDto()))
+                .serviceProvider(toServiceProvider(ratingDto.getServiceProviderDto()))
                 .build();
         return rating;
+    }
+
+
+    public static RatingDto mapToRatingDtoFromClient(Rating rating){
+        RatingDto.RatingDtoBuilder builder = RatingDto.builder()
+                .serviceProviderRating(rating.getServiceProviderRating())
+                .serviceProviderRatingDescription(rating.getServiceProviderRatingDescription())
+                .taskDto(mapToTaskDto(rating.getTask()));
+
+        if (rating.getClient() != null){
+            builder.clientDto(mapToClientDto(rating.getClient()));
+        }
+        return builder.build();
     }
 
     public static Rating mapToRatingFromServiceProvider(RatingDto ratingDto){
@@ -30,6 +44,7 @@ public class RatingMapper {
                 .clientRating(ratingDto.getClientRating())
                 .task(mapToTask(ratingDto.getTaskDto()))
                 .serviceProvider(toServiceProvider(ratingDto.getServiceProviderDto()))
+                .client(mapToClient(ratingDto.getClientDto()))
                 .build();
         return rating;
     }
@@ -47,15 +62,5 @@ public class RatingMapper {
         return  builder.build();
     }
 
-    public static RatingDto mapToRatingDtoFromClient(Rating rating){
-        RatingDto.RatingDtoBuilder builder = RatingDto.builder()
-                .serviceProviderRating(rating.getServiceProviderRating())
-                .serviceProviderRatingDescription(rating.getServiceProviderRatingDescription())
-                .taskDto(mapToTaskDto(rating.getTask()));
 
-        if (rating.getClient() != null){
-            builder.clientDto(mapToClientDto(rating.getClient()));
-        }
-        return builder.build();
-    }
 }

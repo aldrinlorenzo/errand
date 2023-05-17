@@ -1,5 +1,6 @@
 package com.errand.dto;
 
+import com.errand.models.Client;
 import com.errand.models.Label;
 import com.errand.models.Rating;
 import lombok.*;
@@ -59,6 +60,8 @@ public class TaskDto {
     private String createdBy;
 
     private Rating rating;
+
+    private Client client;
 
 
 }

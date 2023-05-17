@@ -5,10 +5,7 @@ import com.errand.dto.RatingDto;
 import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.TaskDto;
 
-import com.errand.models.Client;
-import com.errand.models.Offer;
-import com.errand.models.Rating;
-import com.errand.models.Task;
+import com.errand.models.*;
 import com.errand.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +18,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static com.errand.mapper.ClientMapper.mapToClientDto;
+import static com.errand.mapper.OfferMapper.mapToOffer;
 import static com.errand.mapper.RatingMapper.mapToRatingFromServiceProvider;
+import static com.errand.mapper.ServiceProviderMapper.toServiceProvider;
+import static com.errand.mapper.ServiceProviderMapper.toServiceProviderDto;
 import static com.errand.mapper.TaskMapper.mapToTask;
 
 @Controller
@@ -147,7 +147,7 @@ public class ClientController {
 
     @GetMapping("/tasks/{taskId}/offers/{offerId}/accept")
     public String acceptOffer(@PathVariable("taskId") Long taskId,
-                             @PathVariable("offerId") Long offerId){
+                             @PathVariable("offerId") Long offerId, RatingDto ratingDto){
         TaskDto taskDto = taskService.findTaskById(taskId);
         offerService.acceptOffer(offerId, taskDto);
         return "redirect:/client/tasks/{taskId}/offers";
@@ -198,8 +198,19 @@ public class ClientController {
         return "redirect:/client/profile";
     }
 
-    @PostMapping("/tasks/{taskId}/rate")
+    @GetMapping("/tasks/{taskId}/rate")
     public String rateServiceProvider(@PathVariable("taskId")Long taskId,
+                                      @ModelAttribute("rating")RatingDto ratingDto,
+                                      BindingResult result, Model model){
+        TaskDto task = taskService.findTaskById(taskId);
+        model.addAttribute("taskLabels", labelService.findAllLabels());
+        model.addAttribute("client", clientService.getCurrentClient());
+        model.addAttribute("task", task);
+        return "rating-from-client";
+    }
+
+    @PostMapping("/tasks/{taskId}/rate")
+    public String saveRateForServiceProvider(@PathVariable("taskId")Long taskId,
                                       @ModelAttribute("rating")RatingDto ratingDto,
                                       BindingResult result, Model model){
         if(result.hasErrors()){
@@ -212,6 +223,8 @@ public class ClientController {
             ratingDto.setClientDto(mapToClientDto(clientService.getCurrentClient()));
             ratingService.updateRatingFromClient(rating, ratingDto);
         }else{
+            Offer offer  = mapToOffer(offerService.findOfferById(task.getId()));
+            ratingDto.setServiceProviderDto(toServiceProviderDto(offer.getServiceProvider()));
             ratingDto.setClientDto(mapToClientDto(clientService.getCurrentClient()));
             ratingDto.setTaskDto(taskService.findTaskById(taskId));
             ratingService.saveRateFromClient(ratingDto);
@@ -220,11 +233,12 @@ public class ClientController {
     }
 
     @GetMapping("/viewMyRatings")
-    public String getRatingsOfCurrentClient(Model model, Client client, Task task){
+    public String getRatingsOfCurrentClient(Model model, ServiceProvider serviceProvider, TaskDto taskDto, Client client){
         client = clientService.getCurrentClient();
         List<RatingDto> ratings = ratingService.getRatingsByClient(client);
         model.addAttribute("ratings", ratings);
         model.addAttribute("client", client);
+        model.addAttribute("taskDto", taskDto);
         return "client-ratings";
     }
 

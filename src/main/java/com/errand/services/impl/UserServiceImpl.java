@@ -1,6 +1,7 @@
 package com.errand.services.impl;
 
 import com.errand.dto.BaseRegistrationDTO;
+import com.errand.exceptions.UserNotFoundException;
 import com.errand.models.Client;
 import com.errand.models.Role;
 import com.errand.models.ServiceProvider;
@@ -11,6 +12,8 @@ import com.errand.repository.ServiceProviderRepository;
 import com.errand.repository.UserRepository;
 import com.errand.security.SecurityUtil;
 import com.errand.services.UserService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,6 +36,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, ClientRepository clientRepository, ServiceProviderRepository serviceProviderRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.clientRepository = clientRepository;
+        this.serviceProviderRepository = serviceProviderRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     @Transactional
@@ -77,10 +87,12 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Users findByUsername(String username) {
-
-        return userRepository.findFirstByUsername(username);
-
+    public Users findByUsername(String username) throws UserNotFoundException {
+        try {
+            return userRepository.findFirstByUsername(username);
+        }catch (Exception e){
+            throw new UserNotFoundException("Can't find using that username");
+        }
     }
 
     @Override

@@ -9,6 +9,8 @@ import java.time.LocalDate;
 
 import java.time.format.DateTimeFormatter;
 
+import static com.errand.mapper.ClientMapper.mapToClient;
+
 @Component
 public class TaskMapper {
 
@@ -27,6 +29,7 @@ public class TaskMapper {
                 .completedDate(task.getCompletedDate())
                 .createdDate(task.getCreatedDate())
                 .modifiedDate(task.getModifiedDate())
+                .client(task.getClient())
                 .build();
         return taskDto;
     }
@@ -49,6 +52,7 @@ public class TaskMapper {
                 .createdDate(task.getCreatedDate())
                 .modifiedDate(task.getModifiedDate())
                 .rating(task.getRating())
+                .client(task.getClient())
                 .build();
         return taskDto;
     }

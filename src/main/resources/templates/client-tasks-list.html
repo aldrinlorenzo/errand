@@ -4,7 +4,6 @@
         layout:decorate="~{layout}">
 <head>
     <title>Client Tasks</title>
-
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 </head>
 
@@ -89,7 +88,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="task :${tasks}">
+                        <tr th:each="task :${tasks}" th:id="@{${task.id}}">
                             <td th:text="${task.id}"></td>
                             <td th:text="${task.title}"></td>
                             <td th:text="${task.description}"></td>
@@ -136,60 +135,20 @@
                                 </a>
                             </td>
                             <td style="text-align: center; white-space: nowrap;">
-                                <a data-toggle="modal" data-target="#Modal"
+<!--                                <a data-toggle="modal" data-target="#Modal"-->
+<!--                                   title="Rate Service Provider"-->
+<!--                                   class="btn btn-secondary btn-circle btn-sm"-->
+<!--                                   th:classappend="${(task.status == 'COMPLETED' && (task.rating == null || ( task.rating!= null && task.rating.serviceProviderRating == '0.0'))) ? '' : 'disabled'}">-->
+
+<!--                                    <i class="fas fa-star"></i>-->
+<!--                                </a>-->
+                                <a th:href="@{/client/tasks/{taskId}/rate(taskId=${task.id})}"
                                    title="Rate Service Provider"
                                    class="btn btn-secondary btn-circle btn-sm"
-                                   th:classappend="${(task.status == 'COMPLETED' && (task.rating == null || ( task.rating!= null && task.rating.serviceProviderRating == '0.0'))) ? '' : 'disabled'}">
+                                   th:classappend="${task.status == 'COMPLETED' && (task.rating == null || (task.rating != null && task.rating.serviceProviderRating == 0) )? '' : 'disabled'}">
 
                                     <i class="fas fa-star"></i>
                                 </a>
-
-                                <div class="modal fade" id="Modal" tabindex="-1" role="dialog"
-                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Rate your Service
-                                                    Provider</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form class="rating"
-                                                      th:action="@{/client/tasks/{taskId}/rate(taskId=${task.id})}"
-                                                      th:object="${rating}" method="post">
-
-                                                    <div class="form-group">
-                                                            <label>Rate your Service Provider:</label>
-                                                            <input type="number"
-                                                                   class="form-control"
-                                                                   placeholder="0-5"
-                                                                   min="0" max="5"
-                                                                   th:field="*{serviceProviderRating}"
-                                                                   required="required">
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="description">Rating Description:</label>
-                                                        <textarea type="text"
-                                                                  class="form-control"
-                                                                  th:field="*{serviceProviderRatingDescription}"
-                                                                  required="required"
-                                                                  id="description"
-                                                        ></textarea>
-                                                    </div>
-
-                                                    <button type="submit" class="btn btn-primary btn-user btn-block">
-                                                        Submit Rating
-                                                    </button>
-                                                </form>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
                             </td>
                         </tr>
 
@@ -205,7 +164,7 @@
     <script type="text/javascript" th:src="@{/vendor/datatables/jquery.dataTables.min.js}" defer></script>
     <script type="text/javascript" th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}" defer></script>
     <script type="text/javascript" th:src="@{/js/clientTaskScripts.js}" defer></script>
-
+    <script type="text/javascript" th:src="@{/js/table.js}"></script>
 </section>
 
 
