@@ -111,4 +111,10 @@ public class TaskServiceImplTest {
         when(taskRepository.searchTasksByClientAndStatus(any(), any())).thenReturn(taskList);
         assert(taskDtoList.equals(taskService.getOngoingTaskByClient()));
     }
+
+    @Test
+    public void testGetCompletedTaskOnAdmin() {
+        when(taskRepository.searchTasksByStatus(any())).thenReturn(taskList);
+        assert(taskDtoList.equals(taskService.getCompletedTaskOnAdmin()));
+    }
 }
