@@ -84,7 +84,7 @@
                         <tr>
                             <td th:text="${offer.price}"></td>
                             <td th:text="${offer.description}"></td>
-                            <td th:text="${offer.serviceProvider.firstName + ' ' +offer.serviceProvider.lastName}"></td>
+                            <td th:text="${offer.serviceProviderDto.firstName + ' ' +offer.serviceProviderDto.lastName}"></td>
                             <td th:text="${offer.status}"></td>
                             <td style="text-align: center; white-space: nowrap;">
                                 <a th:href="@{/client/tasks/{taskId}/offers/{offerId}/accept(taskId=${task.id},offerId=${offer.id})}"

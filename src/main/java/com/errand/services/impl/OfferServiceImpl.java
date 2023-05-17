@@ -6,12 +6,12 @@ import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.TaskDto;
 import com.errand.mapper.OfferMapper;
 import com.errand.mapper.ServiceProviderMapper;
+import com.errand.mapper.TaskMapper;
 import com.errand.models.Offer;
 import com.errand.models.Task;
 import com.errand.repository.OfferRepository;
 import com.errand.services.OfferService;
 import com.errand.services.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,32 +25,59 @@ import static com.errand.mapper.TaskMapper.mapToTask;
 @Service
 public class OfferServiceImpl implements OfferService {
 
-    private OfferRepository offerRepository;
-    private TaskService taskService;
+    private final OfferRepository offerRepository;
+    private final TaskService taskService;
 
-    private OfferMapper offerMapper;
 
-    @Autowired
     public OfferServiceImpl(OfferRepository offerRepository, TaskService taskService) {
         this.offerRepository = offerRepository;
         this.taskService = taskService;
+
     }
 
+
+
     @Override
-    public List<Offer> findOffersByTask(Task task) {
-        return offerRepository.findOffersByTask(task);
+    public List<OfferDto> findOffersByTask(TaskDto  taskDto) {
+        if(taskDto == null){
+            throw new IllegalArgumentException("Task parameter cannot be null.");
+        }
+        try{
+
+            List<Offer> offerList = offerRepository.findOffersByTask(TaskMapper.mapToTask(taskDto));
+            return offerList.stream().map(OfferMapper::mapToOfferDto).collect(Collectors.toList());
+        }
+        catch(RuntimeException ex){
+            throw new RuntimeException("Error occurred while retrieving list of offers");
+        }
+
+
     }
 
     @Override
     public OfferDto findOfferByTaskIdAndServiceProviderId(Long taskId, Long serviceProviderId) {
+        if (taskId == null || serviceProviderId == null) {
+            throw new IllegalArgumentException("Task ID and service provider ID cannot be null.");
+        }
+
         Offer offer = offerRepository.findOfferByTaskAndServiceProvider(taskId, serviceProviderId);
+        if (offer == null) {
+            throw new RuntimeException("Offer not found for the specified task and service provider.");
+        }
+
         return OfferMapper.mapToOfferDto(offer);
     }
 
     @Override
     public List<OfferDto> findOfferByServiceProvider(ServiceProviderDto serviceProviderDto) {
+        if (serviceProviderDto == null) {
+            throw new IllegalArgumentException("ServiceProviderDto parameter cannot be null.");
+        }
+
         List<Offer> offerList = offerRepository.findByServiceProvider(ServiceProviderMapper.toServiceProvider(serviceProviderDto));
-        return offerList.stream().map(OfferMapper::mapToOfferDto).collect(Collectors.toList());
+        return offerList.stream()
+                .map(OfferMapper::mapToOfferDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -58,15 +85,13 @@ public class OfferServiceImpl implements OfferService {
         return offerRepository.findOfferByTaskAndServiceProvider(taskId, serviceProviderId) != null;
     }
 
-
     @Override
     public Boolean createOffer(OfferDto offerDto) {
         try {
-            // if exist  return false
             if (isOfferExist(offerDto.getTaskDto().getId(), offerDto.getServiceProviderDto().getId())) {
                 return false; // Offer already exists
             }
-            // Create a new offer
+
             Offer offer = OfferMapper.mapToOffer(offerDto);
             offerRepository.save(offer);
             return true;
@@ -75,13 +100,11 @@ public class OfferServiceImpl implements OfferService {
             return false;
         }
     }
-
     @Override
     public Boolean updateOffer(OfferDto offerDto) {
         try {
             Offer existingOffer = offerRepository.findOfferByTaskAndServiceProvider(offerDto.getTaskDto().getId(), offerDto.getServiceProviderDto().getId());
 
-            //If offer does not exist -> return false
             if (existingOffer == null) {
                 return false;
             }
@@ -101,10 +124,7 @@ public class OfferServiceImpl implements OfferService {
     @Override
     @Transactional
     public Boolean deleteOffer(Long offerId) throws Exception {
-
         try {
-
-
             offerRepository.deleteOfferById(offerId);
             offerRepository.flush();
             System.out.println("Deleted");
@@ -114,35 +134,26 @@ public class OfferServiceImpl implements OfferService {
 
         }
 
-
     }
-
     @Override
     public OfferStatisticDto getOfferStatistic(ServiceProviderDto serviceProviderDto) {
         List<OfferDto> offerList = findOfferByServiceProvider(serviceProviderDto);
-
         long acceptedTotal = offerList.stream()
                 .filter(offer -> offer.getStatus().equals("ACCEPTED"))
                 .count();
-
         long pendingTotal = offerList.stream()
                 .filter(offer -> offer.getStatus().equals("OFFERED"))
                 .count();
-
         long rejectedTotal = offerList.stream()
                 .filter(offer -> offer.getStatus().equals(""))
                 .count();
-
         OfferStatisticDto offerStatisticDto = new OfferStatisticDto();
         offerStatisticDto.setTotalAcceptedOffer(acceptedTotal);
         offerStatisticDto.setTotalRejectedOffer(rejectedTotal);
         offerStatisticDto.setTotalPendingOffer(pendingTotal);
 
-
         return offerStatisticDto;
-
     }
-
 
     @Override
     public OfferDto findOfferById(Long id) {
@@ -150,8 +161,6 @@ public class OfferServiceImpl implements OfferService {
         return OfferMapper.mapToOfferDto(offer);
 
     }
-
-
     @Override
     public void acceptOffer(Long offerId, TaskDto taskDto) {
         Task task = mapToTask(taskDto);
@@ -166,7 +175,6 @@ public class OfferServiceImpl implements OfferService {
         Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new RuntimeException("Offer not found"));
         offer.setStatus("ACCEPTED");
         offerRepository.save(offer);
-
         //Set the Task Status to Ongoing
         task.setLabels(taskDto.getLabels());
         task.setOfferId(offerId);

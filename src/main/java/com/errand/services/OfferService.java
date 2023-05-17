@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public interface OfferService {
 
-    List<Offer> findOffersByTask(Task task);
+    List<OfferDto> findOffersByTask(TaskDto taskDto);
 
     OfferDto findOfferByTaskIdAndServiceProviderId(Long taskId, Long serviceProviderId);
 
