@@ -2,6 +2,7 @@ package com.errand.services.impl;
 
 import com.errand.dto.PendingTaskDto;
 import com.errand.dto.TaskDto;
+import com.errand.mapper.ServiceProviderMapper;
 import com.errand.mapper.TaskMapper;
 import com.errand.models.*;
 import com.errand.repository.ClientRepository;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -188,11 +190,12 @@ public class TaskServiceImplTest {
 
 
     }
+
     @Test
-    public void testFindTaskByServiceProvider(){
+    public void testFindTaskByServiceProvider() {
 
 
-        try(MockedStatic<TaskMapper> mockedStatic = mockStatic(TaskMapper.class)){
+        try (MockedStatic<TaskMapper> mockedStatic = mockStatic(TaskMapper.class)) {
             when(taskRepository.searchTaskByServiceProviderId(anyLong())).thenReturn(taskList);
             when(TaskMapper.mapToTaskDto(any(Task.class))).thenReturn(any(TaskDto.class));
             List<TaskDto> result = taskService.findTaskByServiceProvider(serviceProvider.getId());
@@ -200,5 +203,78 @@ public class TaskServiceImplTest {
         }
     }
 
+    @Test
+    public void testFindTaskByServiceProviderAndStatus() {
+        try (MockedStatic<TaskMapper> mockedStatic = mockStatic(TaskMapper.class)) {
+            when(taskRepository.searchTaskByServiceProviderIdAndStatus(any(), any()))
+                    .thenReturn(taskList);
+            List<TaskDto> result = taskService.findTaskByServiceProviderAndStatus(serviceProvider.getId(), "COMPLETED");
+            assertEquals(taskList.size(), result.size());
+        }
+    }
 
+    @Test
+    public void testGetTaskByClient() {
+        when(taskRepository.getTasksByClient(any(Client.class))).thenReturn(taskList);
+
+        try (MockedStatic<TaskMapper> mockedStatic = mockStatic(TaskMapper.class)) {
+
+            when(TaskMapper.mapToTaskDto(any(Task.class))).thenReturn(any(TaskDto.class));
+
+            List<TaskDto> result = taskService.getTasksByClient(client);
+
+            assertEquals(taskList.size(),result.size());
+        }
+    }
+
+    @Test
+    public void testUpdateTask() {
+        try (MockedStatic<TaskMapper> mockedStatic = mockStatic(TaskMapper.class)){
+            when(TaskMapper.mapToTask(any(TaskDto.class))).thenReturn(task);
+            taskService.updateTask(taskDto, client);
+            Task expectedTask = new Task();
+            expectedTask.setClient(client);
+            verify(taskRepository).save(any(Task.class));
+
+        }
+
+
+    }
+    @Test
+    public void testCompleteTask(){
+        when(taskRepository.findById(any())).thenReturn(Optional.of(task));
+        taskService.completeTask(anyLong());
+        Task expectedTask = new Task();
+        expectedTask.setStatus("COMPLETED");
+
+        assertEquals(task.getStatus(), expectedTask.getStatus());
+        verify(taskRepository).save(any(Task.class));
+    }
+
+    @Test
+    public void testCancelTask(){
+        when(taskRepository.findById(any())).thenReturn(Optional.of(task));
+        taskService.cancelTask(anyLong());
+        Task expectedTask = new Task();
+        expectedTask.setStatus("CANCELLED");
+
+        assertEquals(task.getStatus(), expectedTask.getStatus());
+        verify(taskRepository).save(any(Task.class));
+    }
+
+    @Test
+    public void testsetStatusOngoing(){
+        when(clientService.getCurrentClient()).thenReturn(client);
+
+        taskService.setStatusToOngoing(task);
+        Task expectedTask = new Task();
+        expectedTask.setStatus("ONGOING");
+
+        assertEquals(task.getStatus(), expectedTask.getStatus());
+        verify(taskRepository).save(any(Task.class));
+
+    }
 }
+
+
+
