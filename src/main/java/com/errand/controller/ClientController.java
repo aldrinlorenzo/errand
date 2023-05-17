@@ -142,16 +142,8 @@ public class ClientController {
     }
 
     @GetMapping("/tasks/{taskId}/offers/{offerId}/accept")
-    public String acceptOffer(@PathVariable("taskId") Long taskId,
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                             @PathVariable("offerId") Long offerId, RatingDto ratingDto){
-=======
-                              @PathVariable("offerId") Long offerId) {
->>>>>>> Stashed changes
-=======
-                              @PathVariable("offerId") Long offerId) {
->>>>>>> Stashed changes
+    public String acceptOffer(@PathVariable("taskId") Long taskId,@PathVariable("offerId") Long offerId, RatingDto ratingDto){
+
         TaskDto taskDto = taskService.findTaskById(taskId);
         offerService.acceptOffer(offerId, taskDto);
         return "redirect:/client/tasks/{taskId}/offers";
@@ -202,8 +194,6 @@ public class ClientController {
         return "redirect:/client/profile";
     }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     @GetMapping("/tasks/{taskId}/rate")
     public String rateServiceProvider(@PathVariable("taskId")Long taskId,
                                       @ModelAttribute("rating")RatingDto ratingDto,
@@ -220,18 +210,6 @@ public class ClientController {
                                       @ModelAttribute("rating")RatingDto ratingDto,
                                       BindingResult result, Model model){
         if(result.hasErrors()){
-=======
-=======
->>>>>>> Stashed changes
-    @PostMapping("/tasks/{taskId}/rate")
-    public String rateServiceProvider(@PathVariable("taskId") Long taskId,
-                                      @ModelAttribute("rating") RatingDto ratingDto,
-                                      BindingResult result, Model model) {
-        if (result.hasErrors()) {
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
             model.addAttribute("rating", ratingDto);
             return "client-tasks-List";
         }
@@ -240,17 +218,9 @@ public class ClientController {
         if (rating != null) {
             ratingDto.setClientDto(mapToClientDto(clientService.getCurrentClient()));
             ratingService.updateRatingFromClient(rating, ratingDto);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         }else{
             Offer offer  = mapToOffer(offerService.findOfferById(task.getId()));
             ratingDto.setServiceProviderDto(toServiceProviderDto(offer.getServiceProvider()));
-=======
-        } else {
->>>>>>> Stashed changes
-=======
-        } else {
->>>>>>> Stashed changes
             ratingDto.setClientDto(mapToClientDto(clientService.getCurrentClient()));
             ratingDto.setTaskDto(taskService.findTaskById(taskId));
             ratingService.saveRateFromClient(ratingDto);
@@ -259,15 +229,7 @@ public class ClientController {
     }
 
     @GetMapping("/viewMyRatings")
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     public String getRatingsOfCurrentClient(Model model, ServiceProvider serviceProvider, TaskDto taskDto, Client client){
-=======
-    public String getRatingsOfCurrentClient(Model model, Client client, Task task) {
->>>>>>> Stashed changes
-=======
-    public String getRatingsOfCurrentClient(Model model, Client client, Task task) {
->>>>>>> Stashed changes
         client = clientService.getCurrentClient();
         List<RatingDto> ratings = ratingService.getRatingsByClient(client);
         model.addAttribute("ratings", ratings);
