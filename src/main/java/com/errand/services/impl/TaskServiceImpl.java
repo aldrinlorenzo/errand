@@ -29,19 +29,19 @@ public class TaskServiceImpl implements TaskService {
     private UserRepository userRepository;
     private ClientRepository clientRepository;
     private ClientService clientService;
-
-    @Autowired
     private TaskMapper taskMapper;
 
     @Autowired
     public TaskServiceImpl(TaskRepository taskRepository,
                            UserRepository userRepository,
                            ClientRepository clientRepository,
-                           ClientService clientService) {
+                           ClientService clientService,
+                           TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
         this.clientRepository = clientRepository;
         this.clientService = clientService;
+        this.taskMapper = taskMapper;
     }
 
     @Override
