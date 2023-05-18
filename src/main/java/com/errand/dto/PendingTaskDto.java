@@ -1,10 +1,15 @@
 package com.errand.dto;
 
+import com.errand.models.Label;
 import lombok.Builder;
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
+
 @Data
 @Builder
 public class PendingTaskDto {
@@ -28,6 +33,9 @@ public class PendingTaskDto {
     private BigDecimal postalCode;
 
     private LocalDate targetDate;
+    @NotNull
+    private Set<Label> labels;
 
     private LocalDateTime createdDate;
+
 }

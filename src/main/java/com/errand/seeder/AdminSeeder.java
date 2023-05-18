@@ -12,10 +12,8 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.Collections;
-import java.util.List;
 
 @Component
 @Order(2)

@@ -3,13 +3,29 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout}">
 <head>
-  <title>Client Tasks</title>
+  <title>New Task</title>
 </head>
 
 <body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <div layout:fragment="profile-name">
   <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${client.firstName + ' ' + client.lastName + ' (Client)'}"></span>
+  <img class="img-profile rounded-circle"
+       th:if="${client.profileImageFileName != null and not #strings.isEmpty(client.profileImageFileName)}"
+       th:src="'/assets/profile-images/' + ${client.profileImageFileName}"
+       alt="Profile Image">
+
+  <img class="img-profile rounded-circle"
+       th:if="${client.profileImageFileName == null or #strings.isEmpty(client.profileImageFileName)}"
+       src="/assets/img/undraw_profile.svg"
+       alt="Default Image">
+</div>
+
+<div layout:fragment="view-profile">
+  <a class="dropdown-item" href="/client/profile">
+    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+    Profile
+  </a>
 </div>
 
 <section layout:fragment="sidebar-item" class="py-2">
@@ -35,9 +51,18 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="/client/tasks">
+    <a class="nav-link" th:href="@{/client/tasks}">
       <i class="fas fa-fw fa-list"></i>
       <span>Task List</span></a>
+  </li>
+
+  <hr class="sidebar-divider">
+
+  <li class="nav-item">
+    <a class="nav-link" href="/client/serviceProviders">
+      <i class="fas fa-fw fa-users"></i>
+      <span>Service Providers</span>
+    </a>
   </li>
 
 </section>
@@ -83,6 +108,7 @@
               <label for="budget">Budget</label>
               <input type="number"
                      class="form-control"
+                     min="1"
                      id="budget"
                      th:field="*{budget}"
                      required="required"

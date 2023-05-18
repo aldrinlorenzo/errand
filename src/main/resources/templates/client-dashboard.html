@@ -10,6 +10,23 @@
 
     <div layout:fragment="profile-name">
         <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${client.firstName + ' ' + client.lastName + ' (Client)'}"></span>
+
+        <img class="img-profile rounded-circle"
+             th:if="${client.profileImageFileName != null and not #strings.isEmpty(client.profileImageFileName)}"
+             th:src="'/assets/profile-images/' + ${client.profileImageFileName}"
+             alt="Profile Image">
+
+        <img class="img-profile rounded-circle"
+             th:if="${client.profileImageFileName == null or #strings.isEmpty(client.profileImageFileName)}"
+             src="/assets/img/undraw_profile.svg"
+             alt="Default Image">
+    </div>
+
+    <div layout:fragment="view-profile">
+        <a class="dropdown-item" href="/client/profile">
+            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+            Profile
+        </a>
     </div>
 
     <section layout:fragment="sidebar-item" class="py-2">
@@ -35,9 +52,17 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/client/tasks">
+            <a class="nav-link" th:href="@{/client/tasks}">
                 <i class="fas fa-fw fa-list"></i>
                 <span>Task List</span></a>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <li class="nav-item">
+            <a class="nav-link" href="/client/serviceProviders">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Service Providers</span></a>
         </li>
 
     </section>
@@ -45,7 +70,7 @@
     <!-- Page Content-->
     <section layout:fragment="body" class="px-3 py-1">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800" th:text="${'Welcome ' + client.firstName + '!'}"></h1>
+            <h1 class="h3 mb-0 text-gray-800" th:text="'Welcome ' + ${client.firstName} + '!'"></h1>
         </div>
 
         <div class="row">
@@ -57,7 +82,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
                                     Pending Requests</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${pendingTaskCount}"></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${pendingTaskCount}" id="pendingTasks"></div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-hourglass-half fa-2x text-gray-300"></i>
@@ -68,13 +93,13 @@
             </div>
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card border-left-warning shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                     Ongoing Requests</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${ongoingTaskCount}" id="ongoingTasks"></div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-spinner fa-2x text-gray-300"></i>
@@ -92,7 +117,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     Completed Requests</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">8</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${completedTaskCount}" id="completedTasks"></div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-check-square fa-2x text-gray-300"></i>
@@ -110,7 +135,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                     Cancelled Requests</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">14</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${cancelledTaskCount}" id="cancelledTasks"></div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-ban fa-2x text-gray-300"></i>
@@ -119,157 +144,84 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="row">
-            <div class="col-lg-3">
-
-                <!-- Collapsable Card Example -->
-                <div class="card border-left-secondary shadow mt-4 mb-4">
-                    <!-- Card Header - Accordion -->
-                    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
-                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                        <h6 class="m-0 font-weight-bold text-primary">Pending Tasks</h6>
-                    </a>
-                    <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapseCardExample">
-                        <div class="card-body">
-                            <!-- Dropdown Card Example -->
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-secondary">Air Conditioner Repair</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                             aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Action:</div>
-                                            <a class="dropdown-item" href="#">Edit</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    Label Target Date
-                                </div>
-                            </div>
-                            <!-- Dropdown Card Example -->
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-secondary">Laundry Service</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="pendingDropdownMenuLink"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                             aria-labelledby="pendingDropdownMenuLink">
-                                            <div class="dropdown-header">Action:</div>
-                                            <a class="dropdown-item" href="#">Edit</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    Label Target Date
-                                </div>
-                            </div>
+            <div class="col-xl-5 col-lg-4">
+                <!-- Illustrations -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Get the service you need, when you need it.</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                 src="/assets/img/undraw_add_tasks.svg" alt="...">
                         </div>
+                        <p>Get the services you need, from professionals you can trust. We're here to make your life easier, with hassle-free service.</p>
+                        <a  th:href="@{/client/serviceProviders}">Connect with trusted service providers. &rarr;</a>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-3">
-
-                <!-- Collapsable Card Example -->
-                <div class="card border-left-warning shadow mt-4 mb-4">
-                    <!-- Card Header - Accordion -->
-                    <a href="#ongoingTasksCard" class="d-block card-header py-3" data-toggle="collapse"
-                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                        <h6 class="m-0 font-weight-bold text-primary">Ongoing Tasks</h6>
-                    </a>
-                    <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="ongoingTasksCard">
-                        <div class="card-body">
-                            <!-- Dropdown Card Example -->
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-secondary">Printer Repair</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="ongoingDropdownMenuLink"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                             aria-labelledby="ongoingdropdownMenuLink">
-                                            <div class="dropdown-header">Action:</div>
-                                            <a class="dropdown-item" href="#">Edit</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    Label Target Date
-                                </div>
-                            </div>
+            <!-- Pie Chart -->
+            <div class="col-xl-7 col-lg-8">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Task Requests</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie pt-4 pb-2">
+                            <canvas id="myPieChart"></canvas>
+                        </div>
+                        <div class="mt-4 text-center small">
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-secondary"></i> Pending
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-warning"></i> Ongoing
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-success"></i> Completed
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-danger"></i> Cancelled
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-lg-3">
-
-                <!-- Collapsable Card Example -->
-                <div class="card border-left-success shadow mt-4 mb-4">
-                    <!-- Card Header - Accordion -->
-                    <a href="#completedTasksCard" class="d-block card-header py-3" data-toggle="collapse"
-                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                        <h6 class="m-0 font-weight-bold text-primary">Completed Tasks</h6>
-                    </a>
-                    <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="completedTasksCard">
-                        <div class="card-body">
-                            This is a collapsable card example using Bootstrap's built in collapse
-                            functionality. <strong>Click on the card header</strong> to see the card body
-                            collapse and expand!
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3">
-
-                <!-- Collapsable Card Example -->
-                <div class="card border-left-danger shadow mt-4 mb-4">
-                    <!-- Card Header - Accordion -->
-                    <a href="#cancelledTasksCard" class="d-block card-header py-3" data-toggle="collapse"
-                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                        <h6 class="m-0 font-weight-bold text-primary">Cancelled Tasks</h6>
-                    </a>
-                    <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="cancelledTasksCard">
-                        <div class="card-body">
-                            This is a collapsable card example using Bootstrap's built in collapse
-                            functionality. <strong>Click on the card header</strong> to see the card body
-                            collapse and expand!
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+        <div class="row">
+            <!--View client ratings-->
+            <div class="col-xl-5 col-lg-4">
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    My Ratings</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                <a  th:href="@{/client/viewMyRatings}">View my ratings from service providers. &rarr;</a>
+
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-star fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" th:src="@{/vendor/chart.js/Chart.min.js}" defer></script>
+        <script type="text/javascript" th:src="@{/js/demo/chart-bar-demo.js}" defer></script>
+        <script type="text/javascript" th:src="@{/js/demo/chart-pie-demo.js}" defer></script>
+
+
     </section>
 
 </body>

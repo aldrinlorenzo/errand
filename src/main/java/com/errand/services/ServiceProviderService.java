@@ -1,18 +1,17 @@
 package com.errand.services;
 
 import com.errand.dto.ServiceProviderDto;
-import com.errand.dto.ServiceProviderForUpdateDto;
-
-
 import java.util.List;
 
+import com.errand.models.ServiceProvider;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public interface ServiceProviderService {
 
-    ServiceProviderForUpdateDto getServiceProviderById(Long id);
+    ServiceProviderDto getServiceProviderById(Long id);
+
+    ServiceProvider findByEmail(String email);
 
     Boolean updateServiceProviderDetails(ServiceProviderDto serviceProviderDto, Long id);
 
@@ -24,7 +23,8 @@ public interface ServiceProviderService {
 
     ServiceProviderDto getCurrentServiceProvider();
 
+    ServiceProvider getLoggedInServiceProvider();
 
-
+    void updateServiceProviderImage(ServiceProviderDto serviceProviderDto);
 
 }

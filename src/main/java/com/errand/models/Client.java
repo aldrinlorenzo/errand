@@ -26,11 +26,16 @@ public class Client{
 
     private String contactNumber;
 
+    private String profileImageFileName;
+
     @OneToOne
     @JoinColumn(name = "userId")
     private Users user;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Task> tasks = new ArrayList<>();
+
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+    private Rating rating;
 
 }

@@ -26,11 +26,16 @@ public class ServiceProvider {
 
     private String businessName;
 
+    private String profileImageFileName;
+
     @OneToOne
     @JoinColumn(name = "userId")
     private Users user;
 
     @OneToOne(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
     private Offer offer;
+
+    @OneToOne(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
+    private Rating rating;
 
 }

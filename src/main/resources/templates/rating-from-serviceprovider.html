@@ -1,0 +1,109 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <title>Edit Task</title>
+</head>
+
+<body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<div layout:fragment="profile-name">
+     <span class="mr-2 d-none d-lg-inline text-gray-600 small"
+           th:text="${serviceProvider.firstName + ' ' + serviceProvider.lastName + ' (ServiceProvider)'}"></span>
+    <img class="img-profile rounded-circle"
+         th:if="${serviceProvider.profileImageFileName != null and not #strings.isEmpty(serviceProvider.profileImageFileName)}"
+         th:src="'/assets/profile-images/' + ${serviceProvider.profileImageFileName}"
+         alt="Profile Image">
+
+    <img class="img-profile rounded-circle"
+         th:if="${serviceProvider.profileImageFileName == null or #strings.isEmpty(serviceProvider.profileImageFileName)}"
+         src="/assets/img/undraw_profile_3.svg"
+         alt="Default Image">
+</div>
+
+<div layout:fragment="view-profile">
+    <a class="dropdown-item" href="/serviceProvider/profile">
+        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+        Profile
+    </a>
+</div>
+
+<section layout:fragment="sidebar-item" class="py-2">
+
+    <hr class="sidebar-divider my-0">
+
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/serviceProvider/dashboard}">
+
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Tasks
+    </div>
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/serviceProvider/tasks/ongoing-tasks}">
+            <i class="fas fa-fw fa-briefcase"></i>
+            <span>My Tasks</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/serviceProvider/tasks/pending-tasks}">
+            <i class="fas fa-fw fa-briefcase"></i>
+            <span>Available Tasks</span>
+        </a>
+    </li>
+
+</section>
+
+<!-- Page Content-->
+<section layout:fragment="body" class="px-3 py-1">
+
+    <div class="container">
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Rate your Client</h6>
+            </div>
+            <div class="card-body">
+
+                <form class="rating" th:action="@{/serviceProvider/tasks/{taskId}/rate(taskId=${task.id})}"  th:object="${rating}" method="post">
+
+                    <div class="form-group">
+
+                        <label for="rating" style="text-align: left;">Rate your Client:</label>
+                        <input type="number"
+                               class="form-control"
+                               id="rating"
+                               placeholder="1-5"
+                               min="1" max="5"
+                               th:field="*{clientRating}"
+                               required="required">
+
+                    </div>
+                    <div class="form-group">
+
+                            <label>Rating Description:</label>
+                            <textarea type="text"
+                                      class="form-control custom-textarea"
+                                      th:field="*{clientRatingDescription}"
+                                      required="required"></textarea>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                        Submit Rating
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

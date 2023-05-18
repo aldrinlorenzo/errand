@@ -1,21 +1,16 @@
 package com.errand.dto;
 
+import com.errand.models.Client;
 import com.errand.models.Label;
+import com.errand.models.Rating;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.beans.factory.annotation.Required;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collector;
 
 @Data
 @Builder
@@ -47,6 +42,8 @@ public class TaskDto {
 
     private Long offerId;
 
+    private OfferDto offerDto;
+
     @NotNull
     @NotBlank
     private String targetDate;
@@ -62,5 +59,8 @@ public class TaskDto {
 
     private String createdBy;
 
+    private Rating rating;
+
+    private Client client;
 
 }

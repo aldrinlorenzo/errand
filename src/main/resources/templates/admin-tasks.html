@@ -4,11 +4,14 @@
         layout:decorate="~{layout}">
 <head>
   <title>Tasks Management</title>
+  <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 </head>
 <body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
 
   <div layout:fragment="profile-name">
     <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${user.username + ' (Administrator)'}"></span>
+    <img class="img-profile rounded-circle"
+         src="/assets/img/undraw_profile_2.svg">
   </div>
 
   <section layout:fragment="sidebar-item" class="py-2">
@@ -62,7 +65,8 @@
             <a class="btn btn-success" th:href="@{/admin/tasks/ongoing-tasks}">View Ongoing Tasks</a>
             <a class="btn btn-dark" th:href="@{/admin/tasks/completed-tasks}">View Completed Tasks</a>
             <a class="btn btn-danger" th:href="@{/admin/tasks/cancelled-tasks}">View Cancelled Tasks</a>
-            <table class="table table-bordered" id="dataTable" STYLE="width='100%'; cellspacing='0'" >
+            <br><br><br>
+            <table class="table table-bordered" id="taskTable" STYLE="width='100%'; cellspacing='0'" >
               <thead>
               <tr>
                 <th>Task ID</th>
@@ -76,8 +80,8 @@
                 <th>Status</th>
               </tr>
               </thead>
-              <tbody th:each="task :${tasks}">
-              <tr>
+              <tbody>
+              <tr th:each="task :${tasks}">
                 <td th:text="${task.id}"></td>
                 <td th:text="${task.title}"></td>
                 <td th:text="${task.description}"></td>
@@ -96,6 +100,9 @@
       </div>
 
     </div>
+    <script type="text/javascript" th:src="@{/vendor/datatables/jquery.dataTables.min.js}" defer></script>
+    <script type="text/javascript" th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}" defer></script>
+    <script type="text/javascript" th:src="@{/js/clientTaskScripts.js}" defer></script>
   </section>
 </body>
 </html>

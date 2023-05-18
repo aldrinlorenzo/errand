@@ -27,6 +27,7 @@ public class TaskMapper {
                 .completedDate(task.getCompletedDate())
                 .createdDate(task.getCreatedDate())
                 .modifiedDate(task.getModifiedDate())
+                .client(task.getClient())
                 .build();
         return taskDto;
     }
@@ -45,28 +46,16 @@ public class TaskMapper {
                 .offerId(task.getOfferId())
                 .targetDate(task.getTargetDate().format(DateTimeFormatter.ISO_DATE))
                 .completedDate(task.getCompletedDate())
+                .labels(task.getLabels())
                 .createdDate(task.getCreatedDate())
                 .modifiedDate(task.getModifiedDate())
+                .rating(task.getRating())
+                .client(task.getClient())
                 .build();
         return taskDto;
     }
 
-    public PendingTaskDto toPendingTaskDto(Task task) {
-        return PendingTaskDto.builder()
-                .title(task.getTitle())
-                .description(task.getDescription())
-                .budget(task.getBudget())
-                .street(task.getStreet())
-                .city(task.getCity())
-                .postalCode(task.getPostalCode())
-                .targetDate(task.getTargetDate())
-                .createdDate(task.getCreatedDate())
-                .targetDate(task.getTargetDate())
-                .createdDate(task.getCreatedDate())
-                .build();
-    }
-
-    public PendingTaskDto mapToPendingTaskDto(Task task) {
+    public static PendingTaskDto mapToPendingTaskDto(Task task) {
         return PendingTaskDto.builder()
                 .id(task.getId())
                 .title(task.getTitle())
@@ -78,6 +67,7 @@ public class TaskMapper {
                 .createdBy(task.getClient().getUser().getUsername())
                 .status(task.getStatus())
                 .targetDate(task.getTargetDate())
+                .labels(task.getLabels())
                 .createdDate(task.getCreatedDate())
                 .targetDate(task.getTargetDate())
                 .createdDate(task.getCreatedDate())

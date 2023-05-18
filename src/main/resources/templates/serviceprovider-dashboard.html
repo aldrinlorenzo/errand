@@ -9,6 +9,22 @@
 <div layout:fragment="profile-name">
     <span class="mr-2 d-none d-lg-inline text-gray-600 small"
           th:text="${serviceProvider.firstName + ' ' + serviceProvider.lastName + ' (ServiceProvider)'}"></span>
+    <img class="img-profile rounded-circle"
+         th:if="${serviceProvider.profileImageFileName != null and not #strings.isEmpty(serviceProvider.profileImageFileName)}"
+         th:src="'/assets/profile-images/' + ${serviceProvider.profileImageFileName}"
+         alt="Profile Image">
+
+    <img class="img-profile rounded-circle"
+         th:if="${serviceProvider.profileImageFileName == null or #strings.isEmpty(serviceProvider.profileImageFileName)}"
+         src="/assets/img/undraw_profile_3.svg"
+         alt="Default Image">
+</div>
+
+<div layout:fragment="view-profile">
+    <a class="dropdown-item" href="/serviceProvider/profile">
+        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+        Profile
+    </a>
 </div>
 
 
@@ -16,7 +32,8 @@
 <section layout:fragment="sidebar-item" class="py-2">
     <hr class="sidebar-divider my-0">
     <li class="nav-item active">
-        <a class="nav-link" th:href="@{/serviceProvider/{id}(id=${serviceProviderId})/dashboard}">
+        <a class="nav-link" th:href="@{/serviceProvider/dashboard}">
+
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
@@ -26,15 +43,15 @@
         Tasks
     </div>
     <li class="nav-item">
-        <a class="nav-link" href="/serviceProvider/tasks/new">
+        <a class="nav-link" th:href="@{/serviceProvider/tasks/ongoing-tasks}">
             <i class="fas fa-fw fa-briefcase"></i>
-            <span>New Request</span>
+            <span>My Tasks</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" th:href="@{serviceProvider/{id}(id=${serviceProviderId})/task}">
+        <a class="nav-link" th:href="@{/serviceProvider/tasks/pending-tasks}">
             <i class="fas fa-fw fa-briefcase"></i>
-            <span>Task List</span>
+            <span>Available Tasks</span>
         </a>
     </li>
 </section>
@@ -45,108 +62,107 @@
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Service Provider Dashboard</h1>
+            <h1 class="h3 mb-0 text-gray-800" th:text="'Welcome ' + ${serviceProvider.firstName} + '!'"></h1>
         </div>
-
         <div class="row">
-            <div class="col-md-4">
-
-                <div class="col-xl-12 col-md-6 mb-4">
+                <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-primary shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Earnings (Monthly)
+                                        Total Earnings
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${totalEarnings}">$40,000</div>
                                 </div>
                                 <div class="col-auto">
-                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-12 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Earnings (Monthly)
-                                    </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                    <i class="fas fa-money fa-2x text-gray-300"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Earnings (Annual) Card Example -->
-                <div class="col-xl-12 col-md-6 mb-4">
-                    <div class="card border-left-success shadow h-100 py-2">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-secondary shadow h-100 py-2">
+                        <a th:href="@{/serviceProvider/tasks/pending-tasks}">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        Earnings (Annual)
+                                    <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
+                                        Pending Offers
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${pendingTaskCount}">18</div>
                                 </div>
                                 <div class="col-auto">
-                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                    <i class="fas fa-hourglass fa-2x text-gray-300"></i>
                                 </div>
                             </div>
                         </div>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Tasks Card Example -->
-                <div class="col-xl-12 col-md-6 mb-4">
-                    <div class="card border-left-info shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                                    </div>
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col-auto">
-                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="progress progress-sm mr-2">
-                                                <div class="progress-bar bg-info" role="progressbar"
-                                                     style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                     aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pending Requests Card Example -->
-                <div class="col-xl-12 col-md-6 mb-4">
+                <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-warning shadow h-100 py-2">
+                        <a th:href="@{/serviceProvider/tasks/ongoing-tasks}">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                        Pending Requests
+                                        Ongoing Requests
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${ongoingTaskCount}">18</div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" role="progressbar" th:style="|width: ${ongoingPercentage}%|"
+                                             aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${ongoingPercentage}"></div>
+                                    </div>
                                 </div>
                                 <div class="col-auto">
-                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                    <i class="fas fa-spinner fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <a th:href="@{/serviceProvider/tasks/completed-tasks}">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        Completed Requests
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${completedTaskCount}">18</div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" th:style="|width: ${completedPercentage}%|"
+                                            aria-valuemin="0" aria-valuemax="100" th:attr="aria-valuenow=${completedPercentage}"></div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-check-square fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-xl-5 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                        My Ratings</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                    <a th:href="@{/serviceProvider/viewMyRatings}">View my ratings from Clients. &rarr;</a>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-star fa-2x text-gray-300"></i>
                                 </div>
                             </div>
                         </div>
@@ -154,10 +170,8 @@
                 </div>
 
 
-            </div>
 
-
-            <div class="col-md-7">
+            <div class="col-xl-7 col-md-6 mb-4">
                 <div class="card border-left-warning shadow h-100 py-2">
                     <div class="col-xl-12 col-md-6 mb-4">
                         <div class="card">
@@ -185,7 +199,7 @@
                                                 th:text="${serviceProvider.businessName}"></span></p>
                                     </div>
                                     <td style="text-align: center">
-                                        <a th:href="@{/serviceProvider/{serviceProviderId}/profile(serviceProviderId=${serviceProviderId})}"
+                                        <a th:href="@{/serviceProvider/profile}"
                                            class="btn btn-warning btn-circle btn-sm">
                                             <i class="fas fa-pen"></i>
                                         </a>

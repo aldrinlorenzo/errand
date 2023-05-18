@@ -4,12 +4,15 @@
         layout:decorate="~{layout}">
 <head>
   <title>Service Provider Management</title>
+  <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <div layout:fragment="profile-name">
-  <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${user.username + ' (Service Provider)'}"></span>
+  <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${user.username + ' (Administrator)'}"></span>
+  <img class="img-profile rounded-circle"
+       src="/assets/img/undraw_profile_2.svg">
 </div>
 
 <!-- Sidebar Items-->
@@ -58,25 +61,9 @@
       <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Service Provider Management</h6>
       </div>
-      <br>
-      <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
-            th:action="@{/admin/serviceproviders/search}"
-            th:object="${serviceProviders}"
-            method="get">
-        <div class="input-group">
-          <input type="text" class="form-control bg-light border-0 small" placeholder="Search name..."
-                 aria-label="Search" aria-describedby="basic-addon2" name="name">
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="submit">
-              <i class="fas fa-search fa-sm"></i>
-            </button>
-          </div>
-        </div>
-      </form>
-
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <table class="table table-bordered" id="SpTable" width="100%" cellspacing="0">
 
             <thead>
             <tr>
@@ -86,19 +73,25 @@
               <th>Email</th>
               <th>Contact Number</th>
               <th>Business Name</th>
-              <th>Action</th>
+              <th class="center-element">Ratings</th>
             </tr>
             </thead>
 
-            <tbody th:each="serviceProvider :${serviceProviders}">
-            <tr>
+            <tbody>
+            <tr th:each="serviceProvider :${serviceProviders}">
               <td th:text="${serviceProvider.id}"></td>
               <td th:text="${serviceProvider.firstName}"></td>
               <td th:text="${serviceProvider.lastName}"></td>
               <td th:text="${serviceProvider.email}"></td>
               <td th:text="${serviceProvider.contactNumber}"></td>
               <td th:text="${serviceProvider.businessName}"></td>
-              <td><button class="btn btn-primary">View Task</button></td>
+              <td class="center-element">
+                <a th:href="@{/admin/serviceProviders/{serviceProviderId}/ratings(serviceProviderId=${serviceProvider.id})}"
+                   title="View Ratings"
+                   class="btn btn-secondary btn-circle btn-sm">
+                  <i class="fas fa-star"></i>
+                </a>
+              </td>
             </tr>
             </tbody>
 
@@ -109,6 +102,9 @@
     </div>
 
   </div>
+  <script type="text/javascript" th:src="@{/vendor/datatables/jquery.dataTables.min.js}" defer></script>
+  <script type="text/javascript" th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}" defer></script>
+  <script type="text/javascript" th:src="@{/js/clientTaskScripts.js}" defer></script>
 </section>
 
 </body>

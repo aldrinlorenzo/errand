@@ -41,8 +41,7 @@ public class TaskSeeder implements CommandLineRunner {
             //task created by client1 Last Name Depp
             Task taskByClient = new Task();
 
-            //taskByClient.setClient(clientRepository.findByLastNameIgnoreCase("Depp"));
-
+            taskByClient.setClient(clientRepository.findByLastName("Depp"));
             taskByClient.setBudget(new BigDecimal(1000));
             taskByClient.setCity("Taguig");
             taskByClient.setDescription("Fix Pc");
@@ -57,8 +56,7 @@ public class TaskSeeder implements CommandLineRunner {
             //task created by client2 LastName Rizal
             Task taskByClient2 = new Task();
 
-            //taskByClient2.setClient(clientRepository.findByLastNameIgnoreCase("Rizal"));
-
+            taskByClient2.setClient(clientRepository.findByLastName("Rizal"));
             taskByClient2.setBudget(new BigDecimal(1000));
             taskByClient2.setCity("Makati");
             taskByClient2.setDescription("Plumbing");
@@ -73,8 +71,7 @@ public class TaskSeeder implements CommandLineRunner {
             //task created by client2 LastName Rizal
             Task taskByClient3 = new Task();
 
-            //taskByClient3.setClient(clientRepository.findByLastNameIgnoreCase("Rizal"));
-
+            taskByClient3.setClient(clientRepository.findByLastName("Rizal"));
             taskByClient3.setBudget(new BigDecimal(1000));
             taskByClient3.setCity("Pasig");
             taskByClient3.setDescription("Cooking");
@@ -89,8 +86,7 @@ public class TaskSeeder implements CommandLineRunner {
             //task created by client2 LastName Rizal
             Task taskByClient4 = new Task();
 
-            //taskByClient4.setClient(clientRepository.findByLastNameIgnoreCase("Rizal"));
-
+            taskByClient4.setClient(clientRepository.findByLastName("Rizal"));
             taskByClient4.setBudget(new BigDecimal(1000));
             taskByClient4.setCity("Pasig");
             taskByClient4.setDescription("Fix Laptop");
@@ -101,8 +97,6 @@ public class TaskSeeder implements CommandLineRunner {
             taskByClient4.setTitle("Help me cook");
 
             taskRepository.save(taskByClient4);
-
-
 
             }
         }

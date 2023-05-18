@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServiceProviderMapper {
 
-    public ServiceProviderForUpdateDto toServiceProviderForUpdateDto(ServiceProvider serviceProvider) {
+    public static ServiceProviderForUpdateDto toServiceProviderForUpdateDto(ServiceProvider serviceProvider) {
         return ServiceProviderForUpdateDto.builder()
                 .firstName(serviceProvider.getFirstName())
                 .lastName(serviceProvider.getLastName())
@@ -18,7 +18,7 @@ public class ServiceProviderMapper {
                 .build();
     }
 
-    public ServiceProvider toServiceProvider(ServiceProviderDto serviceProviderDto) {
+    public static  ServiceProvider toServiceProvider(ServiceProviderDto serviceProviderDto) {
         return ServiceProvider.builder()
                 .id(serviceProviderDto.getId())
                 .firstName(serviceProviderDto.getFirstName())
@@ -29,7 +29,7 @@ public class ServiceProviderMapper {
                 .build();
     }
 
-    public ServiceProviderDto toServiceProviderDto(ServiceProvider serviceProvider){
+    public static ServiceProviderDto toServiceProviderDto(ServiceProvider serviceProvider){
         return ServiceProviderDto.builder()
                 .id(serviceProvider.getId())
                 .firstName(serviceProvider.getFirstName())
@@ -37,6 +37,7 @@ public class ServiceProviderMapper {
                 .email(serviceProvider.getEmail())
                 .contactNumber(serviceProvider.getContactNumber())
                 .businessName(serviceProvider.getBusinessName())
+                .profileImageFileName(serviceProvider.getProfileImageFileName())
                 .build();
     }
 

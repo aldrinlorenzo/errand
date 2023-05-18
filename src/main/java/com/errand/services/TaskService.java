@@ -17,23 +17,31 @@ public interface TaskService {
 
     List<PendingTaskDto> getPendingTask();
 
-    List<PendingTaskDto> getPendingTaskByClient();
+    List<TaskDto> getPendingTaskByClient();
 
     List<TaskDto> getOngoingTask();
 
+    List<TaskDto> getOngoingTaskByClient();
+
     List<TaskDto> getCompletedTaskOnAdmin();
+
+    List<TaskDto> getCompletedTaskByClient();
 
     List<TaskDto> getCancelledTaskOnAdmin();
 
-    Task saveTask(TaskDto taskDto);
+    List<TaskDto> getCancelledTaskByClient();
 
+    Task saveTask(TaskDto taskDto);
 
     List<TaskDto> findTaskByServiceProvider(Long id);
 
+    List<TaskDto> findTaskByServiceProviderAndStatus(Long id, String status);
 
     List<TaskDto> getTasksByClient(Client client);
 
     void updateTask(TaskDto task, Client client);
+
+    void completeTask(Long id);
 
     void cancelTask(Long id);
 

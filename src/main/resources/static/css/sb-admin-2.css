@@ -69,37 +69,14 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   transform: scale(1.05); /* scale up the card slightly on hover */
 }
 
-
-/* Style the select element */
-.label-select {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  font-family: Arial, sans-serif;
-  color: #555;
-  background-color: #fff;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  appearance: none; /* Remove the default dropdown arrow */
-  background-image: url('path/to/custom-arrow.png'); /* Add a custom dropdown arrow */
-  background-repeat: no-repeat;
-  background-position: right 10px center;
+.img-account-profile {
+    height: 10rem;
 }
 
-/* Style the options in the dropdown */
-.label-select option {
-  font-size: 16px;
-  font-family: Arial, sans-serif;
-  color: #555;
-  background-color: #fff;
-}
 
-/* Style the selected option in the dropdown */
-.label-select option:checked {
-  color: #fff;
-  text-decoration: none;
-  background-color: #4e73df;
+
+.center-element {
+    text-align:center;
 }
 
 
@@ -4542,6 +4519,7 @@ input[type="button"].btn-block {
   border-radius: 0.35rem;
 }
 
+
 .card > hr {
   margin-right: 0;
   margin-left: 0;
@@ -6655,6 +6633,7 @@ button.bg-dark:focus {
 
 .rounded-circle {
   border-radius: 50% !important;
+  border: 2px solid black;
 }
 
 .rounded-pill {
@@ -9965,7 +9944,7 @@ a:focus {
 }
 
 .bg-errand{
-    background-color: #001219;
+    background-color: white;
 }
 
 .bg-gradient-info {
@@ -10916,14 +10895,14 @@ a:focus {
   background: url("../assets/img/errandlogo.png");
   background-position: center;
   background-size: cover;
-  background-color: #CA6702;
+  background-color: #3E64D3;
 }
 
 .bg-register-image {
   background: url("../assets/img/errandlogo.png");
   background-position: center;
   background-size: cover;
-  background-color: #CA6702;
+  background-color: #3E64D3;
 }
 
 .bg-password-image {

@@ -9,14 +9,31 @@
 <div layout:fragment="profile-name">
     <span class="mr-2 d-none d-lg-inline text-gray-600 small"
           th:text="${serviceProvider.firstName + ' ' + serviceProvider.lastName + ' (ServiceProvider)'}"></span>
+    <img class="img-profile rounded-circle"
+         th:if="${serviceProvider.profileImageFileName != null and not #strings.isEmpty(serviceProvider.profileImageFileName)}"
+         th:src="'/assets/profile-images/' + ${serviceProvider.profileImageFileName}"
+         alt="Profile Image">
+
+    <img class="img-profile rounded-circle"
+         th:if="${serviceProvider.profileImageFileName == null or #strings.isEmpty(serviceProvider.profileImageFileName)}"
+         src="/assets/img/undraw_profile_3.svg"
+         alt="Default Image">
+</div>
+
+<div layout:fragment="view-profile">
+    <a class="dropdown-item" href="/serviceProvider/profile">
+        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+        Profile
+    </a>
 </div>
 
 
 <!-- Sidebar Navigation -->
 <section layout:fragment="sidebar-item" class="py-2">
     <hr class="sidebar-divider my-0">
-    <li class="nav-item active">
-        <a class="nav-link" th:href="@{/serviceProvider/{id}(id=${serviceProviderId})/dashboard}">
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/serviceProvider/dashboard}">
+
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
@@ -26,105 +43,144 @@
         Tasks
     </div>
     <li class="nav-item">
-        <a class="nav-link" href="/serviceProvider/tasks/new">
+        <a class="nav-link" th:href="@{/serviceProvider/tasks/ongoing-tasks}">
             <i class="fas fa-fw fa-briefcase"></i>
-            <span>New Request</span>
+            <span>My Tasks</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" th:href="@{serviceProvider/{id}(id=${serviceProviderId})/task}">
+        <a class="nav-link" th:href="@{/serviceProvider/tasks/pending-tasks}">
             <i class="fas fa-fw fa-briefcase"></i>
-            <span>Task List</span>
+            <span>Available Tasks</span>
         </a>
     </li>
 </section>
+
 <!-- Page Content-->
 <section layout:fragment="body" class="px-3 py-1">
 
     <div class="container">
+        <div class="row">
+            <div class="col-xl-4">
+                <!-- Profile picture card-->
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header">Profile Picture</div>
+                    <div class="card-body text-center">
+                        <!-- Profile picture image-->
+                        <div class="d-flex justify-content-center mb-3">
+                            <div style="width: 10rem; height: 10rem; overflow: hidden; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid black;">
+                                <img style="width: 100%; height: 100%; object-fit: cover; "
+                                     th:if="${serviceProvider.profileImageFileName != null and not #strings.isEmpty(serviceProvider.profileImageFileName)}"
+                                     th:src="'/assets/profile-images/' + ${serviceProvider.profileImageFileName}"
+                                     alt="Profile Image">
 
-        <div class="card shadow mb-4 mx-7">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Edit Profile</h6>
+                                <img style="width: 100%; height: 100%; object-fit: cover; "
+                                     th:if="${serviceProvider.profileImageFileName == null or #strings.isEmpty(serviceProvider.profileImageFileName)}"
+                                     src="/assets/img/undraw_profile_3.svg"
+                                     alt="Default Image">
+                            </div>
+                        </div>
+
+                        <form id="uploadForm" method="post" th:action="@{/serviceProvider/profile/upload}" enctype="multipart/form-data">
+                            <input class="form-control mb-3" id="input-file" type="file" name="file" accept="image/png, image/jpeg" />
+                            <button class="btn btn-primary" type="submit">
+                                Upload Image
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
+            <div class="col-xl-8">
+                <div class="card mb-8 mb-xl-0">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Edit Profile</h6>
+                    </div>
+                    <div class="card-body">
 
-                <form role="form" method="post"
-                      th:action="@{/serviceProvider/{serviceProviderId}/profile/save(serviceProviderId=${serviceProviderId})}"
-                      th:object="${serviceProvider}">
-                    <div class="form-group">
-                        <label for="title">First Name</label>
-                        <input type="text"
-                               class="form-control"
-                               id="title"
-                               th:field="*{firstName}"
-                               required="required"
+
+                        <form role="form" method="post"
+                              th:action="@{/serviceProvider/profile/save}"
+                              th:object="${serviceProvider}"
                         >
-                        <p th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></p>
+                            <input type="hidden" th:field="*{profileImageFileName}">
+                            <div class="form-group">
+                                <label for="title">First Name</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="title"
+                                       th:field="*{firstName}"
+                                       required="required"
+                                >
+                                <p th:if="${#fields.hasErrors('firstName')}" class="text-danger"
+                                   th:errors="*{firstName}"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="lastName"
+                                       th:field="*{lastName}"
+                                       required="required"
+                                >
+                                <p th:if="${#fields.hasErrors('lastName')}" class="text-danger"
+                                   th:errors="*{lastName}"></p>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label for="email">Email</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="email"
+                                           th:field="*{email}"
+                                           required="required"
+                                    >
+                                    <p th:if="${#fields.hasErrors('email')}" class="text-danger"
+                                       th:errors="*{email}"></p>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="contactNumber">Contact Number</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="contactNumber"
+                                           th:field="*{contactNumber}"
+
+                                    >
+                                    <p th:if="${#fields.hasErrors('contactNumber')}" class="text-danger"
+                                       th:errors="*{contactNumber}"></p>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-6 mb-sm-0">
+                                    <label for="businessName">Business Name</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="businessName"
+                                           th:field="*{businessName}"
+                                           required="required"
+                                    >
+                                    <p th:if="${#fields.hasErrors('businessName')}" class="text-danger"
+                                       th:errors="*{businessName}"></p>
+                                </div>
+
+
+                            </div>
+
+                            <button class="btn btn-primary" type="submit">Save changes</button>
+
+                        </form>
+
                     </div>
-
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text"
-                               class="form-control"
-                               id="lastName"
-                               th:field="*{lastName}"
-                               required="required"
-                        >
-                        <p th:if="${#fields.hasErrors('lastName')}" class="text-danger"
-                           th:errors="*{lastName}"></p>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <label for="email">Email</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="email"
-                                   th:field="*{email}"
-                                   required="required"
-                            >
-                            <p th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></p>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <label for="contactNumber">Contact Number</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="contactNumber"
-                                   th:field="*{contactNumber}"
-
-                            >
-                            <p th:if="${#fields.hasErrors('contactNumber')}" class="text-danger"
-                               th:errors="*{contactNumber}"></p>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row">
-                        <div class="col-sm-4 mb-3 mb-sm-0">
-                            <label for="businessName">Business Name</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="businessName"
-                                   th:field="*{businessName}"
-                                   required="required"
-                            >
-                            <p th:if="${#fields.hasErrors('businessName')}" class="text-danger"
-                               th:errors="*{businessName}"></p>
-                        </div>
-
-                        <div class="d-flex justify-content-end">
-                            <button type="reset" class="btn btn-secondary mx-2">Clear</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </form>
-
+                </div>
             </div>
         </div>
-
     </div>
+
 </section>
 
 </body>

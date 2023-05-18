@@ -1,6 +1,7 @@
 package com.errand.services.impl;
 
 import com.errand.dto.BaseRegistrationDTO;
+import com.errand.exceptions.UserNotFoundException;
 import com.errand.models.Client;
 import com.errand.models.Role;
 import com.errand.models.ServiceProvider;
@@ -16,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.constraints.Null;
 import java.util.Arrays;
 
 @Service
@@ -33,6 +33,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, ClientRepository clientRepository, ServiceProviderRepository serviceProviderRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.clientRepository = clientRepository;
+        this.serviceProviderRepository = serviceProviderRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     @Transactional
@@ -77,10 +84,12 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Users findByUsername(String username) {
-
-        return userRepository.findFirstByUsername(username);
-
+    public Users findByUsername(String username) throws UserNotFoundException {
+        try {
+            return userRepository.findFirstByUsername(username);
+        }catch (Exception e){
+            throw new UserNotFoundException("Can't find using that username");
+        }
     }
 
     @Override
