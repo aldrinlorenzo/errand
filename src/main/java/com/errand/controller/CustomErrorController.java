@@ -30,7 +30,7 @@ public class CustomErrorController implements ErrorController {
             else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 return "500";
             }
-            
+
             return "error";
         }
 

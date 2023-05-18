@@ -19,6 +19,9 @@ public interface ServiceProviderRepository extends JpaRepository<ServiceProvider
 
     ServiceProvider findByLastName(String lastName);
 
+    @Query("SELECT s FROM ServiceProvider s WHERE s.email = :email")
+    ServiceProvider findByEmail(@Param("email") String email);
+
     @Modifying
     @Query("UPDATE ServiceProvider SET firstName = :firstName, lastName = :lastName , email = :email, contactNumber = :contactNumber , businessName = :businessName , profileImageFileName = :profileImageFileName where id = :serviceProviderId ")
     void update(@Param("firstName") String firstName, @Param("lastName") String lastName,

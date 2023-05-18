@@ -1,6 +1,7 @@
 package com.errand.dto;
 
 import lombok.Data;
+import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -22,15 +23,17 @@ public class BaseRegistrationDTO {
     @NotEmpty
     private String password;
 
-    @Pattern(regexp = "^[ a-zA-Z]+$", message = "First Name should contain only letters")
+    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "First Name should contain only letters and spaces")
     private String firstName;
 
-    @Pattern(regexp = "^[ a-zA-Z]+$", message = "Last Name should contain only letters")
+    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "Last Name should contain only letters and spaces")
     private String lastName;
 
+    @Pattern(regexp = "^[0-9+]*$", message = "Contact Number should contain only numbers and '+' (if present)")
     private String contactNumber;
 
-    @Pattern(regexp = "^[a-zA-Z0-9!@#\\$%\\^\\&*\\)\\(+=._-]+$", message = "Business Name should contain only letters, numbers and special characters")
+    //@Pattern(regexp = "^[a-zA-Z0-9!@#\\$%\\^\\&*\\)\\(+=._\\-\\s]+$", message = "Business Name should contain only letters, numbers, spaces, and special characters")
+    @Nullable
     private String businessName;
 
     private String license;

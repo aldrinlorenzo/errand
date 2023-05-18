@@ -43,6 +43,16 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Client findByEmail(String email) throws ClientNotFoundException {
+        try {
+            return clientRepository.findByEmail(email);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ClientNotFoundException("Client not found with Email: " + email, e);
+        }
+    }
+
+    @Override
     public List<ClientDto> findByFirstNameIgnoreCase(String firstName) throws ClientNotFoundException {
 
         List<Client> clients = clientRepository.findByFirstNameIgnoreCase(firstName);

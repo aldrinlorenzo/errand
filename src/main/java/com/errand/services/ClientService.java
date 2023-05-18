@@ -12,6 +12,8 @@ public interface ClientService {
 
     Optional<Client> findById(Long id) throws ClientNotFoundException;
 
+    Client findByEmail(String email) throws ClientNotFoundException;
+
     List<ClientDto> findByFirstNameIgnoreCase(String firstName) throws ClientNotFoundException;
 
     List<ClientDto> findByLastNameIgnoreCase(String lastName) throws ClientNotFoundException;
