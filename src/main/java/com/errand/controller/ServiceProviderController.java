@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -144,14 +145,20 @@ public class ServiceProviderController {
     }
 
     @PostMapping("/profile/save")
-    public String updateServiceProviderDetails(ServiceProviderDto serviceProviderDto, Model model) {
+    public String updateServiceProviderDetails(@Valid ServiceProviderDto serviceProviderDto,
+                                               BindingResult result,
+                                               Model model) {
+        if (result.hasErrors()) {
+            setServiceProviderForDisplay(model);
+            return "serviceprovider-profile-edit";
+        }
         try {
             boolean isUpdated = serviceProviderService.updateServiceProviderDetails(serviceProviderDto, serviceProviderService.getCurrentServiceProvider().getId());
 
             if (isUpdated) {
                 model.addAttribute("serviceProvider", serviceProviderDto);
                 model.addAttribute("serviceProviderId", serviceProviderService.getCurrentServiceProvider().getId());
-                return "serviceprovider-dashboard";
+                return "redirect:/serviceProvider/profile";
             } else {
                 return "error";
             }
