@@ -239,7 +239,7 @@ public class ClientController {
             ratingDto.setClientDto(mapToClientDto(clientService.getCurrentClient()));
             ratingService.updateRatingFromClient(rating, ratingDto);
         }else{
-            Offer offer  = mapToOffer(offerService.findOfferById(task.getId()));
+            Offer offer  = mapToOffer(offerService.findOfferById(task.getOfferId()));
             ratingDto.setServiceProviderDto(toServiceProviderDto(offer.getServiceProvider()));
             ratingDto.setClientDto(mapToClientDto(clientService.getCurrentClient()));
             ratingDto.setTaskDto(taskService.findTaskById(taskId));

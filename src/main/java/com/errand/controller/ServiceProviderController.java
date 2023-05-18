@@ -242,7 +242,7 @@ public class ServiceProviderController {
             ratingDto.setServiceProviderDto(toServiceProviderDto(serviceProviderService.getLoggedInServiceProvider()));
             ratingService.updateRatingFromServiceProvider(rating, ratingDto);
         } else {
-            Offer offer  = mapToOffer(offerService.findOfferById(task.getId()));
+            Offer offer  = mapToOffer(offerService.findOfferById(task.getOfferId()));
             ratingDto.setClientDto(mapToClientDto(task.getClient()));
             ratingDto.setServiceProviderDto(serviceProviderService.getCurrentServiceProvider());
             ratingDto.setTaskDto(taskService.findTaskById(taskId));
