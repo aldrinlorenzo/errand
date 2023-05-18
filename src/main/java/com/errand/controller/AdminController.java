@@ -1,10 +1,8 @@
 package com.errand.controller;
 
-import com.errand.dto.ClientDto;
-import com.errand.dto.PendingTaskDto;
-import com.errand.dto.ServiceProviderDto;
-import com.errand.dto.TaskDto;
+import com.errand.dto.*;
 
+import com.errand.models.Label;
 import com.errand.models.Rating;
 import com.errand.models.Users;
 import com.errand.security.SecurityUtil;
@@ -12,12 +10,13 @@ import com.errand.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
+
+import static com.errand.mapper.LabelMapper.toLabelDto;
 
 @Controller
 @RequestMapping("/admin")
@@ -28,14 +27,16 @@ public class AdminController {
     private TaskService taskService;
     private ServiceProviderService serviceProviderService;
     private RatingService ratingService;
+    private LabelService labelService;
 
     @Autowired
-    public AdminController(UserService userService, ClientService clientService, TaskService taskService, ServiceProviderService serviceProviderService, RatingService ratingService) {
+    public AdminController(UserService userService, ClientService clientService, TaskService taskService, ServiceProviderService serviceProviderService, RatingService ratingService, LabelService labelService) {
         this.userService = userService;
         this.clientService = clientService;
         this.taskService = taskService;
         this.serviceProviderService = serviceProviderService;
         this.ratingService = ratingService;
+        this.labelService = labelService;
     }
 
     @GetMapping("/dashboard")
@@ -67,6 +68,55 @@ public class AdminController {
 
         return "admin-clients";
 
+    }
+    @GetMapping("/labels")
+    public String getAdminLabels(Model model, LabelDto labelDto){
+        Set<Label> labels = labelService.findAllLabels();
+        model.addAttribute("user", userService.getCurrentUser());
+        model.addAttribute("labels", labels);
+        model.addAttribute("labelDto", labelDto);
+        return "admin-labels";
+    }
+    @PostMapping("/labels-save")
+    public String addAdminLabels(@ModelAttribute("labelDto")LabelDto labelDto, BindingResult result, Model model){
+        if(result.hasErrors()){
+            model.addAttribute("labelDto", labelDto);
+            return "admin-labels";
+        }
+        model.addAttribute("labelDto", labelDto);
+        model.addAttribute("user", userService.getCurrentUser());
+        labelService.saveLabel(labelDto);
+        return "redirect:/admin/labels";
+    }
+
+    @GetMapping("/labels-edit/{labelId}")
+    public  String editAdminLabels(@PathVariable("labelId")Long labelId,
+                                   @ModelAttribute("existingLabel")LabelDto existingLabel,
+                                   BindingResult result, Model model) {
+
+        if(result.hasErrors()){
+            model.addAttribute("existingLabel", existingLabel);
+            return "admin-label-edit";
+        }
+        existingLabel = labelService.findbyId(labelId);
+        Set<Label> labels = labelService.findAllLabels();
+        model.addAttribute("labels", labels);
+        model.addAttribute("user", userService.getCurrentUser());
+        model.addAttribute("existingLabel", existingLabel);
+        return "admin-label-edit";
+    }
+
+    @PostMapping("/labels-edit/{labelId}/update")
+    public  String saveEditedAdminLabels(@PathVariable("labelId")Long labelId,
+                                   @ModelAttribute("existingLabel")LabelDto existingLabel,
+                                   BindingResult result, Model model){
+        if(result.hasErrors()){
+            model.addAttribute("existingLabel", existingLabel);
+            return "admin-label-edit";
+        }
+        existingLabel.setId(labelId);
+        labelService.editLabel(existingLabel);
+        return "redirect:/admin/labels";
     }
 
 

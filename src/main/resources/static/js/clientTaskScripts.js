@@ -22,3 +22,7 @@ $(document).ready( function() {
     $('#taskTable').DataTable();
 });
 
+$(document).ready( function() {
+    $('#labelTable').DataTable();
+});
+
