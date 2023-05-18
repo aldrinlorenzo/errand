@@ -1,0 +1,126 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+  <title>Admin Dashboard</title>
+  <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+</head>
+
+<body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<div layout:fragment="profile-name">
+  <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${user.username + ' (Administrator)'}"></span>
+  <img class="img-profile rounded-circle"
+       src="/assets/img/undraw_profile_2.svg">
+</div>
+
+<section layout:fragment="sidebar-item" class="py-2">
+
+  <hr class="sidebar-divider my-0">
+
+  <li class="nav-item active">
+    <a class="nav-link" href="/admin/dashboard">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Dashboard</span></a>
+  </li>
+
+  <hr class="sidebar-divider">
+
+  <div class="sidebar-heading">
+    Management
+  </div>
+
+  <li class="nav-item">
+    <a class="nav-link" href="/admin/clients">
+      <i class="fas fa-fw fa-user-tie"></i>
+      <span>Clients</span></a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="/admin/serviceProviders">
+      <i class="fas fa-fw fa-tools"></i>
+      <span>Service Providers</span></a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="/admin/tasks">
+      <i class="fas fa-fw fa-briefcase"></i>
+      <span>Tasks</span></a>
+  </li>
+
+
+</section>
+
+<!-- Page Content-->
+<section layout:fragment="body" class="px-3 py-1">
+  <div class="container-fluid">
+
+    <div class="card shadow mb-4">
+
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Label Lists</h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="labelTable" STYLE="width='100%'; cellspacing='0'">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+              <tr th:each="labels :${labels}" th:id="@{${labels.id}}">
+                <td th:text="${labels.id}"></td>
+                <td th:text="${labels.name}"></td>
+                <td>
+                  <a th:href="@{/admin/labels-edit/{labelId}(labelId=${labels.id})}"
+                     class="btn btn-warning btn-circle btn-sm"
+                     title="Edit Label">
+                    <i class="fas fa-pen"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <div class="card-body">
+
+        <form method="post" th:action="@{/admin/labels-save}" th:object="${labelDto}">
+          <div class="form-group">
+
+            <label>Label name</label>
+            <input type="text" class="form-control" id="description" rows="3"
+                   th:field="*{name}" required="required">
+
+            <p th:if="${#fields.hasErrors('name')}" class="text-danger"
+               th:errors="*{name}"></p>
+          </div>
+
+          <div class="d-flex justify-content-end">
+            <button type="reset" class="btn btn-secondary mx-2">Clear</button>
+            <button type="submit" class="btn btn-primary">Add Label</button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Page level custom scripts -->
+  <script type="text/javascript" th:src="@{/vendor/chart.js/Chart.min.js}" defer></script>
+  <script type="text/javascript" th:src="@{/js/chart-pie-admin.js}" defer></script>
+  <script type="text/javascript" th:src="@{/js/clientTaskScripts.js}" defer></script>
+
+</section>
+
+</body>
+</html>
