@@ -26,5 +26,4 @@ public class ServiceProviderForUpdateDto {
 
     private String businessName;
 
-
 }

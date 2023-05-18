@@ -4,8 +4,6 @@ import com.errand.dto.OfferDto;
 import com.errand.dto.OfferStatisticDto;
 import com.errand.dto.ServiceProviderDto;
 import com.errand.dto.TaskDto;
-import com.errand.models.Offer;
-import com.errand.models.Task;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -37,4 +37,5 @@ public class PendingTaskDto {
     private Set<Label> labels;
 
     private LocalDateTime createdDate;
+
 }

@@ -20,4 +20,5 @@ public class OfferDto {
     private ServiceProviderDto serviceProviderDto;
 
     private TaskDto taskDto;
+
 }

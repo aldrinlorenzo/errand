@@ -1,9 +1,7 @@
 package com.errand.services.impl;
 
 import com.errand.dto.LabelDto;
-import com.errand.dto.TaskDto;
 import com.errand.models.Label;
-import com.errand.repository.ClientRepository;
 import com.errand.repository.LabelRepository;
 import com.errand.services.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,7 @@
 package com.errand.mapper;
 
 import com.errand.dto.LabelDto;
-import com.errand.dto.TaskDto;
 import com.errand.models.Label;
-import com.errand.models.Task;
 
 public class LabelMapper {
 
@@ -30,4 +28,5 @@ public class LabelMapper {
 
         return builder.build();
     }
+
 }

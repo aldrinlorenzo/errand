@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-
 public interface OfferRepository extends JpaRepository<Offer,Long> {
 
     Offer findByPrice(float price);
@@ -20,7 +19,6 @@ public interface OfferRepository extends JpaRepository<Offer,Long> {
 
     @Query("SELECT o FROM Offer o WHERE o.task.id = :taskId AND o.serviceProvider.id = :serviceProviderId")
     Offer findOfferByTaskAndServiceProvider(@Param("taskId") Long taskId, @Param("serviceProviderId") Long serviceProviderId);
-
 
     @Query("SELECT o FROM Offer o WHERE o.serviceProvider = :serviceProvider")
     List<Offer> findByServiceProvider(@Param("serviceProvider") ServiceProvider serviceProvider);

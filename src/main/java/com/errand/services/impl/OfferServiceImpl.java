@@ -28,14 +28,11 @@ public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
     private final TaskService taskService;
 
-
     public OfferServiceImpl(OfferRepository offerRepository, TaskService taskService) {
         this.offerRepository = offerRepository;
         this.taskService = taskService;
 
     }
-
-
 
     @Override
     public List<OfferDto> findOffersByTask(TaskDto  taskDto) {
@@ -83,7 +80,9 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public Boolean isOfferExist(Long taskId, Long serviceProviderId) {
         return offerRepository.findOfferByTaskAndServiceProvider(taskId, serviceProviderId) != null;
-    }@Override
+    }
+
+    @Override
     public Boolean createOffer(OfferDto offerDto) {
         try {
             if (isOfferExist(offerDto.getTaskDto().getId(), offerDto.getServiceProviderDto().getId())) {
@@ -98,6 +97,7 @@ public class OfferServiceImpl implements OfferService {
             return false;
         }
     }
+
     @Override
     public Boolean updateOffer(OfferDto offerDto) {
         try {
@@ -118,7 +118,6 @@ public class OfferServiceImpl implements OfferService {
         }
     }
 
-
     @Override
     @Transactional
     public Boolean deleteOffer(Long offerId) throws Exception {
@@ -133,6 +132,7 @@ public class OfferServiceImpl implements OfferService {
         }
 
     }
+
     @Override
     public OfferStatisticDto getOfferStatistic(ServiceProviderDto serviceProviderDto) {
         List<OfferDto> offerList = findOfferByServiceProvider(serviceProviderDto);
@@ -157,8 +157,8 @@ public class OfferServiceImpl implements OfferService {
     public OfferDto findOfferById(Long id) {
         Offer offer = offerRepository.findById(id).orElseThrow(() -> new RuntimeException("Offer not found"));
         return OfferMapper.mapToOfferDto(offer);
-
     }
+
     @Override
     public void acceptOffer(Long offerId, TaskDto taskDto) {
         Task task = mapToTask(taskDto);

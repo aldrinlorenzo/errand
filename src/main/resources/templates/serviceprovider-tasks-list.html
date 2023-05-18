@@ -168,7 +168,9 @@
                                            th:classappend="${offer.status != 'OFFERED' ? 'd-none' : ''}">
                                             <i class="fas fa-trash"></i>
                                         </a>
-                                        <div class="modal fade" th:id="'Modal-' + ${offer.id + '-' + offer.taskDto.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" th:id="'Modal-' + ${offer.id + '-' + offer.taskDto.id}"
+                                             tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                             aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">

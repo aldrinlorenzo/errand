@@ -5,13 +5,11 @@ import com.errand.dto.*;
 import com.errand.models.*;
 import com.errand.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
@@ -19,8 +17,6 @@ import java.util.List;
 
 import static com.errand.mapper.ClientMapper.mapToClientDto;
 import static com.errand.mapper.OfferMapper.mapToOffer;
-import static com.errand.mapper.RatingMapper.mapToRatingFromServiceProvider;
-import static com.errand.mapper.ServiceProviderMapper.toServiceProvider;
 import static com.errand.mapper.ServiceProviderMapper.toServiceProviderDto;
 import static com.errand.mapper.TaskMapper.mapToTask;
 

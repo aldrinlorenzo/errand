@@ -2,7 +2,6 @@ package com.errand.services.impl;
 
 import com.errand.dto.ServiceProviderDto;
 import com.errand.mapper.ServiceProviderMapper;
-import com.errand.models.Client;
 import com.errand.models.ServiceProvider;
 import com.errand.models.Users;
 import com.errand.repository.ServiceProviderRepository;
@@ -21,7 +20,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class ServiceProviderServiceImpl implements ServiceProviderService {
-
 
     private ServiceProviderRepository serviceProviderRepository;
     private UserRepository userRepository;
@@ -66,7 +64,6 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
                 id, serviceProviderDto.getProfileImageFileName());
        return  true;
     }
-
 
     @Override
     public List<ServiceProviderDto> getAllServiceProvider() {

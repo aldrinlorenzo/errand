@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Set;
 
-import static com.errand.mapper.LabelMapper.toLabelDto;
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {

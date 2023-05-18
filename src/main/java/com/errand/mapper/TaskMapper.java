@@ -9,8 +9,6 @@ import java.time.LocalDate;
 
 import java.time.format.DateTimeFormatter;
 
-import static com.errand.mapper.ClientMapper.mapToClient;
-
 @Component
 public class TaskMapper {
 

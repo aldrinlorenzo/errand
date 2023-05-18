@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class OfferMapper {
 
-
     public static Offer mapToOffer(OfferDto offerDto){
         return Offer.builder()
                 .id(offerDto.getId())
@@ -29,8 +28,5 @@ public class OfferMapper {
                 .serviceProviderDto(ServiceProviderMapper.toServiceProviderDto(offer.getServiceProvider()))
                 .build();
     }
-
-
-
 
 }

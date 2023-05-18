@@ -1,6 +1,5 @@
 package com.errand.security;
 
-import com.errand.repository.UserRepository;
 import com.errand.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,8 +23,6 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
     SuccessHandler(UserService userService){
         this.userService = userService;
     }
-
-
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,

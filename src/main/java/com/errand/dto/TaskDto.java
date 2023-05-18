@@ -63,5 +63,4 @@ public class TaskDto {
 
     private Client client;
 
-
 }

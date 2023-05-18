@@ -7,6 +7,7 @@ import org.springframework.lang.Nullable;
 @Data
 @Builder
 public class RatingDto {
+
     @Nullable
     private float clientRating;
 
@@ -25,4 +26,5 @@ public class RatingDto {
 
     @Nullable
     private ClientDto clientDto;
+
 }

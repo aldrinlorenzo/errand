@@ -65,7 +65,9 @@
             </div>
             <div class="card-body">
 
-                <form role="form" method="post" th:action="@{/serviceProvider/tasks/{taskId}/offers/create(taskId=${taskId})}" th:object="${offer}">
+                <form role="form" method="post"
+                      th:action="@{/serviceProvider/tasks/{taskId}/offers/create(taskId=${taskId})}"
+                      th:object="${offer}">
                     <div class="form-group">
                         <label for="price">Offer Price</label>
                         <input type="number"

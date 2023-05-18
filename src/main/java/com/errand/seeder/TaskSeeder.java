@@ -98,8 +98,6 @@ public class TaskSeeder implements CommandLineRunner {
 
             taskRepository.save(taskByClient4);
 
-
-
             }
         }
     }

@@ -2,26 +2,22 @@ package com.errand.services.impl;
 
 import com.errand.dto.RatingDto;
 import com.errand.dto.ServiceProviderDto;
-import com.errand.dto.TaskDto;
 import com.errand.models.*;
 import com.errand.repository.ClientRepository;
 import com.errand.repository.RatingRepository;
 import com.errand.repository.UserRepository;
 import com.errand.security.SecurityUtil;
 import com.errand.services.RatingService;
-import com.errand.mapper.RatingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.errand.mapper.ClientMapper.mapToClient;
 import static com.errand.mapper.RatingMapper.*;
 import static com.errand.mapper.ServiceProviderMapper.toServiceProvider;
-import static com.errand.mapper.TaskMapper.mapToTask;
 
 @Service
 public class RatingServiceImpl implements RatingService {

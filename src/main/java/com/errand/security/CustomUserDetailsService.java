@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
+
     private UserRepository userRepository;
 
     @Autowired
@@ -37,4 +38,5 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Invalid username or password");
         }
     }
+
 }

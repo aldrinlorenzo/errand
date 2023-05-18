@@ -24,7 +24,6 @@ public class RatingMapper {
         return rating;
     }
 
-
     public static RatingDto mapToRatingDtoFromClient(Rating rating){
         RatingDto.RatingDtoBuilder builder = RatingDto.builder()
                 .serviceProviderRating(rating.getServiceProviderRating())
@@ -67,6 +66,5 @@ public class RatingMapper {
 
         return  builder.build();
     }
-
 
 }
