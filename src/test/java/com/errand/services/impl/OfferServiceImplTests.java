@@ -2,6 +2,7 @@ package com.errand.services.impl;
 
 import java.lang.reflect.Executable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -13,8 +14,12 @@ import com.errand.mapper.OfferMapper;
 import com.errand.mapper.ServiceProviderMapper;
 import com.errand.mapper.TaskMapper;
 import com.errand.models.*;
+import com.errand.repository.ClientRepository;
 import com.errand.repository.OfferRepository;
+import com.errand.repository.TaskRepository;
+import com.errand.repository.UserRepository;
 import com.errand.security.SecurityUtil;
+import com.errand.services.ClientService;
 import com.errand.services.OfferService;
 import com.errand.services.TaskService;
 import org.junit.jupiter.api.Assertions;
@@ -38,19 +43,31 @@ public class OfferServiceImplTests {
     @Mock
     private TaskService taskService;
     @Mock
-
     private TaskMapper taskMapper;
-
     @Mock
     private OfferMapper offerMapper;
     @Mock
     private OfferDto offerDto;
-
     @Mock
     private TaskDto taskDto;
+    @Mock
+    private TaskRepository taskRepository;
+    @Mock
+    private UserRepository userRepository;
+    @Mock
+    private ClientRepository clientRepository;
+    @Mock
+    private ClientService clientService;
 
     @BeforeEach
     void setUp() {
+        taskService = new TaskServiceImpl(
+                taskRepository,
+                userRepository,
+                clientRepository,
+                clientService,
+                taskMapper
+        );
         MockitoAnnotations.openMocks(this);
         offerService = new OfferServiceImpl(offerRepository, taskService);
         Set<Label> labels = new HashSet<>();
@@ -75,17 +92,26 @@ public class OfferServiceImplTests {
 
     @Test
     public void findOffersByTask_NotNullTask_ShouldReturnAList() {
-
+        Users user = new Users();
+        Client client = new Client();
+        client.setUser(user);
+        ServiceProvider serviceProvider = new ServiceProvider();
+        Task task = new Task();
+        task.setTargetDate(LocalDate.now());
+        task.setClient(client);
+        Offer offer = new Offer();
+        offer.setTask(task);
+        offer.setServiceProvider(serviceProvider);
+        List<Offer> offerList = new ArrayList<>();
+        offerList.add(offer);
+        when(offerRepository.findOffersByTask(any(Task.class))).thenReturn(offerList);
 
         //Act
-        try (MockedStatic<TaskMapper> mockedStatic = mockStatic(TaskMapper.class)){
-        List<OfferDto> actual = offerService.findOffersByTask(taskDto);
+        List<OfferDto> actual = offerService.findOffersByTask(TaskMapper.mapToTaskDto(task));
 
         // Assert
         Assertions.assertNotNull(actual);
         Assertions.assertTrue(actual.stream().allMatch(Objects::nonNull));
-        verify(taskMapper).mapToTask(taskDto);
-        }
     }
 
     @Test
