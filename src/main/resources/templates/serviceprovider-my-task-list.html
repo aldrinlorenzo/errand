@@ -88,6 +88,7 @@
                             <th>Target Date</th>
                             <th>Location</th>
                             <th>Status</th>
+                            <th>Labels</th>
                             <th>Action</th>
                             <th>Rate</th>
                         </tr>
@@ -102,6 +103,13 @@
                                 <td th:text="${task.targetDate}"></td>
                                 <td th:text="${task.street+', '+task.city+', '+task.postalCode}"></td>
                                 <td th:text="${task.status}"></td>
+                                <th:block th:if="${not #sets.isEmpty(task.labels)}" th:each="label : ${task.labels}">
+                                    <td style="text-align:center;"><span class="badge badge-primary"
+                                                                         th:text="${label.name}"></span></td>
+                                </th:block>
+                                <th:block th:unless="${not #sets.isEmpty(task.labels)}">
+                                    <td></td>
+                                </th:block>
                                 <td style="text-align: center; white-space: nowrap;">
                                     <a th:href="@{/serviceProvider/tasks/{taskId}/offers(taskId=${task.id})}"
                                        title="Make New Offer"

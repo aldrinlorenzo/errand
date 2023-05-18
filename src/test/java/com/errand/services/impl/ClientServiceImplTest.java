@@ -82,8 +82,7 @@ class ClientServiceImplTest {
         List<ClientDto> result = clientService.findByFirstNameIgnoreCase(firstName);
 
         assertEquals(expectedClients.size(), result.size());
-        assertEquals(client1.getFirstName(), result.get(0).getFirstName());
-        assertEquals(client1.getLastName(), result.get(0).getLastName());
+        assertEquals(client1.getFirstName(), result.get(0).getFirstName());        assertEquals(client1.getLastName(), result.get(0).getLastName());
         assertEquals(client1.getEmail(), result.get(0).getEmail());
         assertEquals(client1.getContactNumber(), result.get(0).getContactNumber());
         assertEquals(client2.getFirstName(), result.get(1).getFirstName());
@@ -115,7 +114,7 @@ class ClientServiceImplTest {
                 "John",
                 "Doe",
                 "john.doe@example.com",
-                "09123456789");
+               "09123456789");
         Client client2 = createClient(2L,
                 "Jane",
                 "Doe",

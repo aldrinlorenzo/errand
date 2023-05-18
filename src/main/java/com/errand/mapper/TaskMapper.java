@@ -69,6 +69,7 @@ public class TaskMapper {
                 .createdBy(task.getClient().getUser().getUsername())
                 .status(task.getStatus())
                 .targetDate(task.getTargetDate())
+                .labels(task.getLabels())
                 .createdDate(task.getCreatedDate())
                 .targetDate(task.getTargetDate())
                 .createdDate(task.getCreatedDate())
