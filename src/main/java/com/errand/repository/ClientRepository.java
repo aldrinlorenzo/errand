@@ -1,7 +1,10 @@
 package com.errand.repository;
 
 import com.errand.models.Client;
+import com.errand.models.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -14,6 +17,9 @@ public interface ClientRepository extends JpaRepository<Client,Long> {
     Client findByFirstName(String firstName);
 
     Client findByLastName(String lastName);
+
+    @Query("SELECT c FROM Client c WHERE c.email = :email")
+    Client findByEmail(@Param("email") String email);
 
 
 }

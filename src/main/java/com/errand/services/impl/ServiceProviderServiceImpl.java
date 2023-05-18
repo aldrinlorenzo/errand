@@ -48,6 +48,11 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     }
 
     @Override
+    public ServiceProvider findByEmail(String email) {
+        return serviceProviderRepository.findByEmail(email);
+    }
+
+    @Override
     @Transactional
     public Boolean updateServiceProviderDetails(@NonNull ServiceProviderDto serviceProviderDto, @NonNull Long id) {
         if (!serviceProviderRepository.existsById(id)) {
