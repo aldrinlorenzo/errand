@@ -22,10 +22,10 @@ public class BaseRegistrationDTO {
     @NotEmpty
     private String password;
 
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "First Name should contain only letters")
+    @Pattern(regexp = "^[ a-zA-Z]+$", message = "First Name should contain only letters")
     private String firstName;
 
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "Last Name should contain only letters")
+    @Pattern(regexp = "^[ a-zA-Z]+$", message = "Last Name should contain only letters")
     private String lastName;
 
     private String contactNumber;
