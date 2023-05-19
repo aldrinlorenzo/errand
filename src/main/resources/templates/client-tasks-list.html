@@ -83,13 +83,13 @@
                     <table class="table table-bordered" id="clientTasksTable" STYLE="width='100%'; cellspacing='0'">
                         <thead>
                         <tr>
-                            <th>Task ID</th>
+                            <th style="white-space: nowrap;">Task ID</th>
                             <th>Title</th>
                             <th>Descriptions</th>
                             <th>Budget</th>
-                            <th>Created Date</th>
-                            <th>Target Date</th>
                             <th>Location</th>
+                            <th style="white-space: nowrap;">Target Date</th>
+                            <th style="white-space: nowrap;">Created Date</th>
                             <th>Label</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -102,10 +102,9 @@
                             <td th:text="${task.title}"></td>
                             <td th:text="${task.description}"></td>
                             <td th:text="${task.budget}"></td>
-                            <td th:text="${#temporals.format(task.createdDate, 'MMMM-dd-yyyy hh:mm:a')}"></td>
-                            <td th:text="${task.targetDate}"></td>
                             <td th:text="${task.street+', '+task.city+', '+task.postalCode}"></td>
-
+                            <td th:text="${task.targetDate}"></td>
+                            <td style="white-space: nowrap;" th:text="${#temporals.format(task.createdDate, 'MMMM-dd-yyyy hh:mm:a')}"></td>
                             <th:block th:if="${not #sets.isEmpty(task.labels)}" th:each="label : ${task.labels}">
                                 <td style="text-align:center;"><span class="badge badge-primary"
                                                                      th:text="${label.name}"></span></td>
