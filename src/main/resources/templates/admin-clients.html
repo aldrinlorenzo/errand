@@ -84,8 +84,8 @@
                   <td th:text="${client.lastName}"></td>
                   <td th:text="${client.email}"></td>
                   <td th:text="${client.contactNumber}"></td>
-                  <td th:text="${client.user.createdDate}"></td>
-                  <td th:text="${client.user.modifiedDate}"></td>
+                  <td th:text="${#temporals.format(client.user.createdDate, 'MMMM-dd-yyyy hh:mm:a')}"></td>
+                  <td th:text="${#temporals.format(client.user.modifiedDate, 'MMMM-dd-yyyy hh:mm:a')}"></td>
                 </tr>
               </tbody>
             </table>
