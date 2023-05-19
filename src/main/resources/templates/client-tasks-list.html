@@ -102,7 +102,7 @@
                             <td th:text="${task.title}"></td>
                             <td th:text="${task.description}"></td>
                             <td th:text="${task.budget}"></td>
-                            <td th:text="${task.createdDate}"></td>
+                            <td th:text="${#temporals.format(task.createdDate, 'MMMM-dd-yyyy hh:mm:a')}"></td>
                             <td th:text="${task.targetDate}"></td>
                             <td th:text="${task.street+', '+task.city+', '+task.postalCode}"></td>
 
