@@ -5,6 +5,7 @@ import com.errand.models.Label;
 import com.errand.models.Rating;
 import lombok.*;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -25,6 +26,7 @@ public class TaskDto {
     @Pattern(regexp = "^(?!\\s*$)[a-zA-Z0-9!@#\\$%\\^\\&*\\)\\(+=._ -]+$", message = "Invalid Description")
     private String description;
 
+    @DecimalMin(value = "0", inclusive = true, message = "Postal Code cannot be negative")
     private BigDecimal budget;
 
     @NotNull
@@ -36,6 +38,7 @@ public class TaskDto {
     private String city;
 
     @NotNull
+    @DecimalMin(value = "0", inclusive = true, message = "Postal Code cannot be negative")
     private BigDecimal postalCode;
 
     private String status;

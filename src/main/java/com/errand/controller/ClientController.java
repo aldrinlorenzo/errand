@@ -191,6 +191,9 @@ public class ClientController {
             return "client-tasks-edit";
         }
         task.setId(taskId);
+        if(task.getClient() != clientService.getCurrentClient()){
+            return "403";
+        }
         taskService.updateTask(task, clientService.getCurrentClient());
         return "redirect:/client/tasks";
     }
